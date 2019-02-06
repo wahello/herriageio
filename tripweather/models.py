@@ -11,7 +11,7 @@ class Trip(models.Model):
     name = models.CharField(max_length=256)
     start_loc = models.CharField(max_length=50)
     end_loc = models.CharField(max_length=50)
-    date = models.DateTimeField(default=django.utils.timezone.now())
+    date = models.DateTimeField(default=django.utils.timezone.now().date())
     deleted = models.BooleanField(default=False)
 
     class Meta:

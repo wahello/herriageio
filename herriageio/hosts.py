@@ -7,5 +7,7 @@ host_patterns = patterns(
     host(r'birthdate', 'birthdate.urls', name='birthdate'),
     host(r'tripweather', 'tripweather.urls',
          name='tripweather'),
+    host(r'lunchmunch', 'lunchmunch.urls',
+         name='lunchmunch'),
     host(r'(?!www).*', 'hostsconf.urls', name='wildcard'),
 )

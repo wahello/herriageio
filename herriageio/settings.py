@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'profile_handling',
     'birthdate',
     'tripweather',
+    'lunchmunch',
 ]
 
 MIDDLEWARE = [

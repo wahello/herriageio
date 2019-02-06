@@ -1,0 +1,38 @@
+{% extends "lunchmunch/base.html" %}
+
+{% block body %}
+    <div class="two-column">
+        <p>Groups</p>
+        <p style="text-align: right;">
+            <a href="{% url 'group_form' %}">New Group</a>
+        </p>
+    </div>
+    <hr>
+
+    <div style="overflow-x:auto;">
+        <table style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <tr>
+                <th style="text-align: left;">Name</th>
+                <th style="text-align: right;">Event In</th>
+            </tr>
+
+            {% if groups.count != 0 %}
+                {% for group in groups %}
+                    <tr>
+                        <td style="text-align: left;">
+                            <a href="{{ group.get_absolute_url }}">{{ group.name }}</a>
+                        </td>
+                        <td style="text-align: right;">
+                            <a href="{{ group.get_absolute_url }}">{{ group.next_event.at|timeuntil }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td style="text-align: left;">No groups yet.</td>
+                    <td></td>
+                </tr>
+            {% endif %}
+        </table>
+    </div>
+{% endblock %}

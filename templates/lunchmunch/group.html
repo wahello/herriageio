@@ -1,0 +1,104 @@
+{% extends "lunchmunch/base.html" %}
+
+{% block body %}
+    <div class="two-column">
+        <div>
+            <p>
+                <strong>{{ group.name }}</strong>
+            </p>
+        </div>
+        <div style="text-align: right; display: grid; grid-template-columns: 1fr;">
+            <p>
+                <a href="{% url 'group_form' code=group.code %}">Edit</a>
+            </p>
+        </div>
+    </div>
+    <hr>
+
+    <p>Leader:
+        <a href="{% url 'account' username=group.leader.username%}">{{ group.leader }}</a>
+    </p>
+
+    <br><br><br>
+    <hr>
+    <div class="two-column">
+        <p>Events</p>
+        <p style="text-align: right;">
+            <a href="{% url 'group_event' code=group.code %}">
+                {% if group.next_event %}
+                    Edit Event
+                {% else %}
+                    New Event
+                {% endif %}
+            </a>
+        </p>
+    </div>
+    <hr>
+
+    <div style="overflow-x:auto;">
+        <table style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <tr>
+                <th style="text-align: left;">Status</th>
+                <th style="text-align: right;">At</th>
+                <th style="text-align: right;">Points</th>
+            </tr>
+
+            {% if group.events.count != 0 %}
+                {% for event in group.events.all %}
+                    <tr>
+                        <td style="text-align: left;">
+                            <a href="{% url 'group_event' code=group.code %}">{{ event.status|title }}</a>
+                        </td>
+                        <td style="text-align: right;">
+                            <a href="{% url 'group_event' code=group.code %}">{{ event.at }}</a>
+                        </td>
+                        <td style="text-align: right;">50</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td style="text-align: left;">No events yet.</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+        </table>
+    </div>
+
+    <br><br><br>
+    <hr>
+    <div class="two-column">
+        <p>Users</p>
+        <p style="text-align: right;">
+            <a href="#">Invite User</a>
+        </p>
+    </div>
+    <hr>
+
+    <div style="overflow-x:auto;">
+        <table style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <tr>
+                <th style="text-align: left;">Name</th>
+                <th style="text-align: right;">Events Joined</th>
+            </tr>
+
+            {% if group.users.count != 0 %}
+                {% for user in group.users.all %}
+                    <tr>
+                        <td style="text-align: left;">
+                            <a href="{{ user.profile.get_absolute_url }}">{{ user.username }}</a>
+                        </td>
+                        <td style="text-align: right;">
+                            <a href="{{ group.get_absolute_url }}">0</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td style="text-align: left;">No users yet.</td>
+                    <td></td>
+                </tr>
+            {% endif %}
+        </table>
+    </div>
+{% endblock %}

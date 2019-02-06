@@ -1,0 +1,84 @@
+{% extends "lunchmunch/base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+    <form class="" action="." method="post">
+        {% csrf_token %}
+        <div class="two-column">
+            <div>
+                <p>
+                    Event for
+                    <a href="{% url 'group' code=group.code %}">{{ group.name }}</a>
+                </p>
+            </div>
+            <div style="text-align: right; display: grid; grid-template-columns: 1fr;">
+                <p>
+                    {% if group.next_event %}
+                        {{ upcoming.status }}
+                        <a href="#">👪 Join Lobby
+                        </a>
+                    {% else %}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <hr>
+
+        {% if form %}
+            {{ form.errors }}
+            <div class="form-group">
+                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" name="at" id="id_at" placeholder="Event Date & Time"/>
+                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                        <div class="input-group-text">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Schedule</button>
+        {% endif %}
+
+        {% if event %}
+            <div class="row">
+                <div class="col-md-3 {% if group.next == 'upcoming' %}pull-right{% endif %}">
+                    <p>
+                        <strong>Current Stage:</strong><br>
+                        {{ event.status|title }}
+                        <br><br>
+                        <span class="small">{{ event.stage_description }}</span>
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <p>
+                        <strong>Next Stage In:</strong><br>
+                        {{ event.seconds_until_stage_progress }}
+                        Seconds
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <p>
+                        <strong>Next Stage:</strong><br>
+                        {{ event.next_stage|title }}
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <p>
+                        <strong>Joined Users:</strong><br>
+                        0
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+    </form>
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker();
+        });
+    </script>
+{% endblock %}

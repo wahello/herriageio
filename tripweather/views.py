@@ -48,12 +48,15 @@ def check_weather(request, unique_id=None):
                                                                          str(e_response['coord']['lon']) + "," + str(e_response['coord']['lat']) +
                                                                          "?access_token=pk.eyJ1IjoiY2hhbmNlaGVycmlhZ2UiLCJhIjoiY2pqdGdyZGM3MzZlcjN3cXE4bDVsb3hjdSJ9.3SfOp7dq5RDZLgUPp05HqQ").json()['durations'][0][1]))).split('.')[0]
 
-            s_cur_temp = pytemperature.k2f(s_response['main']['temp'])
-            e_cur_temp = pytemperature.k2f(e_response['main']['temp'])
+            s_cur_temp = float(pytemperature.k2f(s_response['main']['temp']))
+            e_cur_temp = float(pytemperature.k2f(e_response['main']['temp']))
 
             trip_notes = 'Looks like your trip will be clear and nice. Drive safe!'
             if e_cur_temp < s_cur_temp:
-                trip_notes = 'Oooohhhh. Looks like {0} is a little bit cooler than {1}. Safe travels!'.format(
+                trip_notes = 'Oooohhhh. Looks like {0} is a little bit cooler than {1}. Don\'t forget a backup jacket!'.format(
+                    s_response['name'], e_response['name'])
+            elif e_cur_temp > s_cur_temp:
+                trip_notes = 'Oooohhhh. Looks like {0} is a little bit warmer than {1}. Pack a swimsuit!'.format(
                     s_response['name'], e_response['name'])
 
             context = {

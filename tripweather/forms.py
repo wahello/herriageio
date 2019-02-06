@@ -13,9 +13,9 @@ class EndLocForm(forms.Form):
 
 class TripForm(forms.ModelForm):
     start_loc = forms.CharField(label="", max_length=24, widget=forms.TextInput({
-                                'placeholder': 'Departure Location...'}))
+                                'placeholder': '🏃 Departure Location...'}))
     end_loc = forms.CharField(label="", max_length=24, widget=forms.TextInput({
-                              'placeholder': 'Arrival Location...'}))
+                              'placeholder': '🏁 Destination Location...'}))
 
     class Meta:
         model = Trip

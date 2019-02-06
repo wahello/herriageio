@@ -1,0 +1,104 @@
+{% extends "lunchmunch/base.html" %}
+
+{% block body %}
+    <div class="two-column">
+        <div>
+            <p>{{ user.username }}</p>
+        </div>
+        <div style="text-align: right;">
+            {% if request.user == user %}
+                <p>
+                    <a href="{% url 'account_edit' %}" type="button">Settings</a>
+                    <a href="{% url 'preferences' %}" type="button">Preferences</a>
+                </p>
+            {% else %}
+                <p>
+                    <a href="{% url 'favorite' username=user.username %}" type="button">
+                        {% if user in request.user.profile.favorite_users.all %}❌ Unfavorite{% else %}⭐ Favorite{% endif %}
+                    </a>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+
+    <br><br><br>
+    <div class="two-column">
+        <div class="col">
+            <hr>
+            <div class="two-column">
+                <p>Groups</p>
+                <p style="text-align: right;">
+                    <a href="{% url 'group_form' %}">New Group</a>
+                </p>
+            </div>
+            <hr>
+
+            <div style="overflow-x:auto;">
+                <table style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <tr>
+                        <th style="text-align: left;">Name</th>
+                        <th style="text-align: right;">Event In</th>
+                    </tr>
+
+                    {% if user.profile.has_group %}
+                        {% for group in user.profile.groups %}
+                            <tr>
+                                <td style="text-align: left;">
+                                    <a href="{{ group.get_absolute_url }}">{{ group.name }}</a>
+                                </td>
+                                <td style="text-align: right;">
+                                    <a href="{{ group.get_absolute_url }}">{{ group.next_event.at|timeuntil }}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td style="text-align: left;">No groups yet.</td>
+                            <td></td>
+                        </tr>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+
+        <div class="col">
+            <hr>
+            <div class="two-column">
+                <p>Favorite Users</p>
+            </div>
+            <hr>
+
+            <div style="overflow-x:auto;">
+                <table style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <tr>
+                        <th style="text-align: left;">Name</th>
+                        <th style="text-align: right;">Action</th>
+                    </tr>
+
+                    {% if user.profile.favorite_users.count != 0 %}
+                        {% for user_ in user.profile.favorite_users.all %}
+                            <tr>
+                                <td style="text-align: left;">
+                                    <a href="{{ user_.profile.get_absolute_url }}">{{ user_.username }}</a>
+                                </td>
+                                <td style="text-align: right;">
+                                    {% if request.user == user %}
+                                        <a href="{% url 'favorite' username=user_.username %}" type="button">
+                                            {% if user_ in request.user.profile.favorite_users.all %}❌ Unfavorite{% else %}⭐ Favorite{% endif %}
+                                        </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td style="text-align: left;">No favorites yet.</td>
+                            <td></td>
+                        </tr>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -7,11 +7,13 @@
 	<meta charset="UTF-8">
 	<title>Trip Weather Predictions</title>
 
+	<link rel="icon" data-emoji="🌦️" type="image/png">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<link href='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet' />
 	<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
 	<link href="{% static "tripweather/css/style.css" %}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://use.typekit.net/pvu5szd.css">
 </head>
 <body>
     {% if messages %}
@@ -59,48 +61,24 @@
 					<div class="col-md-12">
 						<form method="POST" action=".">
 							{% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-5">
+                                    <h1>Always Know What To Expect While On A Drive.</h1>
+                                    <p class="lead">Get information about the drive, the stops on the way, and even what the hottest spots are in your destination.</p>
+                                </div>
+                            </div>
+
 							<div class="row">
 								<div class="col-md-12">
 									<div class="row">
 										<div class="col-lg-4 mb-5">
-											<label for="id_start_loc">Where Is Your Journey Starting?</label>
 											{{ trip_form.start_loc|as_crispy_field }}
-											<div class="search-results-container departure">
-												<ul>
-													<li>Coordinates:     <span class="pull-right coordinates">[,]</span></li>
-													<li class="geo-results"></li>
-													<li>Departure Time:</li>
-													<li>Departure Weather:</li>
-													<li>Departures:</li>
-													<li>Rating:</li>
-												</ul>
-											</div>
 										</div>
 										<div class="col-lg-4 mb-5">
-											<label for="id_end_loc">Where Is Your Journey Starting?</label>
 											{{ trip_form.end_loc|as_crispy_field }}
-											<div class="search-results-container">
-												<ul>
-													<li>Coordinates:</li>
-													<li>Arrival Time:</li>
-													<li>Arrival Weather:</li>
-													<li>Arrivals:</li>
-													<li>Rating:</li>
-												</ul>
-											</div>
 										</div>
 										<div class="col-lg-4 mb-5">
-											<label>Let's See How It Looks</label>
-											<button type="submit" class="btn btn-primary form-btn btn-block mb-3" style="margin-top: 0px;">Check Weather</button>
-											<div class="search-results-container">
-												<ul>
-													<li>Distance:</li>
-													<li>Travel Time:</li>
-													<li>Trip Weather:</li>
-													<li>Trips:</li>
-													<li>Rating:</li>
-												</ul>
-											</div>											
+											<button type="submit" class="btn btn-primary form-btn btn-block mb-3" style="margin-top: 0px;">See Drive</button>
 										</div>
 									</div>
 								</div>
@@ -115,34 +93,35 @@
 			<div id='map'></div>
 		
 			<div class="sidebar">
-				<div class="collapser"><i class="fa fa-chevron-left"></i></div>
-				<div class="results duration">
-					<p class="mb-0">Duration:</p>
-					<h5>{{ duration }}</h5>
-				</div>
+                <div class="content">
+                    <div class="collapser"><i class="fa fa-chevron-left"></i></div>
+                    <div class="results duration">
+                        <p class="mb-0">Duration:</p>
+                        <h5>{{ duration }}</h5>
+                    </div>
 
-				<div class="results departure">
-					<p class="mb-0">Departure <span class="pull-right">{{ s_cur_temp }}</span></p>
-					<h3 class="departure-name mb-0">{{ s_response.name }}</h3>	
-				</div>
+                    <div class="results departure">
+                        <p class="mb-0">Departure <span class="pull-right">{{ s_cur_temp }}</span></p>
+                        <h3 class="departure-name mb-0">{{ s_response.name }}</h3>	
+                    </div>
 
-				<div class="notes">
-					<p class="mb-0 small">{{ trip_notes|safe }}</p>
-					<h5 class="mb-0 small pull-right mt-1">- TripWeather</h5>
-				</div>
+                    <div class="notes">
+                        <p class="mb-0 small">{{ trip_notes|safe }}</p>
+                        <h5 class="mb-0 small mt-1"><br>- TripWeather</h5>
+                    </div>
 
-				<div class="results arrival">
-					<p class="mb-0">Arrival  <span class="pull-right">{{ e_cur_temp }}</span></p>
-					<h3 class="arrival-name mb-0">{{ e_response.name }}</h3>
-				</div>
+                    <div class="results arrival">
+                        <p class="mb-0">Arrival  <span class="pull-right">{{ e_cur_temp }}</span></p>
+                        <h3 class="arrival-name mb-0">{{ e_response.name }}</h3>
+                    </div>                
+                </div>
 			</div>
 
 			<div class="header">
 				<div class="content">
 					<div class="d-flex">
 						<div class="p-2 title">
-							<p class="mb-0">Provided By:</p>
-							<h5>TripWeather</h5>
+							<h5><a href="{% url 'check_weather' %}">🌦️ TripWeather</a></h5>
 						</div>
 
 						<div class="mr-auto p-2">
@@ -174,13 +153,33 @@
 	<script src='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
 
 	<script>
-                   {% if s_response and e_response %}
+		const favicon = document.querySelector("link[rel=icon]");
+
+		if (favicon) {
+		  const emoji = favicon.getAttribute("data-emoji");
+
+		  if (emoji) {
+		    const canvas = document.createElement("canvas");
+		    canvas.height = 64;
+		    canvas.width = 64;
+
+		    const ctx = canvas.getContext("2d");
+		    ctx.font = "64px serif";
+		    ctx.fillText(emoji, 0, 64);
+
+		    favicon.href = canvas.toDataURL();
+		  }
+		}
+	</script>
+
+	<script>
+    {% if s_response and e_response %}
         mapboxgl.accessToken = 'pk.eyJ1IjoiY2hhbmNlaGVycmlhZ2UiLCJhIjoiY2pqdGdyZGM3MzZlcjN3cXE4bDVsb3hjdSJ9.3SfOp7dq5RDZLgUPp05HqQ';
         var map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/chanceherriage/cjjuwazde4oj82rqng1qwinmz',
             center: ['{{ center_lon }}', '{{ center_lat }}'],
-            zoom: 7, // starting zoom
+            zoom: 4, // starting zoom
             localIdeographFontFamily: "'Proxima Nova', sans-serif",
         });
 
@@ -191,7 +190,7 @@
         function getRoute() {
             var start = ['{{ s_response.coord.lon }}', '{{ s_response.coord.lat }}'];
             var end = ['{{ e_response.coord.lon }}', '{{ e_response.coord.lat }}'];
-            var directionsRequest = 'https://api.mapbox.com/directions/v5/mapbox/cycling/' + start[0] + ',' + start[1] + ';' + end[0] + ',' + end[1] + '?geometries=geojson&access_token=' + mapboxgl.accessToken;
+            var directionsRequest = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + start[0] + ',' + start[1] + ';' + end[0] + ',' + end[1] + '?geometries=geojson&access_token=' + mapboxgl.accessToken;
             $.ajax({
                 method: 'GET',
                 url: directionsRequest,
@@ -217,7 +216,7 @@
                 var distanceSoFar = 0;
 
                 var waypoints = [];
-                for (var s = 0; s < route.steps.length; s++) {
+               /* for (var s = 0; s < route.steps.length; s++) {
                     //duration and distance of current step
                     var duration = route.steps[s].duration;
                     var distance = route.steps[s].distance;
@@ -239,159 +238,160 @@
                     }
 
                     console.log(route);
+                }        */        
 
-                    // this is where the code from the next step will go 
-                    var geojson = {
-                        type: 'FeatureCollection',
-                        features: [{
-                                type: 'Feature',
-                                geometry: {
-                                    type: 'Point',
-                                    coordinates: [start[0], start[1]]
-                                },
-                                properties: {
-                                    title: 'Mapbox',
-                                    description: '{{ s_response.name }}'
-                                }
+                
+                // JSON objects of the start and end point markers
+                var geojson = {
+                    type: 'FeatureCollection',
+                    features: [{
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [start[0], start[1]]
                             },
-                            {
-                                type: 'Feature',
-                                geometry: {
-                                    type: 'Point',
-                                    coordinates: [end[0], end[1]]
-                                },
-                                properties: {
-                                    title: 'Mapbox',
-                                    description: '{{ e_response.name }}'
-                                }
+                            properties: {
+                                title: 'Mapbox',
+                                description: '{{ s_response.name }}'
                             }
-                        ]
-                    };
-
-                    // add markers to map
-                    geojson.features.forEach(function (marker) {
-
-                        // create a HTML element for each feature
-                        var el = document.createElement('div');
-                        el.className = 'marker';
-
-                        // make a marker for each feature and add to the map
-                        new mapboxgl.Marker(el)
-                            .setLngLat(marker.geometry.coordinates)
-                            .addTo(map);
-
-                        new mapboxgl.Marker(el)
-                            .setLngLat(marker.geometry.coordinates)
-                            .setPopup(new mapboxgl.Popup({
-                                    offset: 25
-                                }) // add popups
-                                .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
-                            .addTo(map);
-                    });
-									}
-                });
-            };
-
-            $(".collapser").click(function (e) {
-                $('.content-container').toggleClass('maxed');
-            });
-
-            $("#save_link").click(function (e) {
-                {% if trip %}
-                    var unique_id = '{{ trip.unique_id }}'
-                {% else %}
-                    var unique_id = null
-                {% endif %}
-
-                if ($(this).hasClass('text-success')) {
-                    if ($("#id_trip_name").val().length != 0 && $("#id_trip_name").val() != "{{ trip.name }}") {
-
-                        if (unique_id != null) {
-                            data = {
-                                'unique_id': unique_id,
-                                'trip_name': $("#id_trip_name").val(),
-                                'start_loc': $(".departure-name").html(),
-                                'end_loc': $(".arrival-name").html(),
-                            }
-                        } else {
-                            data = {
-                                'trip_name': $("#id_trip_name").val(),
-                                'start_loc': $(".departure-name").html(),
-                                'end_loc': $(".arrival-name").html(),
+                        },
+                        {
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [end[0], end[1]]
+                            },
+                            properties: {
+                                title: 'Mapbox',
+                                description: '{{ e_response.name }}'
                             }
                         }
+                    ]
+                };
 
-                        $.ajax({
-                            url: '/save/',
-                            data: data,
-                            dataType: 'json',
-                            success: function (data) {
-                                console.log(data)
-                                window.location.replace(data.url);
-                            }
-                        });
-                    }
+                // Loop through the two markers that were just created and add them to the map with a hover tag
+                geojson.features.forEach(function(marker) {
 
-                    $("#trip_name").css('width', '0');
-                    $("#trip_name").css('display', 'none');
-                    $(this).html('<i class="fa fa-save"></i> Save');
-                    $(this).removeClass('text-success');
-                } else {
-                    $("#trip_name").css('width', '18%');
-                    $("#trip_name").css('display', 'inline-flex');
+                    // create a HTML element for each feature
+                    var el = document.createElement('div');
+                    el.className = 'marker';
 
-                    $(this).html('<i class="fa fa-check"></i> Confirm');
-                    $(this).addClass('text-success');
-                }
-            });
+                    // make a marker for each feature and add to the map
+                    new mapboxgl.Marker(el)
+                        .setLngLat(marker.geometry.coordinates)
+                        .addTo(map);
 
-            $(".centerer").click(function (e) {
-                e.preventDefault();
-                map.flyTo({
-                    center: ['{{ center_lon }}', '{{ center_lat }}'],
-                    zoom: 7,
+                    new mapboxgl.Marker(el)
+                        .setLngLat(marker.geometry.coordinates)
+                        .setPopup(new mapboxgl.Popup({
+                                offset: 25
+                            }) // add popups
+                            .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+                        .addTo(map);
                 });
             });
+        }
 
+        $(".collapser").click(function (e) {
+            $('.content-container').toggleClass('maxed');
+        });
+
+        $("#save_link").click(function (e) {
             {% if trip %}
-                $("#id_trip_name").val('{{ trip.name }}')
+                var unique_id = '{{ trip.unique_id }}'
+            {% else %}
+                var unique_id = null
             {% endif %}
 
-            var modalConfirm = function (callback) {
-                $("#delete_link").on("click", function (e) {
-                    e.preventDefault();
-                    $("#mi-modal").modal('show');
-                });
+            if ($(this).hasClass('text-success')) {
+                if ($("#id_trip_name").val().length != 0 && $("#id_trip_name").val() != "{{ trip.name }}") {
 
-                $("#modal-btn-si").on("click", function () {
-                    callback(true);
-                    $("#mi-modal").modal('hide');
-                });
+                    if (unique_id != null) {
+                        data = {
+                            'unique_id': unique_id,
+                            'trip_name': $("#id_trip_name").val(),
+                            'start_loc': $(".departure-name").html(),
+                            'end_loc': $(".arrival-name").html(),
+                        }
+                    } else {
+                        data = {
+                            'trip_name': $("#id_trip_name").val(),
+                            'start_loc': $(".departure-name").html(),
+                            'end_loc': $(".arrival-name").html(),
+                        }
+                    }
 
-                $("#modal-btn-no").on("click", function () {
-                    callback(false);
-                    $("#mi-modal").modal('hide');
-                });
-            };
-
-            modalConfirm(function (confirm) {
-                if (confirm) {
-                    console.log('should delete');
-                } else {
-                    console.log('cancel delete');
-                }
-            });
-        {% else %}
-            if ($('#id_start_loc').val().length == 0) {
-                if ("geolocation" in navigator) { //check geolocation available 
-                    navigator.geolocation.getCurrentPosition(function (position) {
-                        $('.departure').find('.coordinates').html("[" + (position.coords.latitude).toFixed(2) + "," + (position.coords.longitude).toFixed(2) + "]");
+                    $.ajax({
+                        url: '/save/',
+                        data: data,
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log(data)
+                            window.location.replace(data.url);
+                        }
                     });
-                } else {
-                    console.log("Browser doesn't support geolocation!");
                 }
+
+                $("#trip_name").css('width', '0');
+                $("#trip_name").css('display', 'none');
+                $(this).html('<i class="fa fa-save"></i> Save');
+                $(this).removeClass('text-success');
+            } else {
+                $("#trip_name").css('width', '18%');
+                $("#trip_name").css('display', 'inline-flex');
+
+                $(this).html('<i class="fa fa-check"></i> Confirm');
+                $(this).addClass('text-success');
             }
+        });
+
+        $(".centerer").click(function (e) {
+            e.preventDefault();
+            map.flyTo({
+                center: ['{{ center_lon }}', '{{ center_lat }}'],
+                zoom: 7,
+            });
+        });
+
+        {% if trip %}
+            $("#id_trip_name").val('{{ trip.name }}')
         {% endif %}
+
+        var modalConfirm = function (callback) {
+            $("#delete_link").on("click", function (e) {
+                e.preventDefault();
+                $("#mi-modal").modal('show');
+            });
+
+            $("#modal-btn-si").on("click", function () {
+                callback(true);
+                $("#mi-modal").modal('hide');
+            });
+
+            $("#modal-btn-no").on("click", function () {
+                callback(false);
+                $("#mi-modal").modal('hide');
+            });
+        };
+
+        modalConfirm(function (confirm) {
+            if (confirm) {
+                console.log('should delete');
+            } else {
+                console.log('cancel delete');
+            }
+        });
+    {% else %}
+        if ($('#id_start_loc').val().length == 0) {
+            if ("geolocation" in navigator) { //check geolocation available 
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    $('.departure').find('.coordinates').html("[" + (position.coords.latitude).toFixed(2) + "," + (position.coords.longitude).toFixed(2) + "]");
+                });
+            } else {
+                console.log("Browser doesn't support geolocation!");
+            }
+        }
+    {% endif %}
 	</script>
 </body>
 </html>
