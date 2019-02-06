@@ -1,5 +1,7 @@
+{% extends 'herriageio/page_template.html' %}
 {% load staticfiles %}
 
+{% block app_base %}
 <html>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -58,3 +60,4 @@
         {% block scripts %}{% endblock %}
     </body>
 </html>
+{% endblock app_base %}

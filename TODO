@@ -1,2 +1,10 @@
-☐ Make all profiles connected across Herriage.io and not in an independent app.
-    ☐ We will likely need to create a 'profiles' app that will house all the information for all the users.
+Consolidate herriage.io profiles:
+    ☐ Make all profiles connected across Herriage.io and not in an independent app.
+        ☐ We will likely need to create a 'profiles' app that will house all the information for all the users.
+            ☐ We already have `profile_handling` app
+
+    Note:
+        I am almost positive that every single app currently has their own set of profiles. We need a way to easily sort the data from the app. Perhaps something with the way with of using `app_label` -- Not sure this is really weird.
+
+
+☐ Change the icon for Birthdate to party horn

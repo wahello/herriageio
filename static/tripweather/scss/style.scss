@@ -1,5 +1,9 @@
 $black: #292929;
 
+html {
+	z-index: 98;
+}
+
 body {
 	font-family: elido, sans-serif;
 	-webkit-font-smoothing: antialiased;

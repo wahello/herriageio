@@ -1,397 +1,400 @@
+{% extends 'herriageio/page_template.html' %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Trip Weather Predictions</title>
+{% block app_base %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Trip Weather Predictions</title>
 
-	<link rel="icon" data-emoji="🌦️" type="image/png">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link href='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet' />
-	<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
-	<link href="{% static "tripweather/css/style.css" %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="https://use.typekit.net/pvu5szd.css">
-</head>
-<body>
-    {% if messages %}
-	    <div class="col-md-12 messages-bar">
-            <ul class="messages">
-            {% for message in messages %}
-                <li {% if message.tags %} class="{{message.tags}}"{% endif %}>{{message}}</li>
-            {% endfor %}
-            </ul>
-	    </div>
-    {% endif %}
-
-	{% if trip %}		
-	    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
-		  <div class="modal-dialog modal-sm">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
-		      </div>
-		      <div class="modal-footer">
-		      	<p>Are you sure you want to delete this trip? Please type in the exact name of the trip and click confirm.</p>
-		      	{{ trip.unique_id }}
-		      	<div class="container-fluid">
-		      		<div class="row">
-	      				<div class="col-md-6">
-			        		<a href="{% url 'delete_trip' unique_id=trip.unique_id %}" class="btn btn-danger btn-block" id="modal-btn-si">Confirm</a>
-			      		</div>
-			      		<div class="col-md-6">
-					        <button type="button" class="btn btn-secondary btn-block" id="modal-btn-no">Cancel</button>
-			      		</div>	
-		      		</div>
-		      	</div>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-	{% endif %}
-
-	{% if not s_response and not e_response %}
-		<div class="form">
-			<div class="form-background"></div>
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
-						<form method="POST" action=".">
-							{% csrf_token %}
-                            <div class="row">
-                                <div class="col-md-6 mb-5">
-                                    <h1>Always Know What To Expect While On A Drive.</h1>
-                                    <p class="lead">Get information about the drive, the stops on the way, and even what the hottest spots are in your destination.</p>
-                                </div>
-                            </div>
-
-							<div class="row">
-								<div class="col-md-12">
-									<div class="row">
-										<div class="col-lg-4 mb-5">
-											{{ trip_form.start_loc|as_crispy_field }}
-										</div>
-										<div class="col-lg-4 mb-5">
-											{{ trip_form.end_loc|as_crispy_field }}
-										</div>
-										<div class="col-lg-4 mb-5">
-											<button type="submit" class="btn btn-primary form-btn btn-block mb-3" style="margin-top: 0px;">See Drive</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</form>		
-					</div>
-				</div>
-			</div>
-		</div>
-	{% else %}
-		<div class="content-container">
-			<div id='map'></div>
-		
-			<div class="sidebar">
-                <div class="content">
-                    <div class="collapser"><i class="fa fa-chevron-left"></i></div>
-                    <div class="results duration">
-                        <p class="mb-0">Duration:</p>
-                        <h5>{{ duration }}</h5>
-                    </div>
-
-                    <div class="results departure">
-                        <p class="mb-0">Departure <span class="pull-right">{{ s_cur_temp }}</span></p>
-                        <h3 class="departure-name mb-0">{{ s_response.name }}</h3>	
-                    </div>
-
-                    <div class="notes">
-                        <p class="mb-0 small">{{ trip_notes|safe }}</p>
-                        <h5 class="mb-0 small mt-1"><br>- TripWeather</h5>
-                    </div>
-
-                    <div class="results arrival">
-                        <p class="mb-0">Arrival  <span class="pull-right">{{ e_cur_temp }}</span></p>
-                        <h3 class="arrival-name mb-0">{{ e_response.name }}</h3>
-                    </div>                
-                </div>
-			</div>
-
-			<div class="header">
-				<div class="content">
-					<div class="d-flex">
-						<div class="p-2 title">
-							<h5><a href="{% url 'check_weather' %}">🌦️ TripWeather</a></h5>
-						</div>
-
-						<div class="mr-auto p-2">
-							<a href="#" class="centerer"><i class="fa fa-bullseye"></i> Center</a>
-						</div>
-						<div class="ml-auto p-2">
-							<a href="{% url 'check_weather' %}" class="text-warning"><i class="fa fa-plus"></i> New</a>
-						</div>			
-						<div class="p-2" id="trip_name">
-							<input type="text" id="id_trip_name" class="form-control" placeholder="Trip Name...">
-						</div>
-						<div class="p-2">
-							<a id="save_link"><i class="fa fa-save"></i> Save</a>
-						</div>
-						{% if trip %}
-							<div class="p-2">
-								<a href="#" id="delete_link" class="text-danger"><i class="fa fa-trash"></i> Delete</a>
-							</div>
-						{% endif %}
-					</div>
-				</div>
-			</div>
-		</div>
-	{% endif %}
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-	<script src='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
-
-	<script>
-		const favicon = document.querySelector("link[rel=icon]");
-
-		if (favicon) {
-		  const emoji = favicon.getAttribute("data-emoji");
-
-		  if (emoji) {
-		    const canvas = document.createElement("canvas");
-		    canvas.height = 64;
-		    canvas.width = 64;
-
-		    const ctx = canvas.getContext("2d");
-		    ctx.font = "64px serif";
-		    ctx.fillText(emoji, 0, 64);
-
-		    favicon.href = canvas.toDataURL();
-		  }
-		}
-	</script>
-
-	<script>
-    {% if s_response and e_response %}
-        mapboxgl.accessToken = 'pk.eyJ1IjoiY2hhbmNlaGVycmlhZ2UiLCJhIjoiY2pqdGdyZGM3MzZlcjN3cXE4bDVsb3hjdSJ9.3SfOp7dq5RDZLgUPp05HqQ';
-        var map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/chanceherriage/cjjuwazde4oj82rqng1qwinmz',
-            center: ['{{ center_lon }}', '{{ center_lat }}'],
-            zoom: 4, // starting zoom
-            localIdeographFontFamily: "'Proxima Nova', sans-serif",
-        });
-
-        map.on('load', function () {
-            getRoute();
-        });
-
-        function getRoute() {
-            var start = ['{{ s_response.coord.lon }}', '{{ s_response.coord.lat }}'];
-            var end = ['{{ e_response.coord.lon }}', '{{ e_response.coord.lat }}'];
-            var directionsRequest = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + start[0] + ',' + start[1] + ';' + end[0] + ',' + end[1] + '?geometries=geojson&access_token=' + mapboxgl.accessToken;
-            $.ajax({
-                method: 'GET',
-                url: directionsRequest,
-            }).done(function (data) {
-                var route = data.routes[0].geometry;
-                map.addLayer({
-                    id: 'route',
-                    type: 'line',
-                    source: {
-                        type: 'geojson',
-                        data: {
-                            type: 'Feature',
-                            geometry: route
-                        }
-                    },
-                    paint: {
-                        'line-width': 4,
-                        "line-color": "#A044FF",
-                    }
-                });
-
-                var timeSoFar = 0;
-                var distanceSoFar = 0;
-
-                var waypoints = [];
-               /* for (var s = 0; s < route.steps.length; s++) {
-                    //duration and distance of current step
-                    var duration = route.steps[s].duration;
-                    var distance = route.steps[s].distance;
-
-                    var newWaypointsNeeded = Math.floor((timeSoFar + duration) / timeInterval) - Math.floor(timeSoFar / timeInterval);
-
-                    // if passed a timeInterval threshold, drop a marker there
-                    for (var w = 0; w < newWaypointsNeeded; w++) {
-
-                        var timeToNextWaypoint = timeInterval - (timeSoFar % timeInterval) + w * timeInterval;
-
-                        var remainingDistance = route.steps[s].distance * timeToNextWaypoint / duration;
-
-                        var currentPt = turf.along(route.geometry, (distanceSoFar + remainingDistance) / 1000, 'kilometers');
-                        var seconds = (1 + w + Math.floor(timeSoFar / timeInterval)) * timeInterval;
-                        currentPt.properties.time = seconds < 3600 ? seconds / 60 + 'min' : (seconds % 3600 > 0 ? Math.floor(seconds / 3600) + ':' + (seconds % 3600) / 60 : Math.floor(seconds / 3600) + 'h')
-
-                        waypoints.push(currentPt)
-                    }
-
-                    console.log(route);
-                }        */        
-
-                
-                // JSON objects of the start and end point markers
-                var geojson = {
-                    type: 'FeatureCollection',
-                    features: [{
-                            type: 'Feature',
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [start[0], start[1]]
-                            },
-                            properties: {
-                                title: 'Mapbox',
-                                description: '{{ s_response.name }}'
-                            }
-                        },
-                        {
-                            type: 'Feature',
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [end[0], end[1]]
-                            },
-                            properties: {
-                                title: 'Mapbox',
-                                description: '{{ e_response.name }}'
-                            }
-                        }
-                    ]
-                };
-
-                // Loop through the two markers that were just created and add them to the map with a hover tag
-                geojson.features.forEach(function(marker) {
-
-                    // create a HTML element for each feature
-                    var el = document.createElement('div');
-                    el.className = 'marker';
-
-                    // make a marker for each feature and add to the map
-                    new mapboxgl.Marker(el)
-                        .setLngLat(marker.geometry.coordinates)
-                        .addTo(map);
-
-                    new mapboxgl.Marker(el)
-                        .setLngLat(marker.geometry.coordinates)
-                        .setPopup(new mapboxgl.Popup({
-                                offset: 25
-                            }) // add popups
-                            .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
-                        .addTo(map);
-                });
-            });
-        }
-
-        $(".collapser").click(function (e) {
-            $('.content-container').toggleClass('maxed');
-        });
-
-        $("#save_link").click(function (e) {
-            {% if trip %}
-                var unique_id = '{{ trip.unique_id }}'
-            {% else %}
-                var unique_id = null
-            {% endif %}
-
-            if ($(this).hasClass('text-success')) {
-                if ($("#id_trip_name").val().length != 0 && $("#id_trip_name").val() != "{{ trip.name }}") {
-
-                    if (unique_id != null) {
-                        data = {
-                            'unique_id': unique_id,
-                            'trip_name': $("#id_trip_name").val(),
-                            'start_loc': $(".departure-name").html(),
-                            'end_loc': $(".arrival-name").html(),
-                        }
-                    } else {
-                        data = {
-                            'trip_name': $("#id_trip_name").val(),
-                            'start_loc': $(".departure-name").html(),
-                            'end_loc': $(".arrival-name").html(),
-                        }
-                    }
-
-                    $.ajax({
-                        url: '/save/',
-                        data: data,
-                        dataType: 'json',
-                        success: function (data) {
-                            console.log(data)
-                            window.location.replace(data.url);
-                        }
-                    });
-                }
-
-                $("#trip_name").css('width', '0');
-                $("#trip_name").css('display', 'none');
-                $(this).html('<i class="fa fa-save"></i> Save');
-                $(this).removeClass('text-success');
-            } else {
-                $("#trip_name").css('width', '18%');
-                $("#trip_name").css('display', 'inline-flex');
-
-                $(this).html('<i class="fa fa-check"></i> Confirm');
-                $(this).addClass('text-success');
-            }
-        });
-
-        $(".centerer").click(function (e) {
-            e.preventDefault();
-            map.flyTo({
-                center: ['{{ center_lon }}', '{{ center_lat }}'],
-                zoom: 7,
-            });
-        });
-
-        {% if trip %}
-            $("#id_trip_name").val('{{ trip.name }}')
+        <link rel="icon" data-emoji="🌦️" type="image/png">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link href='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet' />
+        <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+        <link href="{% static "tripweather/css/style.css" %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://use.typekit.net/pvu5szd.css">
+    </head>
+    <body>
+        {% if messages %}
+            <div class="col-md-12 messages-bar">
+                <ul class="messages">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{message.tags}}"{% endif %}>{{message}}</li>
+                {% endfor %}
+                </ul>
+            </div>
         {% endif %}
 
-        var modalConfirm = function (callback) {
-            $("#delete_link").on("click", function (e) {
-                e.preventDefault();
-                $("#mi-modal").modal('show');
-            });
+        {% if trip %}		
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                </div>
+                <div class="modal-footer">
+                    <p>Are you sure you want to delete this trip? Please type in the exact name of the trip and click confirm.</p>
+                    {{ trip.unique_id }}
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="{% url 'delete_trip' unique_id=trip.unique_id %}" class="btn btn-danger btn-block" id="modal-btn-si">Confirm</a>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-secondary btn-block" id="modal-btn-no">Cancel</button>
+                            </div>	
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        {% endif %}
 
-            $("#modal-btn-si").on("click", function () {
-                callback(true);
-                $("#mi-modal").modal('hide');
-            });
+        {% if not s_response and not e_response %}
+            <div class="form">
+                <div class="form-background"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form method="POST" action=".">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6 mb-5">
+                                        <h1>Always Know What To Expect While On A Drive.</h1>
+                                        <p class="lead">Get information about the drive, the stops on the way, and even what the hottest spots are in your destination.</p>
+                                    </div>
+                                </div>
 
-            $("#modal-btn-no").on("click", function () {
-                callback(false);
-                $("#mi-modal").modal('hide');
-            });
-        };
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-lg-4 mb-5">
+                                                {{ trip_form.start_loc|as_crispy_field }}
+                                            </div>
+                                            <div class="col-lg-4 mb-5">
+                                                {{ trip_form.end_loc|as_crispy_field }}
+                                            </div>
+                                            <div class="col-lg-4 mb-5">
+                                                <button type="submit" class="btn btn-primary form-btn btn-block mb-3" style="margin-top: 0px;">See Drive</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>		
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="content-container">
+                <div id='map'></div>
+            
+                <div class="sidebar">
+                    <div class="content">
+                        <div class="collapser"><i class="fa fa-chevron-left"></i></div>
+                        <div class="results duration">
+                            <p class="mb-0">Duration:</p>
+                            <h5>{{ duration }}</h5>
+                        </div>
 
-        modalConfirm(function (confirm) {
-            if (confirm) {
-                console.log('should delete');
-            } else {
-                console.log('cancel delete');
+                        <div class="results departure">
+                            <p class="mb-0">Departure <span class="pull-right">{{ s_cur_temp }}</span></p>
+                            <h3 class="departure-name mb-0">{{ s_response.name }}</h3>	
+                        </div>
+
+                        <div class="notes">
+                            <p class="mb-0 small">{{ trip_notes|safe }}</p>
+                            <h5 class="mb-0 small mt-1"><br>- TripWeather</h5>
+                        </div>
+
+                        <div class="results arrival">
+                            <p class="mb-0">Arrival  <span class="pull-right">{{ e_cur_temp }}</span></p>
+                            <h3 class="arrival-name mb-0">{{ e_response.name }}</h3>
+                        </div>                
+                    </div>
+                </div>
+
+                <div class="header">
+                    <div class="content">
+                        <div class="d-flex">
+                            <div class="p-2 title">
+                                <h5><a href="{% url 'check_weather' %}">🌦️ TripWeather</a></h5>
+                            </div>
+
+                            <div class="mr-auto p-2">
+                                <a href="#" class="centerer"><i class="fa fa-bullseye"></i> Center</a>
+                            </div>
+                            <div class="ml-auto p-2">
+                                <a href="{% url 'check_weather' %}" class="text-warning"><i class="fa fa-plus"></i> New</a>
+                            </div>			
+                            <div class="p-2" id="trip_name">
+                                <input type="text" id="id_trip_name" class="form-control" placeholder="Trip Name...">
+                            </div>
+                            <div class="p-2">
+                                <a id="save_link"><i class="fa fa-save"></i> Save</a>
+                            </div>
+                            {% if trip %}
+                                <div class="p-2">
+                                    <a href="#" id="delete_link" class="text-danger"><i class="fa fa-trash"></i> Delete</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <script src='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
+
+        <script>
+            const favicon = document.querySelector("link[rel=icon]");
+
+            if (favicon) {
+            const emoji = favicon.getAttribute("data-emoji");
+
+            if (emoji) {
+                const canvas = document.createElement("canvas");
+                canvas.height = 64;
+                canvas.width = 64;
+
+                const ctx = canvas.getContext("2d");
+                ctx.font = "64px serif";
+                ctx.fillText(emoji, 0, 64);
+
+                favicon.href = canvas.toDataURL();
             }
-        });
-    {% else %}
-        if ($('#id_start_loc').val().length == 0) {
-            if ("geolocation" in navigator) { //check geolocation available 
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    $('.departure').find('.coordinates').html("[" + (position.coords.latitude).toFixed(2) + "," + (position.coords.longitude).toFixed(2) + "]");
+            }
+        </script>
+
+        <script>
+        {% if s_response and e_response %}
+            mapboxgl.accessToken = 'pk.eyJ1IjoiY2hhbmNlaGVycmlhZ2UiLCJhIjoiY2pqdGdyZGM3MzZlcjN3cXE4bDVsb3hjdSJ9.3SfOp7dq5RDZLgUPp05HqQ';
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/chanceherriage/cjjuwazde4oj82rqng1qwinmz',
+                center: ['{{ center_lon }}', '{{ center_lat }}'],
+                zoom: 4, // starting zoom
+                localIdeographFontFamily: "'Proxima Nova', sans-serif",
+            });
+
+            map.on('load', function () {
+                getRoute();
+            });
+
+            function getRoute() {
+                var start = ['{{ s_response.coord.lon }}', '{{ s_response.coord.lat }}'];
+                var end = ['{{ e_response.coord.lon }}', '{{ e_response.coord.lat }}'];
+                var directionsRequest = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + start[0] + ',' + start[1] + ';' + end[0] + ',' + end[1] + '?geometries=geojson&access_token=' + mapboxgl.accessToken;
+                $.ajax({
+                    method: 'GET',
+                    url: directionsRequest,
+                }).done(function (data) {
+                    var route = data.routes[0].geometry;
+                    map.addLayer({
+                        id: 'route',
+                        type: 'line',
+                        source: {
+                            type: 'geojson',
+                            data: {
+                                type: 'Feature',
+                                geometry: route
+                            }
+                        },
+                        paint: {
+                            'line-width': 4,
+                            "line-color": "#A044FF",
+                        }
+                    });
+
+                    var timeSoFar = 0;
+                    var distanceSoFar = 0;
+
+                    var waypoints = [];
+                /* for (var s = 0; s < route.steps.length; s++) {
+                        //duration and distance of current step
+                        var duration = route.steps[s].duration;
+                        var distance = route.steps[s].distance;
+
+                        var newWaypointsNeeded = Math.floor((timeSoFar + duration) / timeInterval) - Math.floor(timeSoFar / timeInterval);
+
+                        // if passed a timeInterval threshold, drop a marker there
+                        for (var w = 0; w < newWaypointsNeeded; w++) {
+
+                            var timeToNextWaypoint = timeInterval - (timeSoFar % timeInterval) + w * timeInterval;
+
+                            var remainingDistance = route.steps[s].distance * timeToNextWaypoint / duration;
+
+                            var currentPt = turf.along(route.geometry, (distanceSoFar + remainingDistance) / 1000, 'kilometers');
+                            var seconds = (1 + w + Math.floor(timeSoFar / timeInterval)) * timeInterval;
+                            currentPt.properties.time = seconds < 3600 ? seconds / 60 + 'min' : (seconds % 3600 > 0 ? Math.floor(seconds / 3600) + ':' + (seconds % 3600) / 60 : Math.floor(seconds / 3600) + 'h')
+
+                            waypoints.push(currentPt)
+                        }
+
+                        console.log(route);
+                    }        */        
+
+                    
+                    // JSON objects of the start and end point markers
+                    var geojson = {
+                        type: 'FeatureCollection',
+                        features: [{
+                                type: 'Feature',
+                                geometry: {
+                                    type: 'Point',
+                                    coordinates: [start[0], start[1]]
+                                },
+                                properties: {
+                                    title: 'Mapbox',
+                                    description: '{{ s_response.name }}'
+                                }
+                            },
+                            {
+                                type: 'Feature',
+                                geometry: {
+                                    type: 'Point',
+                                    coordinates: [end[0], end[1]]
+                                },
+                                properties: {
+                                    title: 'Mapbox',
+                                    description: '{{ e_response.name }}'
+                                }
+                            }
+                        ]
+                    };
+
+                    // Loop through the two markers that were just created and add them to the map with a hover tag
+                    geojson.features.forEach(function(marker) {
+
+                        // create a HTML element for each feature
+                        var el = document.createElement('div');
+                        el.className = 'marker';
+
+                        // make a marker for each feature and add to the map
+                        new mapboxgl.Marker(el)
+                            .setLngLat(marker.geometry.coordinates)
+                            .addTo(map);
+
+                        new mapboxgl.Marker(el)
+                            .setLngLat(marker.geometry.coordinates)
+                            .setPopup(new mapboxgl.Popup({
+                                    offset: 25
+                                }) // add popups
+                                .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+                            .addTo(map);
+                    });
                 });
-            } else {
-                console.log("Browser doesn't support geolocation!");
             }
-        }
-    {% endif %}
-	</script>
-</body>
-</html>
+
+            $(".collapser").click(function (e) {
+                $('.content-container').toggleClass('maxed');
+            });
+
+            $("#save_link").click(function (e) {
+                {% if trip %}
+                    var unique_id = '{{ trip.unique_id }}'
+                {% else %}
+                    var unique_id = null
+                {% endif %}
+
+                if ($(this).hasClass('text-success')) {
+                    if ($("#id_trip_name").val().length != 0 && $("#id_trip_name").val() != "{{ trip.name }}") {
+
+                        if (unique_id != null) {
+                            data = {
+                                'unique_id': unique_id,
+                                'trip_name': $("#id_trip_name").val(),
+                                'start_loc': $(".departure-name").html(),
+                                'end_loc': $(".arrival-name").html(),
+                            }
+                        } else {
+                            data = {
+                                'trip_name': $("#id_trip_name").val(),
+                                'start_loc': $(".departure-name").html(),
+                                'end_loc': $(".arrival-name").html(),
+                            }
+                        }
+
+                        $.ajax({
+                            url: '/save/',
+                            data: data,
+                            dataType: 'json',
+                            success: function (data) {
+                                console.log(data)
+                                window.location.replace(data.url);
+                            }
+                        });
+                    }
+
+                    $("#trip_name").css('width', '0');
+                    $("#trip_name").css('display', 'none');
+                    $(this).html('<i class="fa fa-save"></i> Save');
+                    $(this).removeClass('text-success');
+                } else {
+                    $("#trip_name").css('width', '18%');
+                    $("#trip_name").css('display', 'inline-flex');
+
+                    $(this).html('<i class="fa fa-check"></i> Confirm');
+                    $(this).addClass('text-success');
+                }
+            });
+
+            $(".centerer").click(function (e) {
+                e.preventDefault();
+                map.flyTo({
+                    center: ['{{ center_lon }}', '{{ center_lat }}'],
+                    zoom: 7,
+                });
+            });
+
+            {% if trip %}
+                $("#id_trip_name").val('{{ trip.name }}')
+            {% endif %}
+
+            var modalConfirm = function (callback) {
+                $("#delete_link").on("click", function (e) {
+                    e.preventDefault();
+                    $("#mi-modal").modal('show');
+                });
+
+                $("#modal-btn-si").on("click", function () {
+                    callback(true);
+                    $("#mi-modal").modal('hide');
+                });
+
+                $("#modal-btn-no").on("click", function () {
+                    callback(false);
+                    $("#mi-modal").modal('hide');
+                });
+            };
+
+            modalConfirm(function (confirm) {
+                if (confirm) {
+                    console.log('should delete');
+                } else {
+                    console.log('cancel delete');
+                }
+            });
+        {% else %}
+            if ($('#id_start_loc').val().length == 0) {
+                if ("geolocation" in navigator) { //check geolocation available 
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        $('.departure').find('.coordinates').html("[" + (position.coords.latitude).toFixed(2) + "," + (position.coords.longitude).toFixed(2) + "]");
+                    });
+                } else {
+                    console.log("Browser doesn't support geolocation!");
+                }
+            }
+        {% endif %}
+        </script>
+    </body>
+    </html>
+{% endblock app_base %}
