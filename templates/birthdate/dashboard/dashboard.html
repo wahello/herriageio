@@ -1,0 +1,14 @@
+{% extends "birthdate/base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+	<div class="container-fluid cus-format">
+		<div class="row">
+			<div class="col-md-12">
+				<h1>Dashboard</h1>
+				<p>{{ request.user.username }}</p>
+				<p>{{ request.user.profile.pk }}</p>
+			</div>
+		</div>
+	</div>
+{% endblock body %}

@@ -1,0 +1,75 @@
+{% extends "birthdate/base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+	<div class="container-fluid cus-format">
+		<div class="row animated fadeIn slow">
+			<div class="col-md-4 pull-right about-centered">
+				<div class="centered-content">
+					<img class="img-fluid" src="{% static 'birthdate/images/about_illustration.png' %}" alt="canvas illustration">
+				</div>
+			</div>
+			<div class="col-md-6 offset-md-2 about-centered">
+				<div class="centered-content">
+					<h1>Founded For A Simple Reason. Continuing For Your Simple Reason.</h1>
+					<p>Hey, I am Chance Herriage. A serial-builder that builds the quick and necessary solutions to our every day problems. I am always keeping track of small issues that need some fixing so get in contact if you have a crazy idea, but don’t know how to develop it.</p>
+
+					<p>🍰 birthdate came to me after years of struggling to remember my best of friends birthdays. I love them, I really do, it's just a lot of information to keep track of and even when I set a reminder I still somehow forgot.</p>				
+
+					<p>Then my birthday came around this year and I got more late birthday wishes than on the actual day. I wasn't mad, just kind of interested by the people that took the time to say something.</p>
+
+					<p>And thus, I found my newest service to offer to you. No longer will we have to say we forgot or fumble for an excuse when we see them. Just sign up for the service, import your contacts and forget it. There's no maintenance required, there's no unadvertised charges, and most importantly, your friends never have to know you're using automated birthday messages.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid cus-format text-center">
+		<div class="row">
+			<div class="col-md-8 offset-md-2" id="statistics-row">
+				<h2>My Open Statistics</h2>
+				<p>I believe in letting others have a glimpse into the solutions that I have developed and this project is no different. Take a look below and see this projects most interesting statistics of interaction.</p>
+			</div>
+		</div>
+		<div class="row" id="statistics-info">
+			<div class="col-md-3">
+				<h3><span>12</span> Subscribers</h3>
+				<p>Not a big following yet, but I still appreciate those of you that have already taken the leap into being better with birthdays.</p>
+			</div>
+			<div class="col-md-3">
+				<h3><span>89</span> Messages Sent</h3>
+				<p>It’s been awesome seeing the templates y'all are using. Even though the system is automated the custom-touch isn’t missing.</p>
+			</div>
+			<div class="col-md-3">
+				<h3><span>1,352</span> Scheduled</h3>
+				<p>That’s what I like to see! No maintenance required and more birthday plans are in you guys futures.</p>
+			</div>
+			<div class="col-md-3">
+				<h3><span>5</span> Referred</h3>
+				<p>When someone signs up from your referral link you and the person signing up will get an entire month of messages for free.</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid cus-format s-top-margin">
+		<div class="row animated fadeIn slow">
+			<div class="col-md-4 pull-right about-centered">
+				<div class="centered-content">
+					<img class="img-fluid" src="{% static 'birthdate/images/friends_illustration.svg' %}" alt="canvas illustration">
+				</div>
+			</div>
+			<div class="col-md-6 offset-md-2 about-centered">
+				<div class="centered-content">
+					<h2>Well, Won't My Friends Know It's Automated?</h2>
+					<p>They <strong>never</strong> have to know that their birthday wishes are automated if you don't want them to, it's completely up to you. </p>
+
+					<p>The way I have set this service up you can choose an option to utilize the most popular community templates so you never wish use the same birthday wish twice. No one will ever be thinking you're just copying and pasting or using an automated service.</p>
+
+					<p>If you do decide to tell them though, you can earn an entire year of usage for 50% off when they sign up from your referral link. 50% off, you question? Yep, exactly. I want everyone to feel appreciated on their birthdays, and with that kind of pricing you have no reason not to be the first person giving amazing and hilarious birthday wishes every time a birthday rolls around.</p>
+
+					<p>If you want something to change; Let's be the first ones to take a step in the direction of that change.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock body %}

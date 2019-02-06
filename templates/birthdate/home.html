@@ -1,0 +1,120 @@
+{% extends "birthdate/base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+<div id="home">
+	<div class="top container-fluid">
+		<div class="row">
+			<div class="col-md-6">
+				<h1>Avoid Having Pissed Off Friends When You Forget Their Birthday</h1>
+				<p>Automate your birthday wishes and never have anyone thinking you forgot again. Worried about them finding out it's automated? Don't worry, we've got you covered. </p>
+				<div class="btn-container">
+					<button class="btn btn-red {% if status == 'off' or not status %}outline{% endif %}">🌚 Turn Off System</button>
+					<button class="btn btn-green {% if status == 'on' %}outline{% endif %}">🌞 Turn On System</button>
+				</div>
+			</div>
+			
+			<div id="text-message-container">
+				<p class='slow status-change-line off loaded'> Turned Off</p>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock body %}
+
+{% block scripts %}
+<script>
+var good_texts = [{
+		'name': '🍃 Aaron', 
+		'message': 'You\'ve done it again! You are always the first person that messages me on my birthday. See you at work man!!!'
+	},{
+		'name': 'Sofia', 
+		'message': 'Well damn... I thought you were going to slip up this year after not seeing you today, but yet again you text me right at 12:00! I need to learn your tricks...'
+	},{
+		'name': '🍃 Mason', 
+		'message': 'Bro thank you!! Come over after and we can light up 😉 -- I\'m late to class, but I will hit you up when I get out'
+	}
+];
+
+var bad_texts = [{
+		'name': 'Meme', 
+		'message': 'Did you tell your Mom happy birthday? I really hope you remembered this year.'
+	},{
+		'name': '🐵  Cyd', 
+		'message': 'I thought you forgot about my birthday all day long… I cried at work…'
+	},{
+		'name': 'Dad', 
+		'message': 'You know son… It would have been nice to at least here from you on my birthday. It’s not asking that much…'
+	},{
+		'name': '👪 Mom', 
+		'message': 'It’s Jimmys’ birthday today. I know he’s “only” your step-father, but it would mean a lot to him if you told him texted him.'
+	},{
+		'name': '🍃 Aaron', 
+		'message': 'Yo, you know it’s Aprils’ birthday? She seemed upset you hadn’t said anything to her yet. I thought you were going to be serious this time man…'
+	},{
+		'name': 'April', 
+		'message': 'Why can’t you remember my birthday, but you can remember all those random facts? Shows how much you care about. Ruined my birthday. Bye.'
+	},
+];
+
+$(".btn-green").click(function() { 
+	$(this).prop('disabled', true);
+	$(this).addClass('outline');
+
+	$(".btn-red").prop('disabled', false);
+	$(".btn-red").removeClass('outline');
+	$birthdate_status = "on";
+
+	/*$(".bad").each(function() { 
+       $(this).fadeOut(400).delay(400).remove();
+	})*/
+
+	$("#text-message-container").prepend("<p class='status-change-line on loaded'>Turned On</p>");
+});
+
+$(".btn-red").click(function() { 
+	$(this).prop('disabled', true);
+	$(this).addClass('outline');
+
+	$(".btn-green").prop('disabled', false);
+	$(".btn-green").removeClass('outline');
+	$birthdate_status = "off";
+
+	$("#text-message-container").prepend("<p class='status-change-line off loaded'> Turned Off</p>");
+
+	/*$(".good").each(function() { 
+       $(this).fadeOut(400).delay(400).remove();
+	})*/
+});
+
+function TextManager(){
+	$birthdate_status = "off";
+	$active_messages = 0;
+	$good_messages_seen = 0;
+	$bad_messages_seen = 0;
+	$upper_bound_message_limit = 0;
+
+  	setInterval(() => {
+  		if($active_messages < $upper_bound_message_limit || $upper_bound_message_limit == 0) { 
+			if($(".btn-green").hasClass("outline")) { 
+				$birthdate_status = 'on';
+				$("#text-message-container").prepend("<p class='text good loaded'><strong>" + good_texts[$good_messages_seen].name + "</strong><br />"+ good_texts[$good_messages_seen].message + "</p>");
+				$good_messages_seen += 1;
+
+				if(good_texts.length == $good_messages_seen) { $good_messages_seen = 0; }
+			} else { 
+				$birthdate_status = 'off';
+				$("#text-message-container").prepend("<p class='text bad loaded'><strong>" + bad_texts[$bad_messages_seen].name + "</strong><br />"+ bad_texts[$bad_messages_seen].message + "</p>");
+				$bad_messages_seen += 1;
+
+				if(bad_texts.length == $bad_messages_seen) { $bad_messages_seen = 0; }
+			}
+			$active_messages += 1;
+  		}
+	}, 3200);
+}
+
+var textManager = new TextManager();
+
+</script>
+{% endblock scripts %}

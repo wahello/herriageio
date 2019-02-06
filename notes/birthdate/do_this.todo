@@ -1,0 +1,138 @@
+ ☐ Maybe there should be a package where you don't get any custmiozablity for a veyr low price, but the full one is only like a couple more dollars @created(18-11-06 13:13)
+
+ ☐ Account Creation Process @created(18-10-28 14:00)
+   √ Log In / Sign Up Page @created(18-10-28 14:01) @done (18-10-29 19:48)
+     For email they will need to log in with their provider and we will scape their contact list. Similar to how LinkedIn does.
+   ☐ Pricing Plan @created(18-10-28 14:00)
+     If they click the plan from the pricing page before signing up redirect to the sign up page with the url of /sign-up/?PP=<plan_name>
+   ☐ Payment Information @created(18-10-28 14:06)
+     Display a message like "You're just about done. Last thing you have to do before you can go completely hands-off is set up your payment information."
+
+     Payment information will be required before they can import their list 
+
+ ☐ Feature Ideas @created(18-10-28 14:08)
+   ☐ We should give the option to users to never use a Template more than once for social media platforms. This would keep them from ever being exposed of using a service like this. This is where the Template community hub would become valuable immensely. @created(18-10-28 14:08)
+   ☐ Allow the users to specify which platform a Template can be used and which platform a person will be told happy birthday on. @created(18-10-28 14:10)
+     This will be at the contact level
+   ☐ Crowd-funded front-page messages @created(18-10-28 14:14)
+   ☐ Period Statistics @created(18-10-28 14:14)
+     ☐ Reponse Rate @created(18-10-28 14:14)
+     ☐ Forgot Birthdays (ALWAYS ZERO) -- THAT'S PART OF THE FUN OF INCLUDING THIS ;) 
+   ☐ Response List @created(18-10-28 14:15)
+   ☐ Scheduled Messages List @created(18-10-28 14:15)
+   ☐ Segmented User Groups @created(18-10-28 14:15)
+   ☐ Grab images of the birthday-person and birthdate user and post them with the template on the platforms that allow for grabbing images @created(18-10-28 14:17)
+   ☐ Friendship statistics of the last year @created(18-10-28 14:18)
+     This would require Template templates with things like {{ value }}
+
+☐ Active Todo @created(18-10-29 00:40)
+   √ Finish designing every page @created(18-10-29 00:40) @done (18-10-29 19:48)
+   ☐ Development @created(18-10-29 00:40)
+     ☐ Bettter Homepagee
+     ☐ Corrrect the margin issue @created(18-10-29 21:16)
+       Right now everything has too little margin and looks weird. Should be at least 30px.
+     
+     ☐ Social Media Account Connection @created(18-10-30 14:12)
+       We need to create a way that they can either sign up with their username and then connect their social media. Or they can start by clicking their social media where we can hopefully grab a username or password, 
+       create the user, and then fill in the social keys of their birthdate_profile
+
+       We are going to do this part last after the rest of the system has been developed. It can be done, it's just hard.
+
+     ☐ Contacts @created(18-10-29 19:48)
+       √ Single Import / Addition @created(18-10-29 19:49) @done (18-10-30 14:04)
+       √ Bulk Import @created(18-10-29 19:49) @done (18-10-30 14:05)
+
+     √ When a contact is created -> schedule message @created(18-11-05 18:38) @done (18-11-05 19:05)
+       √ when a message is scheduled -> check status of reminders -> schedule reminders if enabled @created(18-11-05 19:04) @done (18-11-05 19:13)
+     √ Prevent the creation of a new message if the contact already has one created - There is no reason we would want multiple messages -- then this being automated really comes to light @created(18-11-06 08:59) @done (18-11-06 10:58)
+
+     √ console_str for all profile objects @created(18-11-05 20:54) @done (18-11-06 08:52)
+       C | Chance Herriage
+         M | 10/23/19
+           R | 10/20/19
+           R | 10/13/19
+           R | 10/3/19
+
+     ☐ When a message is sent schedule next years message @created(18-11-05 18:39)
+     √ Figure out if we can remove teh 00:00:00 on times @created(18-11-06 10:58) @done (18-11-06 11:17)
+       this actually shouldn't have taken as long as it did. All we needed to do was call .date() on the parse because it returns a datetime and then we were calling .date() after after already changing the value to .date() so it appeared it was a bug with Python, but it was just messed up in my setup
+
+     √ Reminders @done (18-11-06 09:13)
+       √ Implement automatic scheduling of remidners for the contacts that they have marked to do so. By default: All contacts will have reminders but we also want them to globally have access to change the status of reminders being scheduled @created(18-10-31 14:19) @done (18-11-06 09:13)
+       √ Turn on Reminders @done (18-11-02 11:24)
+         Set all contacts to have reminders enabled besides the ones that have manually_disabled_reminder set as True
+
+         Set all reminders as disabled so that they are still in teh database and their information isn't lost, they just won't appear on the dashboard and appear as if they are actually turned off the user
+       √ Turn off Reminders @done (18-11-02 11:24)
+         Set all contacts to no longer have reminders besides the ones that have manually_enabled_reminder set as True
+
+         We will need to create remindesr for any contact that doesn't have them established yet
+       √ Turn off Remindesr for Specific Contact @done (18-11-02 11:24)
+         Turn manually_disabled_reminders to True. Even when they turn on 'ALL' reminders this won't be changed
+       √ Turn on Reminder for Specific Contact @done (18-11-02 11:24)
+         Turn manually_enabled_reminders to True. Even when they turn off 'ALL' reminders the status of the remidnesr won't be changed
+
+       √ Develop the actual reminders @done (18-11-02 16:30)
+         √ When a contacts reminder status changes we need to change teh status of all the reminders for that contact @done (18-11-05 15:11)
+           We shouldn't delete the reminders in the case that they are disabled -- Just mark them as disabled or something similar
+         √ We may have an issue of the status change of a contact not paying attentioon to the manual entries. not sure, but it needs to be tested @done (18-11-05 15:11)
+         √ need to grab the contact in the manager @done (18-11-05 15:11)
+
+       √ Need to change the year of their birthdays to the current year instead of scheduling it back to their birth year. @created(18-11-05 15:14) @done (18-11-05 15:26)
+         We don't need to manually create the reminders as this is done in the pre_save
+
+       ☐ SHIT -- We may have to use fucking web scraping to get the emails of all of our friends. We would need a constant check running that this is still working. I'm not sure if we could even grab all of them from the webpage is accessible @created(18-11-06 13:55)
+         ☐ We can't use the API because Facebook doesn't allow for that anymore
+           We will use it for posting, but we won't be able to 
+         ☐ We can't just scrape the website because the date formatting isn't consistant and coould change
+         ☐ We need to figure out how we can just use a calendar file for impoort
+           ☐ Could connect to their Apple account or could connect to Google Calendar or something -- I'm not sure, yet another big problem with this.
+
+       ☐ Implement the actual reminder aspect whether it be through text message or through Push Notifications (the more likely option and better option) or email @created(18-11-06 09:13)
+         We will need to use Celery for this likely. Yet another thing I haven't worked with before, but this project will help me speed up the dev of extoly and trybooked, so worth the time dedicated
+         We need to figure uot what method would be best for this. Most apps, phones, and website already use push notifcations because they are essentially just reminders. 
+
+       ☐ Social Media Connections @created(18-10-30 14:04)
+
+     ☐ Templates @created(18-10-31 14:12)
+       √ Clone to other users @created(18-10-31 14:12) @done (18-10-31 14:13)
+       √ Attribute their use @created(18-10-31 14:13) @done (18-10-31 14:13)
+       ☐ Media file upload
+       ☐ Logs @created(18-10-31 14:13)
+         ☐ Uses @created(18-10-31 14:13)
+         ☐ Clone Count @created(18-10-31 14:13)
+         ☐ Anytime it's changed @created(18-10-31 14:14)
+           This could become cumbersome of the database -- we need to be careful when working on this.
+       ☐ Build options to only send to certain contacts @created(18-10-31 14:15)
+         ☐ Post to...
+           ☐ Facebook
+           ☐ Twitter
+           ☐ Email
+           ☐ Text
+         ☐ Audience Makeup Options
+           ☐ Age Ranger (min & max)
+           ☐ Gender
+           ☐ Location
+
+     ☐ Reminders @created(18-10-31 14:25)
+       ☐ reminder_timeline_options
+         Let them choose how delayed the other reminders are... (1 day, 1 week, 1 month)
+
+         This should help people remember to go get a gift before the last
+         day. Being told that it's someones birthday on their birthday does
+         absolutely no good. This is a pretty important feature
+
+      ☐ We are going to want a get_reminder_status of the contact so that we can keep that decision code in one place
+        This will be used when scheduling the reminders, but also the enabling and disabling of the reminders both globally, and contact based
+
+
+ ☐ Notes @created(18-10-29 00:38)
+   We are going to finish this product to the MVP level before doing any ads. I want to do a quick launch of this.
+
+   This should realistically be the project that sets me off into the clouds. The ability to put multiple projects under the same domain and to market them as my own projects instead of positioning it as a business. I think there is much more potential here.
+
+   DANGER: We are going to have to reconsider how we are going to push the messages as well as how we are going to manage the logins. django-social-auth doesn't allow us to post to the account so there is really no reason to even use the library. Would be better in the long-run to understand how the login system works, as well as how we can do it manually without the help of a library. 
+
+   I assume, it is just a lot of JS. But that is the problem to figure out for now @started(18-10-30 16:26)
+
+   We are going to do our first round of Test Driven Development (TDD) -- Realistically we should build out as many features and the tests and then do the views. We should likely live in the Sublime and the console for a while.

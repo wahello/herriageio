@@ -1,0 +1,62 @@
+{% extends "birthdate/base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+	<div class="container-fluid cus-format">
+		<div class="row">
+			<div class="col-md-6 about-centered">
+				<div class="centered-content">
+					<h1>Which Of These Pricing Plans Best <br>Fits Your Needs And Contact List?</h1>
+					<p>I built 🍰 birthdatio to make your life easier and filled with more amazing memories with your friends. Because I want you to be totally happy with what you are getting, I’ve decided to let you determine what pricing structure you would like to be on. You currently have the choices of… </p>	
+				</div>
+			</div>
+			<div class="col-md-4 offset-md-2 about-centered"><div class="centered-content"><img src="{% static 'birthdate/images/balloons_illustration.svg' %}" alt="" class="img-fluid"></div></div>
+		</div>
+		<div class="row s-top-margin pricing-container">
+			{% if request.user.is_authenticated and request.user.profile.pricing_plan == '45_payasgo' or change or not request.user.is_authenticated or request.user.profile.pricing_plan is None %}
+				<div class="col-md-4">
+					<div class="pricing-item first">
+						<div class="row">
+							<div class="col-md-12">
+								<h3>Pay As You Go <span class="small">Avg. $135.99 / Year</span></h3>
+								<p>Not sure how many contacts you have to send birthday wishes to? No worries. With this plan it costs less than half a dollar per birthday wish.</p>	
+								
+								<p class="price red">$0.45<span class="period">/ MESSAGE</span></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+			{% if request.user.is_authenticated and request.user.profile.pricing_plan == '1999_yearly' or change or not request.user.is_authenticated or request.user.profile.pricing_plan is None %}
+				<div class="col-md-4 pricing">
+					<div class="pricing-item">
+						<div class="row">
+							<div class="col-md-12">
+								<h3>Unlimited Messages All Year</h3>
+								<p>Have a lot of friends and family that you want to tell happy birthday? This will probably be the plan for you. One payment, one time a year.</p>
+								<p class="price">$39.99 <span class="period">/ YEAR</span></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+			{% if request.user.is_authenticated and request.user.profile.pricing_plan == '1999_yearly' or change or not request.user.is_authenticated or request.user.profile.pricing_plan is None %}
+				<div class="col-md-4 pricing">
+					<div class="pricing-item">
+						<div class="row">
+							<div class="col-md-12">
+								<h3>50 Messages <span class="small">Avg. $119.99 / Year</span></h3>
+								<p>Not sure you want to use 🍰 birthdate for a whole year? This plan was created for others just like you. Take the system for a test-drive.</p>
+								<p class="price red">$19.99 <span class="period">/ Purchase</span></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+
+			<div class="col-md-8 s-top-margin">
+				<p>The 'Unlimited Messages For A Year' is a limited time package and will disappear soon. Once it is gone all prices will go up and the unlimited plan will no longer be available to those who aren't already on it. There's no exact date, but I urge you to take advantage while you still can.</p>
+			</div>
+		</div>
+	</div>
+{% endblock body %}

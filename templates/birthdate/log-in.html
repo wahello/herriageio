@@ -1,0 +1,46 @@
+{% extends "birthdate/base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block body %}
+	<div class="container-fluid cus-format">
+		<div class="row">
+			<div class="col-sm-8 col-md-6 about-centered">
+				<div class="centered-content">
+					<h1>Log Into To Check Out Your Most Responsive Message Templates</h1>
+					<p>Welcome back 👋  You can access all your planned birthday wishes, templates, contact list and more by accessing your account dashboard. 👀  See you in there.</p>
+
+					<div class="row s-top-margin">
+						<div class="col-md-6">
+							<a href="#" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f"></i> Log In With Facebook</a>
+						</div>
+						<div class="col-md-6">
+							<a href="#" class="btn btn-twitter btn-block"><i class="fab fa-twitter"></i> Log In With Twitter</a>
+						</div>
+						<div class="col-md-12" style="margin-top: 20px;">
+							<form action="." method="POST">
+								{% csrf_token %}
+								{% render_field form.username class="form-control" placeholder="Username..." %}	
+						        {% for error in form.username.errors %}
+						        	<small style="color: red">{{ error }}</small>
+						        {% endfor %}	
+								{% render_field form.password class="form-control" placeholder="Password..." %}
+						        {% for error in form.password.errors %}
+						        	<small style="color: red">{{ error }}</small>
+						        {% endfor %}	
+								<br>
+								<button class="btn btn-green btn-block" type="submit">Log In</button>
+							</form>
+							<p style="margin-top: 10px; font-size: 14px;">Don't have an account? <a href="{% url 'birthdate_sign_up' %}">Sign up</a> now.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4 col-md-4 offset-md-2 about-centered">
+				<div class="centered-content">
+					<img class="img-fluid" src="{% static 'birthdate/images/sign_up_illustration.png' %}" alt="canvas illustration">	
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock body %}

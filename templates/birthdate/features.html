@@ -1,0 +1,57 @@
+{% extends "birthdate/base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+	<div class="container-fluid cus-format">
+		<div class="row animated fadeIn slow">
+			<div class="col-md-6 about-centered">
+				<div class="centered-content">
+					<h1>Offering The Features Needed To Be The Best Friend Possible</h1>
+					<p>I have built out every feature that is needed to offer the best birthday wish to your friends. You can schedule to be the first to tell them, you can choose the from the most popular current templates and a couple more fun things.</p>
+					<a href="{% url 'birthdate_sign_up' %}" class="btn btn-green s-top-margin">Get Started</a>
+				</div>
+			</div>
+			<div class="col-md-4 offset-md-2 about-centered">
+				<div class="centered-content"><img src="{% static 'birthdate/images/features_illustration.svg' %}" alt="features illustration" class="img-fluid"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid cus-format">
+		<div class="row m-top-margin">
+			<div class="col-md-3">
+				<h3>Import Contact List</h3>
+				<p>You can import all your clients. Connect directly to the contact list on your phone, your twitter follower list, or your Facebook friends.</p>
+			</div>
+			<div class="col-md-3">
+				<h3>Schedule The Time</h3>
+				<p>Want to be the first one to send good wishes? Want to schedule later in the day to make it look more genuine? You’re completely in control.</p>
+			</div>
+			<div class="col-md-3">
+				<h3>Message Templates</h3>
+				<p>As our community sends more wishes our system will compile the most popular templates used. Just head over to templates and it will be ready to go.</p>
+			</div>
+			<div class="col-md-3">
+				<h3>Pair With A Gift</h3>
+				<p>Want to be a little extra and schedule a small gift as well? Sounds good, just set your preferences in your account and we will take care of it.</p>
+			</div>
+
+			<div class="col-md-3">
+				<h3>Referral System</h3>
+				<p>Want to get a free month of messages? Sweet! Every time someone signs up with your special link, both of you get a free month automatically.</p>
+			</div>
+			<div class="col-md-3">
+				<h3>Hand-Written Messages</h3>
+				<p>Feel like texting a message isn’t personal enough? Sometimes we just want more. You can set certain contacts to have written letters mailed instead.</p>
+			</div>
+			<div class="col-md-3">
+				<h3>Language Adaptive</h3>
+				<p>If you write a few message templates during your setup our system will be able to automatically craft new messages using similar vinacular.</p>
+			</div>
+			<div class="col-md-3">
+				<h3>Reminder Notifications</h3>
+				<p>We handle sending your birthday wishes, but we can’t meet up with them and celebrate. Though, we will let you know when a birthday is coming up.</p>
+			</div>
+		</div>
+	</div>
+{% endblock body %}

@@ -1,0 +1,56 @@
+{% extends "birthdate/base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block body %}
+	<div class="container-fluid cus-format">
+		<div class="row">
+			<div class="col-sm-8 col-md-6 about-centered">
+				<div class="centered-content">
+					<h1>Never Have Your Friends Thinking You Forgot Again.</h1>
+					<p>Hello 🙏 Welcome to our account signup page.All you have to do now is register and import your list. Everything beyond that is completely optional.</p>
+
+					<div class="row s-top-margin">
+						<div class="col-md-6">
+							<fb:login-button 
+							  scope="public_profile,email"
+							  onlogin="checkLoginState();">
+							</fb:login-button>
+							
+							<a href="#" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f"></i> Sign Up With Facebook</a>
+						</div>
+						<div class="col-md-6">
+							<a href="#" class="btn btn-twitter btn-block"><i class="fab fa-twitter"></i> Sign Up With Twitter</a>
+						</div>
+						<div class="col-md-12" style="margin-top: 20px;">
+							<form action="." method="POST">
+								{% csrf_token %}
+								{% render_field form.username class="form-control" placeholder="Username..." %}	
+						        {% for error in form.username.errors %}
+						        	<small style="color: red">{{ error }}</small>
+						        {% endfor %}				
+								{% render_field form.password1 class="form-control" placeholder="Password..." %}
+						        {% for error in form.password1.errors %}
+						        	<small style="color: red">{{ error }}</small>
+						        {% endfor %}
+								{% render_field form.password2 class="form-control" placeholder="Verify Password..." %}
+								{% for error in form.password2.errors %}
+						        	<small style="color: red">{{ error }}</small>
+						        {% endfor %}
+								<br>
+								<button class="btn btn-green btn-block" type="submit">Sign Up</button>							
+							</form>
+		
+							<p style="margin-top: 10px; font-size: 14px;">Already have an account? <a href="{% url 'birthdate_log_in' %}">Log in</a> now.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4 col-md-4 offset-md-2 about-centered">
+				<div class="centered-content">
+					<img class="img-fluid" src="{% static 'birthdate/images/log_in_illustration.png' %}" alt="canvas illustration">	
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock body %}
