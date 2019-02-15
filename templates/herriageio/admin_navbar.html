@@ -1,8 +1,56 @@
-<div class="admin-navbar p-3 two-column">
-    <div>
-        <a class="p-2" href="http://www.localhost:8000">👱 Chance Herriage</a>
-        <a class="p-2" href="http://tripweather.localhost:8000">🌦️ TripWeather</a>
-        <a class="p-2" href="http://lunchmunch.localhost:8000">🍰 Munch</a>
-        <a class="p-2" href="http://birthdate.localhost:8000">🎉 Birthdate</a>
+{% load hosts %}
+
+<div class="admin-navbar p-3 two-column"> <!-- .hidden by default when out of debug -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mt-5">
+                <h1>🏗️ Mo' Problems Portal</h1>
+                <p class="mb-5">This is the admin dashboard to see a quick overview of all important actions on Mo' Problems.</p>
+            </div>
+
+            <div class="col-md-8">
+                <a class="btn btn-secondary" href="http://www.moproblems.io:8000">🏗️ Mo' Problems</a>
+                <a class="btn btn-secondary" href="http://tripweather.moproblems.io:8000">🌦️ TripWeather</a>
+                <a class="btn btn-secondary" href="http://lunchmunch.moproblems.io:8000">🍔 Munch</a>
+                <a class="btn btn-secondary" href="http://birthdate.moproblems.io:8000">🎉 Birthdate</a>
+            </div>
+            <div class="col-md-4 text-right">
+                {% if request.user.is_authenticated %}
+                    <a class="btn btn-danger" href="http://www.moproblems.io:8000/admin/logout">🔓 Logout</a>                
+                {% else %}
+                    <a class="btn btn-success" href="http://www.moproblems.io:8000/admin/login">🔑 Login</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row mt-5">  
+            <div class="col-md-4">
+                <h3>👱 User Access</h3>
+                <p>Authenticated: {{ request.user.is_authenticated }} </p>
+                {% if request.user.is_authenticated %}
+                    <p>Username: {{ request.user.username }}</p>
+                    <p>Email: {{ request.user.email }}</p>
+                {% endif %}
+
+                <h5 class="mt-5">Profiles</h5>
+                {% for profile in request.user.profiles  %}
+                    <a href="{{ profile.get_absolute_url }}">{{ profile.host }}</a>
+                {% endfor %}
+
+            </div>
+            {% if request.user.is_admin %}
+                <div class="col-md-4">
+                    <h3>🎏 Recent Events</h3>
+                    {% for event in recent_events  %}
+                        <a href="{{ event.get_absolute_url }}">{{ event.host }} | {{ event.user }}<br>{{ event.tag }} | {{ event.created_at }}</a>
+                    {% endfor %}
+                </div>
+                <div class="col-md-4">
+                    <h3>💰 Recent Contacts</h3>
+                    {% for contact in recent_contacts  %}
+                        <a href="{{ contact.get_absolute_url }}"><strong>{{ contact.email }}</strong><br>{{ contact.message }}</a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
     </div>
 </div>

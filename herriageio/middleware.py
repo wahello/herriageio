@@ -1,15 +1,31 @@
-from threading import local
+import json
 
-my_local_global = local()
+
+class SubdomainCompilingMiddleware(object):
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        request = request
+        request.child_app_urls = []
+        child_app_urls = ['birthdate', 'lunchmunch', 'tripweather']
+
+        for url in child_app_urls:
+            object = {"host": url, "url": request.build_absolute_uri(), }
+            request.child_app_urls += object
+
+        return self.get_response(request)
+
+    def process_request(self, request):
+        pass
+
 
 class MultiAuthMiddleware(object):
-	def __init__(self, get_response):
-		self.get_response = get_response
+    def __init__(self, get_response):
+        self.get_response = get_response
 
-	def __call__(self, request):
-		return self.get_response(request)
+    def __call__(self, request):
+        return self.get_response(request)
 
-	def process_request(self, request):
-		print('entered processing')
-		my_local_global['database_name'] = get_database_name(request)
-		
+    def process_request(self, request):
+        pass

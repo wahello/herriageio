@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'birthdate',
     'tripweather',
     'lunchmunch',
+    'herriageio',
 ]
 
 MIDDLEWARE = [
@@ -148,3 +149,9 @@ if DEBUG:
     MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "herriageio_mcdn")
 else:
     MEDIA_ROOT = "/home/chanceherriage/herriageio/media"
+
+MIDDLEWARE += [
+    'herriageio.middleware.SubdomainCompilingMiddleware',
+]
+
+SESSION_COOKIE_DOMAIN = '.moproblems.io'

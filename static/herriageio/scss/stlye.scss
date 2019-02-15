@@ -1,0 +1,43 @@
+.admin-navbar {
+    background: #292929;
+    z-index: 99;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    top: 0px;
+    transform: translateX(0px);
+    transition: .3s all ease-in-out;
+    color: #FFFFFF;
+
+    p {
+        color: rgba(#FFFFFF, .65);
+        font-size: 14px;
+    }
+
+    .btn {
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+}
+
+.admin-navbar a,
+.admin-navbar p {
+    color: #FFFFFF !important;
+}
+
+.admin-navbar.hidden {
+    transform: translateX(-100vw);
+    transition: .3s all ease-in-out;
+}
+
+.admin-navbar-padder {
+    position: absolute;
+    top: 65px;
+    left: 0;
+    right: 0;
+}
+
+.admin-navbar-padder.hidden {
+    top: 0px;
+}

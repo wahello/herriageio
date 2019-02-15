@@ -1,4 +1,44 @@
+✔ Have authentication carried over from subdomains. @done(19-02-15 00:05)
+    Conclusion:
+        This is done with `SESSION_COOKIE_DOMAIN = '.moproblems.io'` and allows us to use the cookies from the base url. For development we have to update our hosts files to contain...
+            `127.0.0.1       www.moproblems.io`
+            `127.0.0.1       tripweather.moproblems.io`
+            `127.0.0.1       lunchmunch.moproblems.io`
+            `127.0.0.1       birthdate.moproblems.io`
+
+        Because that is how the production version will read it and that is the only way that the cookies work properly. This was much easier than expected, but also a very different approach than I expected to take to fix this. Now we can direct all user traffic to moproblems, we will just skin a dashboard or something similar. 
+
+        This will need to be discussed in a meeting for UX purposes.
+
+☐ Have automatic admin accounts created for Chance & Mason.
+☐ Make the admin_navbar maintain the same style regardless of the childs css
+
+Website Architecture:
+    Parent App:
+        ☐ model.Profile
+            Contains all the personal information of the user that isn't required for logging in. A profile is tied to each User that has a unique email. Each app will have to have certain fields added to the parent Profile object and not in a seperate Profile model for each App.
+        
+        Base Apps:
+            Treather:
+                ☐ Inherit model.Profile
+
+            Birthdate:
+                ☐ Inherit model.Profile
+
+            Lunch o' Munch :
+                ☐ Inherit model.Profile
+
+Base 3 Apps:
+    ☐ 🌦️ Treather
+    ☐ 🎉 Birthdate
+    ☐ 🍔 Lunch o' Munch
+
+
 Consolidate herriage.io profiles:
+    ✔ Add cross-navigation to the the admin-navbar. @done(19-02-06 16:45)
+        ☐ We need to make sure that there is a way that we can allow users to stay in while moving across subdomains.
+    ☐ Make `www` a central home / portfolio and host the other apps simulatenously.
+
     ☐ Make all profiles connected across Herriage.io and not in an independent app.
         ☐ We will likely need to create a 'profiles' app that will house all the information for all the users.
             ☐ We already have `profile_handling` app
@@ -6,5 +46,20 @@ Consolidate herriage.io profiles:
     Note:
         I am almost positive that every single app currently has their own set of profiles. We need a way to easily sort the data from the app. Perhaps something with the way with of using `app_label` -- Not sure this is really weird.
 
+☐ Create a consistent styling and method for hot-swapping between apps that doesn't intrude on the UI/UX of any of the parent or child app usage.
 
-☐ Change the icon for Birthdate to party horn
+Herriage.io Styling:
+    ☐ Build herriage.io theme
+        ☐ Primary color
+        ☐ Secondary color
+        ☐ Font family
+        ☐ Default font size
+    ☐ Quick navigation bar
+    ☐ Padding
+
+Page Template Structure:
+    ☐ herriageio/page_template.html
+        ☐ herriageio/admin_navbar.html
+        ☐ app/base.html
+            ☐ app/page.html
+

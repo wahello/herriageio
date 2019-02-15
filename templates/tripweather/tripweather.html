@@ -153,25 +153,15 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <script src='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
+    </body>
+    </html>
+{% endblock app_base %}
 
+{% block app_base_scripts %}
         <script>
-            const favicon = document.querySelector("link[rel=icon]");
-
-            if (favicon) {
-            const emoji = favicon.getAttribute("data-emoji");
-
-            if (emoji) {
-                const canvas = document.createElement("canvas");
-                canvas.height = 64;
-                canvas.width = 64;
-
-                const ctx = canvas.getContext("2d");
-                ctx.font = "64px serif";
-                ctx.fillText(emoji, 0, 64);
-
-                favicon.href = canvas.toDataURL();
-            }
-            }
+            Mousetrap.bind('m', function(e) {
+                $('.content-container').toggleClass('maxed');
+            });
         </script>
 
         <script>
@@ -395,6 +385,4 @@
             }
         {% endif %}
         </script>
-    </body>
-    </html>
-{% endblock app_base %}
+{% endblock app_base_scripts %}

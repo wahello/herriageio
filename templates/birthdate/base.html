@@ -1,108 +1,93 @@
 {% extends 'herriageio/page_template.html' %}
 {% load staticfiles %}
 
+{% block app_base_header %}
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>birthdate - don't let people think you forgot</title>
+
+	<link rel="icon" data-emoji="🎉" type="image/png">
+	<link href="https://fonts.googleapis.com/css?family=Judson|Lato" rel="stylesheet">
+	<link rel="stylesheet" href="{% static "birthdate/css/style.css" %}">
+	{% block app_page_header %}{% endblock app_page_header %}
+{% endblock app_base_header %}
+
 {% block app_base %}
-	<!DOCTYPE html>
-	<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	{% block facebook_event_scripts %}{% endblock facebook_event_scripts %}
 
-		<title>birthdate - don't let people think you forgot</title>
+	{% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+				<li {% if message.tags %}class="{{message.tags}}"{% endif %}>{{ message }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
 
-		<link rel="icon" data-emoji="🎉" type="image/png">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-		<link href="https://fonts.googleapis.com/css?family=Judson|Lato" rel="stylesheet">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
-		<link rel="stylesheet" href="{% static "base/style.css" %}">
-		<link rel="stylesheet" href="{% static "birthdate/css/style.css" %}">
-
-		{% block header %}{% endblock header %}
-	</head>
-	<body>
-		
-	</body>
-		{% block facebook_event_scripts %}{% endblock facebook_event_scripts %}
-
-		{% if messages %}
-			<ul class="messages">
-				{% for message in messages %}
-					<li {% if message.tags %}class="{{message.tags}}"{% endif %}>{{ message }}</li>
-				{% endfor %}
-			</ul>
-		{% endif %}
-
-		<div class="body-content">
-			<nav class="navbar navbar-expand-md">
-				<div class="container-fluid">
-					<div class="row">
-						<!-- Brand -->
-						<a href="{% url 'birthdate_home' %}" class="navbar-brand brand">🎉 birthdate</a>
-
-						<!-- Toggler/collapsibe Button -->
-						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-							<i class="fa fa-bars animated fadeIn slow"></i>
-						</button>
-
-						<!-- Navbar links -->
-						<div class="collapse navbar-collapse" id="collapsibleNavbar">
-							<ul class="navbar-nav">
-								<li class="nav-item">
-									<a class="nav-link" href="{% url 'birthdate_about' %}">About</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="{% url 'birthdate_features' %}">Features</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="{% url 'birthdate_pricing' %}">Pricing</a>
-								</li>
-								
-								{% if not request.user.is_authenticated %}
-									<div class="d-flex ml-auto nav-item">
-										<a href="{% url 'birthdate_log_in' %}" class="nav-link">Log In</a>
-									</div>
-
-									<div class="nav-item">
-										<a href="{% url 'birthdate_sign_up' %}" class="nav-link p-2">Sign Up</a>
-									</div>
-								{% else %}
-									<div class="d-flex ml-auto nav-item">
-										<a href="{% url 'birthdate_dashboard' %}" class="nav-link">{{ request.user.username }}</a>
-									</div>
-
-									<div class="nav-item">
-										<a href="{% url 'birthdate_log_out' %}" class="nav-link p-2">Log Out</a>
-									</div>
-								{% endif %}
-							</ul>
-						</div> 
-					</div>
-				</div>
-			</nav>
-			{% block body %}{% endblock body %}
-		</div>
-		
-
-		<footer>
+	<div class="body-content">
+		<nav class="navbar navbar-expand-md">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-9">
-						<p class="small">Copyright Chance Herriage 2018.</p>
-					</div>
-					<div class="col-md-3 text-right">
-						<a href="http://facebook.com/chance.herriage"><i class="fab fa-facebook-f"></i></a>
-						<a href="http://twitter.com/ChanceHerriage"><i class="fab fa-twitter"></i></a>
-					</div>
+					<!-- Brand -->
+					<a href="{% url 'birthdate_home' %}" class="navbar-brand brand">🎉 birthdate</a>
+
+					<!-- Toggler/collapsibe Button -->
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+						<i class="fa fa-bars animated fadeIn slow"></i>
+					</button>
+
+					<!-- Navbar links -->
+					<div class="collapse navbar-collapse" id="collapsibleNavbar">
+						<ul class="navbar-nav">
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'birthdate_about' %}">About</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'birthdate_features' %}">Features</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'birthdate_pricing' %}">Pricing</a>
+							</li>
+							
+							{% if not request.user.is_authenticated %}
+								<div class="d-flex ml-auto nav-item">
+									<a href="{% url 'birthdate_log_in' %}" class="nav-link">Log In</a>
+								</div>
+
+								<div class="nav-item">
+									<a href="{% url 'birthdate_sign_up' %}" class="nav-link p-2">Sign Up</a>
+								</div>
+							{% else %}
+								<div class="d-flex ml-auto nav-item">
+									<a href="{% url 'birthdate_dashboard' %}" class="nav-link">{{ request.user.username }}</a>
+								</div>
+
+								<div class="nav-item">
+									<a href="{% url 'birthdate_log_out' %}" class="nav-link p-2">Log Out</a>
+								</div>
+							{% endif %}
+						</ul>
+					</div> 
 				</div>
 			</div>
-		</footer>
+		</nav>
+		{% block body %}{% endblock body %}
+	</div>
+	
 
-		<script>
-
-		</script>
-
-	</html>
+	<footer>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-9">
+					<p class="small">Copyright Chance Herriage 2018.</p>
+				</div>
+				<div class="col-md-3 text-right">
+					<a href="http://facebook.com/chance.herriage"><i class="fab fa-facebook-f"></i></a>
+					<a href="http://twitter.com/ChanceHerriage"><i class="fab fa-twitter"></i></a>
+				</div>
+			</div>
+		</div>
+	</footer>
 {% endblock app_base %}
 
 {% block app_base_scripts %}

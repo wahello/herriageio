@@ -1,17 +1,17 @@
 {% extends 'herriageio/page_template.html' %}
 {% load staticfiles %}
 
-{% block app_base %}
-<html>
+{% block app_base_header %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<link rel="icon" data-emoji="🍔" type="image/png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'birthdate/css/style.css' %}">
+{% endblock app_base_header %}
 
-    <body>
-
+{% block app_base %}
         <div class="container-fluid">
             {% if messages %}
                 <ul class="messages">
@@ -24,7 +24,7 @@
             <hr>
             <div class="two-column">
                 <div>
-                    <a href="{% url 'lunchmunch_home' %}">🍰 Munch</a>
+                    <a href="{% url 'lunchmunch_home' %}">🍔 Munch</a>
 
                     {% if request.user.profile.has_group %}
                         <a href="{% url 'groups' %}">Groups</a>
@@ -51,13 +51,13 @@
             {% block body %}{% endblock %}
         </div>
 
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="{% static 'js/bootstrap.js' %}" type="text/javascript"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
-
-        {% block scripts %}{% endblock %}
+        {% block app_scripts %}{% endblock app_scripts %}
     </body>
 </html>
 {% endblock app_base %}
+
+{% block app_base_scripts %}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+
+	{% block app_page_scripts %}{% endblock app_page_scripts %}
+{% endblock %}
