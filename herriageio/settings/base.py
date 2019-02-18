@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'tripweather',
     'lunchmunch',
     'herriageio',
+    'notes',
 ]
 
 MIDDLEWARE = [

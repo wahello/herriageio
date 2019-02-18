@@ -182,14 +182,17 @@ Back Bone:
         ✔ Create <app_name>/base.html @done(19-02-18 15:59)
         ✔ Create <app_name>/home.html @done(19-02-18 15:59)
         ✔ Create base static files @done(19-02-18 16:01)
-        ✔ Check to make sure that our automatically created users automatically have a new profile created when the child_apps is updated in settings @done(19-02-18 16:11)
+        ✘ Check to make sure that our automatically created users automatically have a new profile created when the child_apps is updated in settings @cancelled(19-02-18 16:30)
         ✔ [MANUAL] add to herriageio/hosts.py @done(19-02-18 16:11)
         ✔ [MANUAL] add to hostsconf/routing.py @done(19-02-18 16:11)
         ✔ [MANUAL] add <app>/css & <app>/scss @done(19-02-18 16:11)
         ✔ [MANUAL] add to INSTALLED_APPS in base.py @done(19-02-18 16:11)
 
 
-☐ Notes & commands in admin debug panel would be super helpful.
+Notes:
+    These will only be visible in the debug dashboard. We are basically going to create our own roadmap app, but extremely minimal.
+
+    Comments:
 
 ☐ It would be smart to create a skeleton app that we can simply duplicate and get rolling quickly. With base nav templates and all.
 
