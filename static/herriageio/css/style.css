@@ -1,36 +1,34 @@
-.admin-navbar {
-  background: #292929;
-  z-index: 99;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0px;
-  top: 0px;
-  transform: translateX(0px);
-  transition: .3s all ease-in-out;
-  color: #FFFFFF; }
-  .admin-navbar p {
-    color: rgba(255, 255, 255, 0.65);
-    font-size: 14px; }
-  .admin-navbar .btn {
-    margin-bottom: 10px;
-    font-size: 14px; }
+body {
+  font-family: 'Josefin Sans', sans-serif !important;
+  overflow-x: hidden; }
 
-.admin-navbar a,
-.admin-navbar p {
-  color: #FFFFFF !important; }
+p {
+  font-weight: 300; }
 
-.admin-navbar.hidden {
-  transform: translateX(-100vw);
-  transition: .3s all ease-in-out; }
+form {
+  width: 100%; }
+  form input {
+    margin-bottom: 10px; }
 
-.admin-navbar-padder {
-  position: absolute;
-  top: 65px;
-  left: 0;
-  right: 0; }
+.btn,
+button {
+  margin-bottom: 10px;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  border-radius: 0px;
+  text-transform: uppercase;
+  padding: 7px 36px;
+  border: none; }
+  .btn.btn-green,
+  button.btn-green {
+    color: #FFFFFF;
+    background: #46a877; }
 
-.admin-navbar-padder.hidden {
-  top: 0px; }
+#home-hero {
+  height: calc(100vh - 190px);
+  display: grid;
+  grid-template-rows: 1fr; }
+  #home-hero .content {
+    margin: auto; }
 
 /*# sourceMappingURL=style.css.map */

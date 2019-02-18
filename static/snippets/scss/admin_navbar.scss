@@ -1,0 +1,76 @@
+$black: #3B3B3B;
+$green: #27FF00;
+$white: #FFFFFF;
+
+.admin-navbar {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p,
+    button,
+    .btn,
+    a {
+        font-family: 'Josefin Sans', sans-serif !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    a {
+        font-weight: 400 !important;
+    }
+
+    p {
+        font-weight: 300 !important;
+    }
+
+    background: $black;
+    z-index: 99;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    top: 0px;
+    transform: translateX(0px);
+    transition: .3s all ease-in-out;
+    color: $white;
+    overflow-y: hidden;
+
+    p,
+    a {
+        color: rgba($white, .85);
+        font-size: 14px;
+        margin-bottom: 3px;
+    }
+
+    .btn,
+    button {
+        margin-bottom: 10px;
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        border-radius: 0px;
+        text-transform: uppercase;
+        padding: 7px 36px;
+        border: none;
+
+        &.btn-green {
+            color: $black;
+            background: $green;
+        }
+    }
+
+    &.hidden {
+        transform: translateX(-100vw);
+        transition: .3s all ease-in-out;
+    }
+
+    strong {
+        font-weight: 700;
+        color: $white;
+    }
+}

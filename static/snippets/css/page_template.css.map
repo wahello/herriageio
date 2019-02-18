@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,SAAU;EACN,OAAO,EAAE,GAAG;EACZ,UAAU,EAAE,MAAM;EAClB,KAAK,EAAE,KAAK;EAEZ,YAAG;IACC,OAAO,EAAE,IAAI;IAEb,kBAAQ;MACJ,UAAU,EAAE,OAAO;IAGvB,oBAAU;MACN,UAAU,EAAE,OAAO;IAGvB,iBAAO;MACH,UAAU,EAAE,OAAO;IAGvB,oBAAU;MACN,UAAU,EAAE,OAAO",
+"sources": ["../scss/page_template.scss"],
+"names": [],
+"file": "page_template.css"
+}

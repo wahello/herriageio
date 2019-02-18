@@ -1,31 +1,36 @@
 {% load staticfiles %}
+{% load hosts %}
 
 <html>
     <head>
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
     	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+        <link rel="stylesheet" href="{% static 'snippets/css/page_template.css' %}">
         <link rel="stylesheet" href="{% static 'herriageio/css/style.css' %}">
-
         {% block app_base_header %}
         {% endblock app_base_header %}
-    
+
+	    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,700" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'snippets/css/admin_navbar.css' %}">
     </head>
 
     <body>
         {% include "herriageio/admin_navbar.html" %}
 
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
         <div class="container-fluid">
-            {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
             {% block app_base %}{% endblock %}
         </div>
 
@@ -39,8 +44,34 @@
         <script>
             Mousetrap.bind('A', function(e) {
                 $(".admin-navbar").toggleClass("hidden");
-                $(".admin-navbar-padder").toggleClass("hidden");
             });
+
+               $.extend({
+                getUrlVars: function(){
+                    var vars = [], hash;
+                    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                    for(var i = 0; i < hashes.length; i++) {
+                        hash = hashes[i].split('=');
+                        vars.push(hash[0]);
+                        vars[hash[0]] = hash[1];
+                    }
+                    return vars;
+                },
+                getUrlVar: function(name){
+                    return $.getUrlVars()[name];
+                }
+                });
+
+                //Second call with this:
+                // Get object of URL parameters
+                var allVars = $.getUrlVars();
+                console.log(allVars);
+
+                // Getting URL var by its name
+                var ref = $.getUrlVar('ref');
+                if(ref != null) { 
+                    $(".admin-navbar").toggleClass("hidden");
+                }
         </script>
 
         {% block app_base_scripts %}

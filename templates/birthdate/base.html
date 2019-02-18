@@ -1,5 +1,6 @@
 {% extends 'herriageio/page_template.html' %}
 {% load staticfiles %}
+{% load hosts %}
 
 {% block app_base_header %}
 	<meta charset="utf-8">
@@ -16,20 +17,12 @@
 {% block app_base %}
 	{% block facebook_event_scripts %}{% endblock facebook_event_scripts %}
 
-	{% if messages %}
-		<ul class="messages">
-			{% for message in messages %}
-				<li {% if message.tags %}class="{{message.tags}}"{% endif %}>{{ message }}</li>
-			{% endfor %}
-		</ul>
-	{% endif %}
-
 	<div class="body-content">
 		<nav class="navbar navbar-expand-md">
 			<div class="container-fluid">
 				<div class="row">
 					<!-- Brand -->
-					<a href="{% url 'birthdate_home' %}" class="navbar-brand brand">🎉 birthdate</a>
+					<a href="{% url 'home' host 'birthdate' %}" class="navbar-brand brand">🎉 birthdate</a>
 
 					<!-- Toggler/collapsibe Button -->
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -40,32 +33,40 @@
 					<div class="collapse navbar-collapse" id="collapsibleNavbar">
 						<ul class="navbar-nav">
 							<li class="nav-item">
-								<a class="nav-link" href="{% url 'birthdate_about' %}">About</a>
+								<a class="nav-link" href="{% url 'birthdate_about' host 'birthdate' %}">About</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="{% url 'birthdate_features' %}">Features</a>
+								<a class="nav-link" href="{% url 'birthdate_features' host 'birthdate' %}">Features</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="{% url 'birthdate_pricing' %}">Pricing</a>
+								<a class="nav-link" href="{% url 'birthdate_pricing' host 'birthdate' %}">Pricing</a>
 							</li>
 							
-							{% if not request.user.is_authenticated %}
-								<div class="d-flex ml-auto nav-item">
-									<a href="{% url 'birthdate_log_in' %}" class="nav-link">Log In</a>
-								</div>
+							<!-- start authentication block -->
+							{% if request.user.is_authenticated %}
+								{% if not request.user_has_profile_for_solution %}
+									<div class="d-flex ml-auto nav-item">
+										<a class="nav-link" href="{% host_url 'join_child_app' child_app_label=request.current_host host 'www' %}">🤝 Join Community</a>
+									</div>
+								{% else %}
+									<div class="d-flex ml-auto nav-item">
+										<a class="nav-link" href="{{ request.profile.get_settings_url }}">🛠️ Settings</a>
+									</div>
 
-								<div class="nav-item">
-									<a href="{% url 'birthdate_sign_up' %}" class="nav-link p-2">Sign Up</a>
-								</div>
+									<div class="nav-item">
+										<a class="nav-link" href="{% url 'logout_view' host 'www' %}">👋 Logout</a>   
+									</div>
+								{% endif %}
 							{% else %}
 								<div class="d-flex ml-auto nav-item">
-									<a href="{% url 'birthdate_dashboard' %}" class="nav-link">{{ request.user.username }}</a>
+									<a class="nav-link" href="{% url 'login_view' host 'www' %}?ref_app={{ request.current_host }}">🔑 Login</a>
 								</div>
-
 								<div class="nav-item">
-									<a href="{% url 'birthdate_log_out' %}" class="nav-link p-2">Log Out</a>
+									<a class="nav-link" href="{% url 'signup_view' host 'www' %}?ref_app={{ request.current_host }}">🤸‍ Sign Up</a>
 								</div>
 							{% endif %}
+							<!-- end authentication block -->
+
 						</ul>
 					</div> 
 				</div>

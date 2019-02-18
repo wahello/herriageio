@@ -1,0 +1,25 @@
+.messages {
+    padding: 0px;
+    text-align: center;
+    color: white;
+
+    li {
+        padding: 10px;
+
+        &.error {
+            background: #dd5967;
+        }
+
+        &.success {
+            background: #46a877;
+        }
+
+        &.info {
+            background: #0aabd3;
+        }
+
+        &.warning {
+            background: #f5ad49;
+        }
+    }
+}

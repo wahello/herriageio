@@ -2,11 +2,11 @@ from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
 
-from .views import check_weather, delete_trip, save_trip
+from .views import home, delete_trip, save_trip
 
 urlpatterns = [
     path('<unique_id>/delete/', delete_trip, name="delete_trip"),
-    path('', check_weather, name="check_weather"),
+    path('', home, name="home"),
     path('save/', save_trip, name="save_trip"),
-    path('<unique_id>/', check_weather, name="check_weather"),
+    path('<unique_id>/', home, name="home"),
 ]

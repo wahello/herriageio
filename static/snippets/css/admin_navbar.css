@@ -1,0 +1,57 @@
+.admin-navbar {
+  background: #3B3B3B;
+  z-index: 99;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  top: 0px;
+  transform: translateX(0px);
+  transition: .3s all ease-in-out;
+  color: #FFFFFF;
+  overflow-y: hidden; }
+  .admin-navbar h1,
+  .admin-navbar h2,
+  .admin-navbar h3,
+  .admin-navbar h4,
+  .admin-navbar h5,
+  .admin-navbar p,
+  .admin-navbar button,
+  .admin-navbar .btn,
+  .admin-navbar a {
+    font-family: 'Josefin Sans', sans-serif !important; }
+  .admin-navbar h1,
+  .admin-navbar h2,
+  .admin-navbar h3,
+  .admin-navbar h4,
+  .admin-navbar h5,
+  .admin-navbar a {
+    font-weight: 400 !important; }
+  .admin-navbar p {
+    font-weight: 300 !important; }
+  .admin-navbar p,
+  .admin-navbar a {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    margin-bottom: 3px; }
+  .admin-navbar .btn,
+  .admin-navbar button {
+    margin-bottom: 10px;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    border-radius: 0px;
+    text-transform: uppercase;
+    padding: 7px 36px;
+    border: none; }
+    .admin-navbar .btn.btn-green,
+    .admin-navbar button.btn-green {
+      color: #3B3B3B;
+      background: #27FF00; }
+  .admin-navbar.hidden {
+    transform: translateX(-100vw);
+    transition: .3s all ease-in-out; }
+  .admin-navbar strong {
+    font-weight: 700;
+    color: #FFFFFF; }
+
+/*# sourceMappingURL=admin_navbar.css.map */

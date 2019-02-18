@@ -1,0 +1,85 @@
+{% extends 'herriageio/page_template.html' %}
+{% load staticfiles %}
+{% load hosts %}
+
+{% block app_base_header %}
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>birthdate - don't let people think you forgot</title>
+
+	<link rel="icon" data-emoji="🏗️" type="image/png">
+	<link rel="stylesheet" href="{% static "herriageio/css/style.css" %}">
+	{% block app_page_header %}{% endblock app_page_header %}
+{% endblock app_base_header %}
+
+{% block app_base %}
+	{% block facebook_event_scripts %}{% endblock facebook_event_scripts %}
+
+	<div class="body-content">
+		<nav class="navbar navbar-expand-md">
+			<div class="container">
+				<!-- Brand -->
+				<a href="{% url 'home' host 'www' %}" class="navbar-brand brand">🏗️ Mo' Problems</a>
+
+				<!-- Toggler/collapsibe Button -->
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+					<i class="fa fa-bars animated fadeIn slow"></i>
+				</button>
+
+				<!-- Navbar links -->
+				<div class="collapse navbar-collapse" id="collapsibleNavbar">
+					<ul class="navbar-nav">
+						<!-- start authentication block -->
+						{% if request.user.is_authenticated %}
+							{% if not request.user_has_profile_for_solution %}
+								<div class="d-flex ml-auto nav-item">
+									<a class="nav-link" href="{% host_url 'join_child_app' child_app_label=request.current_host host 'www' %}">🤝 Join Community</a>
+								</div>
+							{% else %}
+								<div class="d-flex ml-auto nav-item">
+									<a class="nav-link" href="{{ request.profile.get_settings_url }}">🛠️ Settings</a>
+								</div>
+
+								<div class="nav-item">
+									<a class="nav-link" href="{% url 'logout_view' host 'www' %}">👋 Logout</a>   
+								</div>
+							{% endif %}
+						{% else %}
+							<div class="d-flex ml-auto nav-item">
+								<a class="nav-link" href="{% url 'login_view' host 'www' %}">🔑 Login</a>
+							</div>
+							<div class="nav-item">
+								<a class="nav-link" href="{% url 'signup_view' host 'www' %}">🤸‍ Sign Up</a>
+							</div>
+						{% endif %}
+						<!-- end authentication block -->
+					</ul>
+				</div>
+			</div>
+		</nav>
+		{% block body %}{% endblock body %}
+	</div>
+	
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<p class="small">Copyright Chance Herriage 2018.</p>
+				</div>
+				<div class="col-md-3 text-right">
+					<a href="http://facebook.com/chance.herriage"><i class="fab fa-facebook-f"></i></a>
+					<a href="http://twitter.com/ChanceHerriage"><i class="fab fa-twitter"></i></a>
+				</div>
+			</div>
+		</div>
+	</footer>
+{% endblock app_base %}
+
+{% block app_base_scripts %}
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+
+	{% block app_page_scripts %}{% endblock app_page_scripts %}
+{% endblock %}

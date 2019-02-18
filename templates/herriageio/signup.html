@@ -1,0 +1,55 @@
+{% extends "herriageio/base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block body %}
+	<div class="container mt-5">
+		<div class="row mt-5">
+			<div class="col-md-12 about-centered">
+				<div class="centered-content">
+					<h1>{{ heading }}</h1>
+					<p>{{ heading_sub_p }}</p>
+
+					<div class="row s-top-margin">
+						<div class="col-md-6">
+							<fb:login-button 
+							  scope="public_profile,email"
+							  onlogin="checkLoginState();">
+							</fb:login-button>
+							
+							<a href="#" class="btn btn-secondary btn-block"><i class="fab fa-facebook-f"></i> Sign Up With Facebook</a>
+						</div>
+						<div class="col-md-6">
+							<a href="#" class="btn btn-secondary btn-block"><i class="fab fa-twitter"></i> Sign Up With Twitter</a>
+						</div>
+						<div class="col-md-12" style="margin-top: 20px;">
+							<form action="." method="POST">
+								{% csrf_token %}
+								{% render_field form.username class="form-control" placeholder="Username..." %}	
+						        {% for error in form.username.errors %}
+						        	<small style="color: red">{{ error }}</small>
+						        {% endfor %}	
+								{% render_field form.email class="form-control" placeholder="Email Address..." %}	
+						        {% for error in form.email.errors %}
+						        	<small style="color: red">{{ error }}</small>
+						        {% endfor %}				
+								{% render_field form.password1 class="form-control" placeholder="Password..." %}
+						        {% for error in form.password1.errors %}
+						        	<small style="color: red">{{ error }}</small>
+						        {% endfor %}
+								{% render_field form.password2 class="form-control" placeholder="Verify Password..." %}
+								{% for error in form.password2.errors %}
+						        	<small style="color: red">{{ error }}</small>
+						        {% endfor %}
+								<br>
+								<button class="btn btn-primary btn-block" type="submit">Sign Up</button>							
+							</form>
+		
+							<p style="margin-top: 10px; font-size: 14px;">Already have an account? <a href="{% url 'login_viwe' host 'www' %}{% if ref_app %}?ref_app={{ ref_app }}{% endif %}">Log in</a> now.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock body %}

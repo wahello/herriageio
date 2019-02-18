@@ -1,49 +1,45 @@
 {% extends 'herriageio/page_template.html' %}
 {% load staticfiles %}
+{% load hosts %}
 
 {% block app_base_header %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="icon" data-emoji="🍔" type="image/png">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
     <link rel="stylesheet" href="{% static 'birthdate/css/style.css' %}">
 {% endblock app_base_header %}
 
 {% block app_base %}
         <div class="container-fluid">
-            {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-
-            <hr>
             <div class="two-column">
                 <div>
-                    <a href="{% url 'lunchmunch_home' %}">🍔 Munch</a>
+                    <a href="{% url 'home' host 'lunchmunch' %}">🍔 Munch</a>
 
-                    {% if request.user.profile.has_group %}
-                        <a href="{% url 'groups' %}">Groups</a>
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.profile.has_group %}
+                            <a href="{% url 'groups' host 'lunchmunch' %}">Groups</a>
+                        {% endif %}
                     {% endif %}
                 </div>
                 <div style="text-align: right;">
+                    <!-- start authentication block -->
                     {% if request.user.is_authenticated %}
-                        {% if request.user.profile.zipcode %}
-                            <a href="#">
-                                📍
-                                {{ request.user.profile.zipcode }}</a>
+                        {% if not request.user_has_profile_for_solution %}
+                            <a class="nav-link" href="{% host_url 'join_child_app' child_app_label=request.current_host host 'www' %}">🤝 Join Community</a>
+                        {% else %}
+                            {% if request.user.profile.zipcode %}
+                                <a class="nav-link" href="#">📍 {{ request.user.profile.zipcode }}</a>
+                            {% endif %}
+
+                            <a class="nav-link" href="{{ request.profile.get_settings_url }}">🛠️ Settings</a>
+
+                            <a class="nav-link" href="{% url 'logout_view' host 'www' %}">👋 Logout</a>   
                         {% endif %}
-                        <a href="{% url 'account' %}">👱
-                            {{ request.user.username }}</a>
-                        <a href="{% url 'logout' %} ">Logout</a>
                     {% else %}
-                        <a href="{% url 'signup' %} ">Sign Up</a>
-                        <a href="{% url 'login' %} ">Login</a>
+                        <a class="nav-link" href="{% url 'login_view' host 'www' %}?ref_app={{ request.current_host }}">🔑 Login</a>
+                        <a class="nav-link" href="{% url 'signup_view' host 'www' %}?ref_app={{ request.current_host }}">🤸‍ Sign Up</a>
                     {% endif %}
+                    <!-- end authentication block -->
                 </div>
             </div>
             <hr>

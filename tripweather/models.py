@@ -2,7 +2,7 @@ import django
 import uuid
 
 from django.db import models
-from django.urls import reverse
+from django_hosts import reverse
 
 
 class Trip(models.Model):
@@ -22,4 +22,4 @@ class Trip(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('check_weather', kwargs={"unique_id": self.unique_id})
+        return reverse('home', host="tripweather", kwargs={"unique_id": self.unique_id})

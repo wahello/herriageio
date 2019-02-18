@@ -1,18 +1,15 @@
-{% extends 'herriageio/page_template.html' %}
+{% extends 'herriageio/base.html' %}
 {% load hosts %}
 
-{% block app_base %}
+{% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12 text-center mt-5">
-
-                <br>
-
-                <a class="btn btn-secondary" href="http://www.localhost:8000">🏗️ Mo' Problems</a>
-                <a class="btn btn-secondary" href="http://lunchmunch.localhost:8000">🌦️ TripWeather</a>
-                <a class="btn btn-secondary" href="http://lunchmunch.localhost:8000">🍔 Munch</a>
-                <a class="btn btn-secondary" href="http://lunchmunch.localhost:8000">🎉 Birthdate</a>        
+            <div class="col-md-8 offset-md-2 text-center mt-5 mb-5" id="home-hero">
+                <div class="content">
+                    <h1>I’LL TAKE YOUR PROBLEM AND GIVE YOU A SOLUTION</h1>
+                    <a href="#" class="btn btn-green">LEARN MORE</a>
+                </div>
             </div>
         </div>
     </div>
-{% endblock app_base %}
+{% endblock body %}

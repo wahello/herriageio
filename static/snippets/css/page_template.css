@@ -1,0 +1,16 @@
+.messages {
+  padding: 0px;
+  text-align: center;
+  color: white; }
+  .messages li {
+    padding: 10px; }
+    .messages li.error {
+      background: #dd5967; }
+    .messages li.success {
+      background: #46a877; }
+    .messages li.info {
+      background: #0aabd3; }
+    .messages li.warning {
+      background: #f5ad49; }
+
+/*# sourceMappingURL=page_template.css.map */

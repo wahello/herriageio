@@ -3,15 +3,15 @@ import json
 
 from django.core.exceptions import ImproperlyConfigured
 
-# automatically sets the env variable so all we have to do is make sure that the file is there and all the other env variables will be imported properly.
-os.environ['SITE_CONFIG'] = 'site_config.json'
+os.environ['SITE_CONFIG'] = './site_config.json'
 
 # we must have the SITE_CONFIG as an environment variable
 with open(os.environ.get('SITE_CONFIG')) as f:
     configs = json.loads(f.read())
 
-
 # just grabs the variable that's been set withtin SITE_CONFIG variable that has to be declared
+
+
 def get_env_var(setting, configs=configs):
     try:
         val = configs[setting]
@@ -26,18 +26,18 @@ def get_env_var(setting, configs=configs):
         raise ImproperlyConfigured(error_msg)
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+BASE_DIR = os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))
 SECRET_KEY = get_env_var("SECRET_KEY")
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = get_env_var('DEBUG')
 
 ALLOWED_HOSTS = ["*"]
+ADMINS = get_env_var("ADMINS")
+MANAGERS = ADMINS
 
-# Application definition
+DEFAULT_REDIRECT_URL = '.moproblems.io:8000'
+PARENT_HOST = DEFAULT_REDIRECT_URL
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django_hosts',
     'widget_tweaks',
     'crispy_forms',
+    'social_django',
 
     # our apps
     'profile_handling',
@@ -73,13 +74,19 @@ MIDDLEWARE = [
 
     # subdomaing response routing
     'django_hosts.middleware.HostsResponseMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+
+    'herriageio.middleware.UserFieldCompilingMiddleware',
+    'herriageio.middleware.GetUserProfiles',
+    'herriageio.middleware.HasProfileForSolution',
 ]
 
 # the home urls access
 ROOT_URLCONF = 'herriageio.urls'
 ROOT_HOSTCONF = 'herriageio.hosts'
 DEFAULT_HOST = 'www'
-DEFAULT_REDIRECT_URL = 'http://www.localhost:8000'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # how the templates are read -- we always need to update DIRS so that we can
 # pull the information correctly
@@ -94,7 +101,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
+            'builtins': [
+                'django_hosts.templatetags.hosts_override',
+            ]
         },
     },
 ]
@@ -120,8 +133,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # time settings
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'America/Chicago'
+LANGUAGE_CODE = get_env_var('LANGUAGE_CODE')
+TIME_ZONE = get_env_var('TIME_ZONE')
 
 DATE_FORMAT = "%m/%d/%Y"
 DATE_INPUT_FORMATS = [
@@ -150,8 +163,46 @@ if DEBUG:
 else:
     MEDIA_ROOT = "/home/chanceherriage/herriageio/media"
 
-MIDDLEWARE += [
-    'herriageio.middleware.SubdomainCompilingMiddleware',
-]
-
 SESSION_COOKIE_DOMAIN = '.moproblems.io'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL = 'login_view'
+LOGOUT_URL = 'logout_view'
+LOGIN_REDIRECT_URL = 'home'
+
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+
+SOCIAL_AUTH_GITHUB_KEY = get_env_var('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = get_env_var('SOCIAL_AUTH_GITHUB_SECRET')
+SOCIAL_AUTH_TWITTER_KEY = get_env_var('SOCIAL_AUTH_TWITTER_KEY')
+SOCIAL_AUTH_TWITTER_SECRET = get_env_var('SOCIAL_AUTH_TWITTER_SECRET')
+SOCIAL_AUTH_FACEBOOK_KEY = get_env_var('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = get_env_var('SOCIAL_AUTH_FACEBOOK_SECRET')
+
+CHANCE_TEST_ADMIN_USERNAME = get_env_var('CHANCE_TEST_ADMIN_USERNAME')
+CHANCE_TEST_ADMIN_PASSWORD = get_env_var('CHANCE_TEST_ADMIN_PASSWORD')
+MASON_TEST_ADMIN_USERNAME = get_env_var('MASON_TEST_ADMIN_USERNAME')
+MASON_TEST_ADMIN_PASSWORD = get_env_var('MASON_TEST_ADMIN_PASSWORD')
+
+MAILCHIMP_LOGIN = "moproblems"
+MAILCHIMP_KEY = get_env_var("MAILCHIMP_KEY")
+
+
+CHILD_APPS = (('www', 'www'),
+              ('birthdate', 'birthdate'),
+              ('lunchmunch', 'lunchmunch'),
+              ('tripweather', 'tripweather'))
+
+MAILCHIMP_LISTS = {'www': '01e7b6b065',
+                   'birthdate': '0d4adf4d52',
+                   'lunchmunch': '05b0bd87c0',
+                   'tripweather': 'f24a20cd0e'}

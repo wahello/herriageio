@@ -18,10 +18,27 @@
             "console": "integratedTerminal",
             "args": [
                 "runserver",
-                "--noreload",
-                "--nothreading"
             ],
             "django": true
+        },
+        {
+            "name": "Django",
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": false,
+            "program": "${workspaceRoot}/manage.py",
+            "console": "integratedTerminal",
+            "args": [
+                "runserver",
+                "--no-color",
+                "--noreload"
+            ],
+            "debugOptions": [
+                "WaitOnAbnormalExit",
+                "WaitOnNormalExit",
+                "RedirectOutput",
+                "DjangoDebugging"
+            ]
         }
     ]
 }

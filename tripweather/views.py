@@ -14,7 +14,7 @@ from .forms import StartLocForm, EndLocForm, TripForm
 from .models import Trip
 
 
-def check_weather(request, unique_id=None):
+def home(request, unique_id=None):
     template_name = 'tripweather/tripweather.html'
     trip_form = TripForm(request.POST or None)
 
@@ -118,4 +118,4 @@ def delete_trip(request, unique_id=None):
     trip = get_object_or_404(Trip, unique_id=unique_id)
     trip.deleted = True
     trip.save()
-    return redirect('check_weather')
+    return redirect('home')
