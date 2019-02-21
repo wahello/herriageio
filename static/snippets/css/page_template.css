@@ -1,7 +1,11 @@
 .messages {
   padding: 0px;
   text-align: center;
-  color: white; }
+  color: white;
+  margin-bottom: 0px;
+  position: relative;
+  z-index: 999999999999;
+  margin-bottom: -3px; }
   .messages li {
     padding: 10px; }
     .messages li.error {

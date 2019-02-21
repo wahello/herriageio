@@ -6,6 +6,9 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name="home"),
+    path('launchpad/', views.launchpad, name="launchpad"),
+    path('launchpad/<redirect_confirmation>/',
+         views.launchpad, name="launchpad"),
 
     path('signup/', views.signup, name="signup"),
 

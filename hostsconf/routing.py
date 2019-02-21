@@ -17,7 +17,9 @@ class BirthdateRouter:
             return 'tripweather_db'
         if model._meta.app_label == 'lunchmunch':
             return 'lunchmunch_db'
-        return 'db'
+        if model._meta.app_label == 'notes':
+            return 'db'
+        return None
 
     def db_for_write(self, model, **hints):
         """
@@ -29,27 +31,29 @@ class BirthdateRouter:
             return 'tripweather_db'
         if model._meta.app_label == 'lunchmunch':
             return 'lunchmunch_db'
-        return 'db'
+        if model._meta.app_label == 'notes':
+            return 'db'
+        return None
 
     def allow_relation(self, obj1, obj2, **hints):
         """
         Allow relations if a model in the auth app is involved.
         """
-        return True
-        # if obj1._meta.app_label == 'birthdate' or\
-        #        obj2._meta.app_label == 'birthdate' or\
-        #        obj1._meta.app_label == 'birthdate' and obj2._meta.app_label == 'auth' or\
-        #        obj1._meta.app_label == 'auth' and obj2._meta.app_label == 'birthdate' or \
-        #        obj1._meta.app_label == 'tripweather' or\
-        #        obj2._meta.app_label == 'tripweather' or\
-        #        obj1._meta.app_label == 'tripweather' and obj2._meta.app_label == 'auth' or\
-        #        obj1._meta.app_label == 'auth' and obj2._meta.app_label == 'tripweather' or \
-        #        obj1._meta.app_label == 'lunchmunch' or \
-        #        obj2._meta.app_label == 'lunchmunch' or\
-        #        obj1._meta.app_label == 'lunchmunch' and obj2._meta.app_label == 'auth' or\
-        #        obj1._meta.app_label == 'auth' and obj2._meta.app_label == 'lunchmunch':
-        #    return True
-        # return False
+        if obj1._meta.app_label == 'birthdate' or\
+                obj2._meta.app_label == 'birthdate' or\
+                obj1._meta.app_label == 'birthdate' and obj2._meta.app_label == 'auth' or\
+                obj1._meta.app_label == 'auth' and obj2._meta.app_label == 'birthdate' or \
+                obj1._meta.app_label == 'tripweather' or\
+                obj2._meta.app_label == 'tripweather' or\
+                obj1._meta.app_label == 'tripweather' and obj2._meta.app_label == 'auth' or\
+                obj1._meta.app_label == 'auth' and obj2._meta.app_label == 'tripweather' or \
+                obj1._meta.app_label == 'lunchmunch' or \
+                obj2._meta.app_label == 'lunchmunch' or\
+                obj1._meta.app_label == 'lunchmunch' and obj2._meta.app_label == 'auth' or\
+                obj1._meta.app_label == 'auth' and obj2._meta.app_label == 'lunchmunch' or\
+                obj1._meta.app_label == 'notes' or obj2._meta.app_label == 'notes':
+            return True
+        return False
 
     def allow_migrate(self, db, app_label, model_name=None, **hints):
         """
@@ -62,7 +66,9 @@ class BirthdateRouter:
             return db == 'tripweather_db'
         if app_label == 'lunchmunch':
             return db == 'lunchmunch_db'
-        return 'db'
+        if app_label == 'notes':
+            return db == 'db'
+        return None
 
 
 class MultiAuthRouter(object):

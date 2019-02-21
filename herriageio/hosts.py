@@ -9,5 +9,7 @@ host_patterns = patterns(
          name='tripweather'),
     host(r'lunchmunch', 'lunchmunch.urls',
          name='lunchmunch'),
+    host(r'notes', 'notes.urls',
+         name='notes'),
     host(r'(?!www).*', 'hostsconf.urls', name='wildcard'),
 )

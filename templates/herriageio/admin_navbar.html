@@ -1,3 +1,4 @@
+{% load crispy_forms_tags %}
 {% load hosts %}
 
 <div class="admin-navbar p-3 two-column hidden"> <!-- .hidden by default when out of debug -->
@@ -54,6 +55,72 @@
                 </div>
             </div>
         </div>
+
+        <!--
+        {% if request.user.is_authenticated %}
+            <div class="row mt-5" id="notes">
+                <div class="col-md-6">
+                    <h3>✏️ Active Notes</h3>
+                    <br>
+                </div>
+                <div class="col-md-6"></div>
+
+                <div class="col-md-4 new_note_form">
+                    <div class="new-note-form-container">
+                        {{ request.blank_note_form.author|as_crispy_field }}
+                        {{ request.blank_note_form.message|as_crispy_field }}
+                        <button type="new_parent_note_button"><strong>👉</strong></button>
+                    </div>
+                </div>
+
+                {% if request.admin_notes.count != 0 %}
+                    <span class="notes-prepend"></span>
+                    {% for note in request.admin_notes  %}
+                        <div class="col-md-4 note" note_id="{{ note.id }}">
+                            <div class="content">
+                                <textarea note_id="{{ note.id }}" name="message" cols="40" rows="10" value="{{ note.message }}" class="textarea form-control" id="id_message" link="{{ note.edit_note_url }}">{{ note.message }}</textarea>
+
+                                <div class="action-container">
+                                    <a class="info-link" note_id="{{ note.id }}"><span class="info-note">🤔</span></a>  
+                                    <a class="reply-link" note_id="{{ note.id }}"><span class="info-reply">💬</span></a>  
+                                </div>
+
+                                <a link="{{ note.resolve_note_url }}" class="resolve-note-link" note_id="{{ note.id }}"><span class="delete-note">👌</span></a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 hidden note new_note_form" parent_id="{{ note.id }}" note_id="{{ note.id }}">
+                            <div class="new-note-form-container">
+                                <form method="POST" id="new_note_form" parent_id="{{ note.id }}" note_id="{{ note.id }}"> 
+                                    {% csrf_token %}
+                                    {{ request.blank_note_form.author|as_crispy_field }}
+                                    {{ request.blank_note_form.message|as_crispy_field }}
+                                    <button type="submit"><strong>👉</strong></button>
+                                </form>
+                            </div>
+                        </div>
+
+                        {% for child in note.children.all  %}
+                            <div class="col-md-4 note child" note_id="{{ child.id }}" parent_id="{{ note.id }}">
+                                <div class="content">
+                                    <input type="hidden" class="note_parent_id" note_id="{{ child.id }}">
+                                    <textarea note_id="{{ child.id }}" name="message" cols="40" rows="10" value="{{ child.message }}" class="textarea form-control" id="id_message" link="{{ child.edit_note_url }}">{{ child.message }}</textarea>
+
+                                    <div class="action-container">
+                                        <a class="info-link" note_id="{{ note.id }}"><span class="info-note">🤔</span></a>  
+                                    </div>
+
+                                    <a link="{{ child.resolve_note_url }}" class="resolve-note-link" note_id="{{ child.id }}"><span class="delete-note">👌</span></a>
+                                    </p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}                
+            </div>
+        {% endif %} -->
+
         <div class="row mt-5">  
             <div class="col-md-6">
                 <h3>👱 User Access</h3>

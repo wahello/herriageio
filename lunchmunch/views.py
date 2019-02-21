@@ -6,7 +6,9 @@ from django.contrib.auth import login, authenticate, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse
 
+from profile_handling.models import Profile
 from .forms import EventForm, ProfileForm, GroupForm
 from .models import Event, Group
 
@@ -15,8 +17,39 @@ tz = pytz.timezone('America/Chicago')
 
 
 def home(request):
+    return redirect('launchpad')
+
     template_name = "lunchmunch/home.html"
     context = {}
+    return render(request, template_name, context)
+
+
+def launchpad(request, redirect_confirmation=None):
+    template_name = "lunchmunch/launchpad.html"
+
+    if request.method == "POST" and redirect_confirmation is None:
+        email = request.POST.get('email_address')
+        user, created = User.objects.get_or_create(email=email, username=email)
+        if created:
+            Profile.objects.create(user=user, host='lunchmunch')
+            messages.success(
+                request, "%s has been created and has been added to the Lunch o' Munch community." % (user.email))
+        elif user is not None:
+            if not Profile.objects.filter(user=user, host="lunchmunch").exists():
+                Profile.objects.create(user=user, host='lunchmunch')
+                messages.success(
+                    request, "%s has been added to the Lunch o' Munch community." % (user.email))
+
+        if user is not None:
+            return redirect(reverse('launchpad', kwargs={'redirect_confirmation': 'thank-you'}))
+        else:
+            redirect_confirmation = None
+            messages.error(request,
+                           'There was an error adding you to our community. ☹️')
+
+    context = {
+        'redirect_confirmation': redirect_confirmation,
+    }
     return render(request, template_name, context)
 
 

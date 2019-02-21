@@ -1,9 +1,14 @@
 import json
+from threading import local
 
 from django.contrib.auth import get_user_model
 from django.core import serializers
 
+from notes.forms import NoteForm
+
 User = get_user_model()
+
+my_local_global = local()
 
 
 class UserFieldCompilingMiddleware(object):
@@ -51,4 +56,19 @@ class HasProfileForSolution(object):
         else:
             request.user_has_profile_for_solution = False
 
+        return self.get_response(request)
+
+
+class GetAdminNotes(object):
+    # this is needed to initialize this middleware class.
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    # this is called between the calling and displaying of the views.
+    def __call__(self, request):
+        from notes.models import Note
+        request.admin_notes = Note.objects.filter(
+            resolved=False, parent_id=None)
+
+        request.blank_note_form = NoteForm()
         return self.get_response(request)

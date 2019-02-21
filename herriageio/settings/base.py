@@ -38,6 +38,8 @@ MANAGERS = ADMINS
 DEFAULT_REDIRECT_URL = '.moproblems.io:8000'
 PARENT_HOST = DEFAULT_REDIRECT_URL
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -51,6 +53,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'crispy_forms',
     'social_django',
+    'corsheaders',
+    'channels',
 
     # our apps
     'profile_handling',
@@ -67,6 +71,7 @@ MIDDLEWARE = [
 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -80,11 +85,13 @@ MIDDLEWARE = [
     'herriageio.middleware.UserFieldCompilingMiddleware',
     'herriageio.middleware.GetUserProfiles',
     'herriageio.middleware.HasProfileForSolution',
+    'herriageio.middleware.GetAdminNotes',
 ]
 
 # the home urls access
 ROOT_URLCONF = 'herriageio.urls'
 ROOT_HOSTCONF = 'herriageio.hosts'
+ASGI_APPLICATION = 'herriageio.socket_routing.application'
 DEFAULT_HOST = 'www'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -207,3 +214,12 @@ MAILCHIMP_LISTS = {'www': '01e7b6b065',
                    'birthdate': '0d4adf4d52',
                    'lunchmunch': '05b0bd87c0',
                    'tripweather': 'f24a20cd0e'}
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('localhost', 6379)],
+        },
+    },
+}

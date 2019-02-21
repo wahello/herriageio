@@ -1,15 +1,17 @@
 .admin-navbar {
+  min-height: 100vh;
   background: #3B3B3B;
   z-index: 99;
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0px;
   top: 0px;
   transform: translateX(0px);
   transition: .3s all ease-in-out;
   color: #FFFFFF;
   overflow-y: hidden; }
+  .admin-navbar .hidden {
+    display: none; }
   .admin-navbar h1,
   .admin-navbar h2,
   .admin-navbar h3,
@@ -53,5 +55,91 @@
   .admin-navbar strong {
     font-weight: 700;
     color: #FFFFFF; }
+
+#notes form {
+  height: 200px; }
+#notes .form-control {
+  background: transparent;
+  color: #FFFFFF;
+  border: 0px;
+  border-radius: 0px !important;
+  font-size: 14px;
+  font-weight: 300; }
+#notes #id_author,
+#notes label[for="id_author"] {
+  display: none; }
+#notes #id_message {
+  height: 160px;
+  padding-left: 0px;
+  padding-right: 0px;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+  resize: none; }
+#notes .note {
+  height: 200px;
+  margin-bottom: 32px; }
+  #notes .note .content {
+    margin: 0px 5px;
+    background: rgba(255, 255, 255, 0.15);
+    height: 100%;
+    padding: 10px; }
+  #notes .note strong {
+    position: absolute;
+    bottom: 6px; }
+  #notes .note .action-container {
+    position: absolute;
+    bottom: 6px;
+    right: 34px; }
+    #notes .note .action-container a:hover,
+    #notes .note .action-container a:focus,
+    #notes .note .action-container a:active {
+      cursor: pointer; }
+  #notes .note .delete-note {
+    position: absolute;
+    bottom: 6px;
+    left: 34px; }
+    #notes .note .delete-note:hover, #notes .note .delete-note:focus, #notes .note .delete-note:active {
+      cursor: pointer; }
+#notes .note.child .content {
+  background: rgba(255, 255, 255, 0.25);
+  position: relative; }
+#notes .note.child .delete-note {
+  left: 6px; }
+#notes .note.child .action-container {
+  right: 6px; }
+#notes .new-note-form-container {
+  background: rgba(255, 255, 255, 0.15);
+  margin-top: -16px;
+  position: relative;
+  margin: 0px 5px;
+  height: 200px;
+  padding: 10px; }
+  #notes .new-note-form-container textarea {
+    margin-top: -16px;
+    -webkit-appearance: none;
+    box-shadow: none !important;
+    resize: none; }
+    #notes .new-note-form-container textarea::-webkit-input-placeholder {
+      color: #FFFFFF; }
+    #notes .new-note-form-container textarea::-moz-placeholder {
+      color: #FFFFFF; }
+    #notes .new-note-form-container textarea:-ms-input-placeholder {
+      color: #FFFFFF; }
+    #notes .new-note-form-container textarea:-moz-placeholder {
+      color: #FFFFFF; }
+  #notes .new-note-form-container button {
+    margin-bottom: 0px;
+    position: absolute;
+    bottom: 0px;
+    text-transform: initial;
+    background: none;
+    color: white;
+    position: absolute;
+    padding: 0px;
+    right: 34px;
+    bottom: 6px;
+    padding-right: 0px; }
+    #notes .new-note-form-container button:hover, #notes .new-note-form-container button:focus, #notes .new-note-form-container button:active {
+      cursor: pointer; }
 
 /*# sourceMappingURL=admin_navbar.css.map */

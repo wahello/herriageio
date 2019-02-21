@@ -112,8 +112,6 @@ class Profile(models.Model):
         return reverse("home", host=self.host)
 
     def get_settings_url(self):
-        print('got settings url ', reverse("settings", host="www",
-                                           kwargs={"profile_host_name": self.host}))
         return reverse("settings", host="www",
                        kwargs={"profile_host_name": self.host})
 

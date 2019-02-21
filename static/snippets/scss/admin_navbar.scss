@@ -1,8 +1,14 @@
 $black: #3B3B3B;
 $green: #27FF00;
+$red: #dd5967;
 $white: #FFFFFF;
 
 .admin-navbar {
+    min-height: 100vh;
+
+    .hidden {
+        display: none;
+    }
 
     h1,
     h2,
@@ -34,7 +40,6 @@ $white: #FFFFFF;
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0px;
     top: 0px;
     transform: translateX(0px);
     transition: .3s all ease-in-out;
@@ -72,5 +77,145 @@ $white: #FFFFFF;
     strong {
         font-weight: 700;
         color: $white;
+    }
+}
+
+#notes {
+    form {
+        height: 200px;
+    }
+
+    .form-control {
+        background: transparent;
+        color: $white;
+        border: 0px;
+        border-radius: 0px !important;
+        font-size: 14px;
+        font-weight: 300;
+    }
+
+    #id_author,
+    label[for="id_author"] {
+        display: none;
+    }
+
+    #id_message {
+        height: 160px;
+        padding-left: 0px;
+        padding-right: 0px;
+        -webkit-appearance: none;
+        box-shadow: none !important;
+        resize: none;
+    }
+
+    .note {
+        height: 200px;
+        margin-bottom: 32px;
+
+        .content {
+            margin: 0px 5px;
+            background: rgba($white, .15);
+            height: 100%;
+            padding: 10px;
+        }
+
+        strong {
+            position: absolute;
+            bottom: 6px;
+        }
+
+        .action-container {
+            position: absolute;
+            bottom: 6px;
+            right: 34px;
+
+            a:hover,
+            a:focus,
+            a:active {
+                cursor: pointer;
+            }
+
+        }
+
+        .delete-note {
+            position: absolute;
+            bottom: 6px;
+            left: 34px;
+
+            &:hover,
+            &:focus,
+            &:active {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .note {
+        &.child {
+            .content {
+                background: rgba($white, .25);
+                position: relative;
+            }
+
+            .delete-note {
+                left: 6px;
+            }
+
+            .action-container {
+                right: 6px;
+            }
+        }
+    }
+
+    .new-note-form-container {
+        background: rgba($white, .15);
+        margin-top: -16px;
+        position: relative;
+        margin: 0px 5px;
+        height: 200px;
+        padding: 10px;
+
+        textarea {
+            margin-top: -16px;
+            -webkit-appearance: none;
+            box-shadow: none !important;
+            resize: none;
+
+            &::-webkit-input-placeholder {
+                color: $white;
+            }
+
+            &::-moz-placeholder {
+                color: $white;
+            }
+
+            &:-ms-input-placeholder {
+                color: $white;
+            }
+
+            &:-moz-placeholder {
+                color: $white;
+            }
+        }
+
+        button {
+            margin-bottom: 0px;
+            position: absolute;
+            bottom: 0px;
+            text-transform: initial;
+            background: none;
+            color: white;
+            position: absolute;
+            padding: 0px;
+            right: 34px;
+            bottom: 6px;
+            padding-right: 0px;
+
+            &:hover,
+            &:focus,
+            &:active {
+                cursor: pointer;
+            }
+        }
     }
 }

@@ -1,3 +1,6 @@
+☐ Figure out how to set up DMX records for mailchimp to prevent spam filtering.
+☐ Add social auth to lunchmunch/launchpad
+
 ✔ Have authentication carried over from subdomains. @done(19-02-15 00:05)
     Conclusion:
         This is done with `SESSION_COOKIE_DOMAIN = '.moproblems.io'` and allows us to use the cookies from the base url. For development we have to update our hosts files to contain...
@@ -192,9 +195,38 @@ Back Bone:
 Notes:
     These will only be visible in the debug dashboard. We are basically going to create our own roadmap app, but extremely minimal.
 
-    Comments:
+    ☐ We should update the edit_note socket to be fired on every key press and not just the escape of the input.
+
+    ✔ Live resolving. @done(19-02-19 19:34)
+        ✔ When we resolve one, they are all resolved. @done(19-02-19 19:34)
+        
+    ✔ edit_note doesn't woork on notes that were created from add_note @done(19-02-20 11:34)
+        ✔ We just need to open a new socket for it :) @done(19-02-20 11:34)
+
+    ☐ Need to add a add_note receiver on all reply forms.
+
+    ☐ We can use Notes as comments as posts. It would be a very nice reusable setup there.
+        ☐ https://gyazo.com/5dd9e1bdb933bc1f526d8387a5e4fb8a
+            ☐ Process the note replies 
 
 ☐ It would be smart to create a skeleton app that we can simply duplicate and get rolling quickly. With base nav templates and all.
+☐ Make it to where comments can go on comments
+☐ Resolve child notes when a parent note is resolved.
+✔ We don't want to update the value of teh text area when the user is the one writing the comment. @done(19-02-20 13:08)
+✔ We need to put add_notes entire socket code in an each for each #new_note_form @done(19-02-20 14:34)
+✔ In the edit_note of add_note we don't need the each. Just need to create an object for the new @done(19-02-20 14:34)
+Notes:
+    Notes:
+        Just taking a break for right now. My brain is hurting.
+
+    ✘ Added notes don't have the reply form. @cancelled(19-02-21 14:29)
+    ✘ You can't resolve a recently added note. @cancelled(19-02-21 14:29)
+    ✘ The add_note form is actually submiting. @cancelled(19-02-21 14:29)
+    ✘ You can't add more than one note in a sesion currently. @cancelled(19-02-21 14:29)
+    ✘ We can add parent notes again, but they aren't being displayed. @cancelled(19-02-21 14:29)
+
+
+✔ Implement lunchmunch launch_pad @done(19-02-21 14:28)
 
 ☐ This isn't going to work anymore in lunchmunch/base.html
     `{% if request.user.profile.has_group %}`
@@ -207,7 +239,7 @@ Notes:
         `<a href="#">`
         `   📍`
         `{{ request.user.profile.zipcode }}</a>`
-    `{% endif %}`
+    `{% end if %}`
 
 ☐ Implement dynamic seo tags for titles and descriptions and favicon emoji
     ☐ Each app should have it's own `seo.py`
@@ -215,6 +247,27 @@ Notes:
 ✔ Remove messages DOM from base and only keep it in page_template.html @done(19-02-18 16:12)
 
 ☐ Figure out groups and permissions for users.
+
+☐ LLC Registration
+☐ User analytics
+    ☐ Be nice to get user loocation. We could automate this process in a couple of child apps when they allow us location access.
+
+☐ Referral credit structure
+    ☐ What they get for referring
+    ☐ Give them credit for interacting with the community.
+
+☐ [V1.1] Define a community interaction benefiting system.
+    ☐ If you help with the voting
+        ☐ Could be a section of the leaderbooard part for the users too help us brainstorm the idea! That would be really badass.
+            ☐ Allow them to append text and an image for the situations that users go above any beyoond.
+
+☐ Have more than a blog, have an actual place where they can chat and have a sense of community.
+    ☐ Public forum.
+        ☐ People can make a post about something they want.
+            ☐ We respond with our ideas
+                ☐ Other people come in and leave their ideas as well!
+
+            ☐ Then we update the post as we build ouot the solution or whatever the process was in relation to that solution.
 
 
 Parent App Backends:

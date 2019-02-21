@@ -1,0 +1,65 @@
+{% extends 'herriageio/page_template.html' %}
+{% load staticfiles %}
+{% load hosts %}
+
+{% block app_base_header %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="icon" data-emoji="🍔" type="image/png">
+
+    <link href="https://fonts.googleapis.com/css?family=Averia+Serif+Libre:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'lunchmunch/css/style.css' %}">
+{% endblock app_base_header %}
+
+{% block app_base %}
+    <div class="launchpad">
+        <nav class="navbar fixed-top navbar-dark">
+            <div class="container">
+                <div class="row">
+                        <a href="{% url 'launchpad' host 'lunchmunch' %}" class="navbar-brand">🍔 Lunch O' Munch</a>    
+                </div>
+            </div>
+        </nav>
+
+        <div class="jumbotron-fluid hero" {% if redirect_confirmation %}style="background-image: url('{% static 'lunchmunch/images/launchpad_thankyou.png' %}');"{% endif %}>
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+                    {% if redirect_confirmation %}
+                        <h1>Thank you for joining the<br> 🍔 Lunch o' Munch community!</h1>
+                        <p class="lead">By joining the community now you have guaranteed yourself FREE lifetime access to Lunch o' Munch. Keep an eye on your inbox as we approach our public launch in the next couple of weeks.</p>
+                    {% else %}
+                        <h1>Keep everyone in the group<br>happy with the choice for lunch.</h1>
+                        <p class="lead">Answer a few questions about what you 👍 like and we will give you a place that 👪  everyone will enjoy. Get started by entering your email below and secure lifetime access for free!</p>
+                    {% endif %}
+                </div>
+
+                {% if not redirect_confirmation %}
+                    <div class="col-md-12">
+                        <form action="." method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="mb-2 col-lg-4 offset-lg-3 col-md-5 offset-md-2 col-sm-10 offset-sm-1 col-xs-12 offset-xs-0">
+                                    <input name="email_address" type="text" class="input-block form-control" placeholder="Email Address...">
+                                </div>
+                                <div class="col-lg-2 col-md-3 offset-md-0 col-sm-10 offset-sm-1 col-xs-12 offset-xs-0">
+                                    <button class="btn btn-secondary btn-block">Get Started</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 mt-3">
+                        <p>Getting started now will grant you exclusive features that no one besides others joining during this phase will have access to. On the creation of your account you agree to be added to our email list.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</html>
+{% endblock app_base %}
+
+{% block app_base_scripts %}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+
+	{% block app_page_scripts %}{% endblock app_page_scripts %}
+{% endblock %}
