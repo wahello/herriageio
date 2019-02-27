@@ -1,0 +1,189 @@
+✔ Have authentication carried over from subdomains. @done(19-02-15 00:05)
+    Conclusion:
+        This is done with `SESSION_COOKIE_DOMAIN = '.moproblems.io'` and allows us to use the cookies from the base url. For development we have to update our hosts files to contain...
+            `127.0.0.1       www.moproblems.io`
+            `127.0.0.1       tripweather.moproblems.io`
+            `127.0.0.1       lunchmunch.moproblems.io`
+            `127.0.0.1       birthdate.moproblems.io`
+
+        Because that is how the production version will read it and that is the only way that the cookies work properly. This was much easier than expected, but also a very different approach than I expected to take to fix this. Now we can direct all user traffic to moproblems, we will just skin a dashboard or something similar. 
+
+        This will need to be discussed in a meeting for UX purposes.
+
+    ✔ We cleaned up all the existing links to authentication actions and now we can easily manage the user. @done(19-02-15 14:18)
+        Conclusion:
+            Now the only thing that is left is adding the actions where they are needed.
+
+        ✔ Social authentication was implemented. It has to be served over HTTPS, but the function 'should' work on the production domain of 'moproblems.io' @done(19-02-15 14:18)
+
+Back Bone:
+    ✔ Be able to link across to other subdomains with dynamic urls. @done(19-02-15 08:51)
+        ✔ With this change we have to specify the host I believe so a lot of the urls on the already built out pages are breaking. This is going to requiring a change, but it is a neccessary one, so it will be worth it in the end. We couldn't function with hard-coded urls on all pages for all apps. That would be an absolute mess. @done(19-02-15 10:42)
+
+        Notes:
+            Yeah, because we are overwriting url. We need the host for almost every url. This may cause problems other dynamic urls, but that is yet to be confirmed.
+
+            This hypothesis was correct. This will easily let us redirect to login, register, logout for the parent app much easier though.
+
+        Research:
+            ✘ We may have to update the get_absolute_url with the host as well. I'm not sure yet, but if things start getting screwy, that is likely why. @cancelled(19-02-15 13:47)
+
+        Conclusion:
+            ✔ Birthdates urls have been cleaned up. @done(19-02-15 08:59)
+
+    ✔ We should have everything cleaned up before we start adding anything. @done(19-02-15 14:18)
+        ✔ This includes removing all authentication related urls from the child apps. If we need them, we will have to update them to the parent apps authentication process anyways and redirecting to the parent apps authentication. @done(19-02-15 14:18)
+            Conclusion:
+                The links have been left there because authentication is vital to our success and the solution success. But, the actual links have been updated to direct to 'www' authentication.
+
+        ✔ Think of a safe way to store secret files. @done(19-02-15 14:18)
+            Notes:
+                We could have a 'Key' model that we can M2M of the Solution model and manually create them when we create a solution and as we go.
+
+    ✔ We should restructure the settings project to work of the environment that we need to be in. @done(19-02-15 14:42)
+        ✔ get_env_var() being added to /utils/ @done(19-02-15 14:35)
+        ✔ __init__.py @done(19-02-15 14:42)
+        ✔ base.py @done(19-02-15 14:42)
+        ✔ staging.py @done(19-02-15 14:42)
+        ✔ production.py @done(19-02-15 14:42)
+        ✔ local.py @done(19-02-15 14:42)
+
+    ✔ If the links are clicked in admin_navbar we should automatically open the navbar when we are redirected to the next url. @done(19-02-15 14:29)
+
+    ✔ We need to add a site_config and the whole jumbo mumbo. @done(19-02-15 14:42)
+
+    ✔ Have automatic admin accounts created for Chance & Mason. @done(19-02-15 15:33)
+        ✔ This will be done in apps.py @done(19-02-15 15:33)
+
+        Conclusion:
+            This took a lot longer than it should have because I failed to read the documentation of AppConfigs. You have to set the default app_config when you don't want to use the default one.
+
+
+    ✔ Make the admin_navbar maintain the same style regardless of the childs css @done(19-02-15 16:08)
+        ✘ w/ child-app statistics easily extended on the creation of a new app @cancelled(19-02-17 19:22)
+            Conclusion:
+                This is beyond the scope of the MVP.
+
+        ✔ This is currently a little wacky with the font changing weights or something on the child-app buttons. @done(19-02-15 16:08)
+
+    ✔ Social authentication should work once we are in a live version of the website on moproblems.io @done(19-02-17 19:26)
+        ✔ Facebook has it's variables set to `https://www.moproblems.io/` @done(19-02-17 19:26)
+        ✔ ... Twitter too. @done(19-02-17 19:26)
+        ✔ ... Github too. @done(19-02-17 19:26)
+        ✔ Move the social keys to site_config.json @done(19-02-17 19:26)
+
+    ✔ Connect automatic integration with marketing email system & that we can have profiles join users for the solutions. @done(19-02-18 15:27)
+        ✔ @critical For this to be functionla we really need to make email_address a required field of users. @done(19-02-17 23:53)
+            ✔ The error of not having an email has been prevented, but we still need to require the email adress for User creation. @done(19-02-17 22:55)
+
+            Conclusion:
+                The field is now included on the SignupForm and it is automatically synced to the User cause it's an awesome form.
+
+        Notes:
+            This is vital at this point. With a project focused around community it is absolutely key that we only focus on the community benefiting features before we have a community. (At least until we have a community.) 
+        Conclusion:
+            This was being so difficult because we had been using the wrong list ID the entire time. It's not the id that is displayed in the browser view and is actually the id that is retrieved when using the API. So, when you want to add a list, you have to retrieve the API list ID before anything will start working.
+
+        ✔ Create a mailchimp list for every child app and then add it to the list of MAILCHIMP_LISTS in `base.py` @done(19-02-16 18:01)
+        ✔ Create parent app profile and combine all profiles into the single parent app one. At some point the profile would be an absolutely massive Model @done(19-02-17 19:27)
+            Conclusion: 
+                With proper setup the model should never actually get too large.
+
+        @critical We need to think through the UX flow more before we go any further:
+            Notes:
+                With the below structure we would have to change the authentication urls to join if they aren't authenticated. If they are, display the user information.    
+
+                ✔ Every profile should have it's own absolute_url for each child app. @done(19-02-17 19:17)
+                    ✔ Update the url from the home page of the child app the profile url of the child app. @done(19-02-17 20:02)
+                        ✔ We should just redirect to the dashboard of each the app instead of the absolute url of the profile @done(19-02-17 20:03)
+                            Conclusion:
+                                Right now this is redirecting to the home of the app. This can be updated later.
+
+            moproblems/signup/?ref_app=None:
+                ✔ User.create @done(19-02-17 23:55)
+                    ✔ Profile.create(host='www') @done(19-02-17 19:28)
+                        ✔ mailchimp.addtolist(profile.host) @done(19-02-17 19:19)
+
+                    ✔ if rep_app -- this can be done in view because we won't be calling ref_app anywhere else @critical @done(19-02-17 23:58)
+                    ✔ form.save(ref_app=ref_app) @done(19-02-17 23:55)
+                            ✔ mailchimp.addtolist(profile.host) @done(19-02-17 19:19)
+
+                        ✔ The ref_app backend is there. We just need to implement the links that include ref_app. These links will be in the navbar of the child apps and footers. Anywhere signup is linked to from a child app. @done(19-02-18 13:10)
+                            ✔ Update all login and signup links in navbars to include the ref_app param @done(19-02-18 13:10)
+                                ✔ birthdate @done(19-02-18 13:10)
+                                ✔ lunchmunch @done(19-02-18 13:10)
+
+                            ✔ Include ref_app on 'Don't have an account yet?' of login when ref_app is not None @done(19-02-18 13:05)
+
+            ✔ Make sure that we actually redirect to the ref_app in login_view and signup_view @done(19-02-18 15:27)
+
+            childapp/join:
+                ✔ if user.is_authenticated @done(19-02-17 19:16)
+                    ✔ mailchimp.addtolist(profile.host) @done(19-02-17 19:16)
+                       ✔ Profile.create(host='childapp') @done(19-02-17 19:16)
+                ✔ else @done(19-02-18 12:47)
+                    Conclusion: 
+                        ✘ We don't want an else in join because login is required for joining a community. They would never be able to access join when they aren't authenticated. @cancelled(19-02-18 12:47)
+
+                        In the end we just added it, but we had to remove the login_required receiver and instead used the .is_authenticated and then appeneded the ref_app.
+
+                    ✔ redirect to login with query parameter of ref_app with the child_app_label as a reference @done(19-02-18 12:47)
+                        ✔ Even though they should never really have access to this. We should still configure the login_required url of the view @done(19-02-18 12:47)
+
+        Admin navbar:
+            ✔ Display 'join' in the navbar when they are authenticated, but don't have a profile. @done(19-02-17 20:03)
+            ✔ Display 'login' / 'sign up' when they aren't authenticated @done(19-02-17 20:03)
+            ✔ Display 'settings' / 'logout' when they are authenticated and have a profile. @done(19-02-17 20:03)
+
+        Child app navbars:
+            ✔ Display 'join' in the navbar when they are authenticated, but don't have a profile. @done(19-02-18 10:29)
+            ✔ Display 'login' / 'sign up' when they aren't authenticated @done(19-02-18 10:29)
+            ✔ Display 'settings' / 'logout' when they are authenticated and have a profile. @done(19-02-18 10:29)
+
+            ✔ Birthdate @done(19-02-18 10:29)
+            ✔ Lunchmunch @done(19-02-18 10:29)
+            ☐ Tripweather
+                ☐ We have to first add a navbar before we can have the correct navbar content
+                    ☐ Add {{ ref_app }} to both login and sign up urls.
+            
+            
+        ✔ We were having a weird issue with post parameters not matching get query parameters that was preventing redirecting to the child app. This bug took up far too much time. @done(19-02-18 14:42)
+            Conclusion:
+                I did learn how to use the debugging of VsCode thoough so I guess the time was woorth it. Still sucks that somoethign that small took so long though.
+
+        ✔ @high With this structure we need to have a profile form on settings that will be updated based on a query parameter or part of the url in the url pattern. A url pattern would probably be the safest option. @done(19-02-17 23:48)
+            ✔ The back end of this has been set up in get_settings_url. THey can access the settings view and we can retrieve the url. @done(19-02-17 23:48)
+                ✔ We just neeed to create the actual settings form. @done(19-02-18 11:17)
+                    ✘ There aren't currently any fields that we would want the user to be able to edit. @cancelled(19-02-18 11:18)
+                        Conclusion:
+                            The form was actually added. Right now it is only visible to admins, but I am not sure the normal users will ever have a need for access to the profile form, but if they ever do, the backend is already in place.
+
+        ✘ The actual integration on user creation is going to be a little difficult. @cancelled(19-02-17 19:22)
+            ✘ on_create of User @cancelled(19-02-17 19:22)
+                ✘ loop through every child app and create a profile for the respective host. @cancelled(19-02-17 19:22)
+                    ✔ on_create of Profile.host == "www" @done(19-02-17 19:13)
+                        ✔ Add them to the default mailchimp list. @done(19-02-17 19:15)
+                    
+                        
+        Notes:
+            ✘ On creation of the user we could automatically create a profile for every child app. @cancelled(19-02-17 19:22)
+                ✔ This would require a variable in base.py that contains the child apps to be created. @done(19-02-17 01:29)
+
+            ✘ Then, we would also need a function that would create profiles for all the users that already exist when we release a new child app. @cancelled(19-02-17 19:23)
+                There definitely needs to be a profile for each seperate app because we want at least the backend for a possible referral system in the far future. Just forward planning and covering my behind.
+
+                ✘ Just create a script that tags 1 arg, and takes host as the arg. Then just create profiles for every user in the database with that child app. @cancelled(19-02-17 19:23)
+                    ✘ This could lead to data pollution or un-needed data being stored.m @cancelled(19-02-17 19:23)
+
+    ✔ We need to document a repeatable process for creating a new child app. @done(19-02-15 08:45)
+    Child App Framework Creation:
+        ✔ ./manage.py startapp <app_name> @done(19-02-18 15:59)
+        ✔ Create templates folder for app @done(19-02-18 15:59)
+        ✔ Create <app_name>/base.html @done(19-02-18 15:59)
+        ✔ Create <app_name>/home.html @done(19-02-18 15:59)
+        ✔ Create base static files @done(19-02-18 16:01)
+        ✘ Check to make sure that our automatically created users automatically have a new profile created when the child_apps is updated in settings @cancelled(19-02-18 16:30)
+        ✔ [MANUAL] add to herriageio/hosts.py @done(19-02-18 16:11)
+        ✔ [MANUAL] add to hostsconf/routing.py @done(19-02-18 16:11)
+        ✔ [MANUAL] add <app>/css & <app>/scss @done(19-02-18 16:11)
+        ✔ [MANUAL] add to INSTALLED_APPS in base.py @done(19-02-18 16:11)

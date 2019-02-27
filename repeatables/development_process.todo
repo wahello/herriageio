@@ -1,0 +1,55 @@
+Development Process:
+    Build list of features:
+        Third party integrations:
+            ☐ Mailchimp
+            ☐ Social Authentications
+            ☐ Social Analytics
+                ☐ Facebook
+                    ☐ Goal tracking for 'Get Started' confirmation url.
+                ☐ Google Analytics
+                    ☐ Goal tracking for 'Get Started' confirmation url.
+
+        Users:
+            ☐ Can be invited by other users for extra veto tokens.
+            ☐ Can signup and login with social authentication.
+            ☐ Can easily invite others to join their group.
+                ☐ Textable link. We need to connect into the functions like other websites do.
+            ☐ Can trigger events by themselves or with a group.
+            ☐ Full choice history. ("Where they and their groups have gone.")
+            ☐ Favorite places chosen. ("Help us make the best decision for you!")
+
+        Groups: 
+            ☐ Can contain any number of people.
+            ☐ Owner customizable settings.
+                ☐ Lobby time. (seconds)
+                ☐ Max number of people. (int)
+                ☐ Invite only. (boolean)
+                ☐ Link only. (boolean)
+                ☐ Include veto period. (boolean)
+            ☐ Push notifications for event actions (after MVP testing)
+
+        Events:
+            ☐ Inherits settings from group event settings.
+            ☐ Auto-sync across all platforms.
+            
+            Periods:
+                ☐ Still upcoming.
+                ☐ Group users joining lobby.
+                ☐ User choosing what they want.
+                ☐ Choosing group suggestion(s).
+                    ☐ Group members choose top choice out of given selections
+                ☐ Veto period (optional)
+                ☐ Final locatione chosen.
+                ☐ Users give "👍" or "👎"
+                ☐ Simple chat room.
+                    ☐ All room events should be contained in the chat room log.
+
+    Design and build out launchpad page :
+    Build feature interactions and responses :
+    Build psuedo-code back-end :
+    Build wireframes for pages:
+    Build actual code for back-end:
+    Build out the wireframes for front-end:
+    Connect the front-end and back-end:
+    Bug hunting:
+    Final MVP:

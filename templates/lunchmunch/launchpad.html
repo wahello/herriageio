@@ -2,6 +2,10 @@
 {% load staticfiles %}
 {% load hosts %}
 
+{% block app_google_events %}
+            gtag('set', {'content_group1': "Lunch o' Munch"}); 
+{% endblock app_google_events %}
+
 {% block app_base_header %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -12,6 +16,31 @@
 {% endblock app_base_header %}
 
 {% block app_base %}
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+            appId      : '2292261734431537',
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v3.2'
+            });
+            
+            FB.AppEvents.logPageView();   
+
+            {% if redirect_confirmation %}
+                FB.AppEvents.logEvent("COMPLETED_REGISTRATION");
+            {% endif %} 
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
     <div class="launchpad">
         <nav class="navbar fixed-top navbar-dark">
             <div class="container">
@@ -29,7 +58,7 @@
                         <p class="lead">By joining the community now you have guaranteed yourself FREE lifetime access to Lunch o' Munch. Keep an eye on your inbox as we approach our public launch in the next couple of weeks.</p>
                     {% else %}
                         <h1>Keep everyone in the group<br>happy with the choice for lunch.</h1>
-                        <p class="lead">Answer a few questions about what you 👍 like and we will give you a place that 👪  everyone will enjoy. Get started by entering your email below and secure lifetime access for free!</p>
+                        <p class="lead">End the arguments of where to eat by playing a quick game and being given a place to eat that everyone will enjoy. Sign up today and snag you and your friends FREE lifetime access.</p>
                     {% endif %}
                 </div>
 

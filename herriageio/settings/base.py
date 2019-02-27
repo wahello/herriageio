@@ -30,12 +30,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))))
 SECRET_KEY = get_env_var("SECRET_KEY")
 DEBUG = get_env_var('DEBUG')
+STAGING = get_env_var('STAGING')
+
+DEFAULT_REDIRECT_URL = '.moproblems.io'
+if DEBUG or STAGING:
+    DEFAULT_REDIRECT_URL = '.moproblems.io:8000'
+
 
 ALLOWED_HOSTS = ["*"]
 ADMINS = get_env_var("ADMINS")
 MANAGERS = ADMINS
 
-DEFAULT_REDIRECT_URL = '.moproblems.io:8000'
 PARENT_HOST = DEFAULT_REDIRECT_URL
 
 CORS_ORIGIN_ALLOW_ALL = True
