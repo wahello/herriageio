@@ -1,0 +1,24 @@
+Notes:
+    These will only be visible in the debug dashboard. We are basically going to create our own roadmap app, but extremely minimal.
+
+    ☐ We should update the edit_note socket to be fired on every key press and not just the escape of the input.
+
+    ✔ Live resolving. @done(19-02-19 19:34)
+        ✔ When we resolve one, they are all resolved. @done(19-02-19 19:34)
+        
+    ✔ edit_note doesn't woork on notes that were created from add_note @done(19-02-20 11:34)
+        ✔ We just need to open a new socket for it :) @done(19-02-20 11:34)
+
+    ☐ Need to add a add_note receiver on all reply forms.
+
+    ☐ We can use Notes as comments as posts. It would be a very nice reusable setup there.
+        ☐ https://gyazo.com/5dd9e1bdb933bc1f526d8387a5e4fb8a
+            ☐ Process the note replies 
+
+    ☐ Resolve child notes when a parent note is resolved.
+    ☐ Make it to where comments can go on comments
+    ☐ Added notes don't have the reply form.
+    ☐ You can't resolve a recently added note.
+    ☐ You can't add more than one note in a sesion currently.
+    ☐ The add_note form is actually submiting.
+    ☐ We can add parent notes again, but they aren't being displayed.

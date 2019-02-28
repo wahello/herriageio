@@ -45,6 +45,9 @@ def login_view(request):
             else:
                 messages.error(
                     request, "The username or password is incorrect.")
+        else:
+            messages.error(
+                request, "The username or password is incorrect.")
 
     context = {
         "section_header": "Account Access",
