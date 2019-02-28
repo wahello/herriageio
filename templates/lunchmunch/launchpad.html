@@ -13,33 +13,32 @@
 
     <link href="https://fonts.googleapis.com/css?family=Averia+Serif+Libre:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'lunchmunch/css/style.css' %}">
+
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '321953505124286');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=321953505124286&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Facebook Pixel Code -->
 {% endblock app_base_header %}
 
 {% block app_base %}
-    <script>
-        window.fbAsyncInit = function() {
-            FB.init({
-            appId      : '2292261734431537',
-            cookie     : true,
-            xfbml      : true,
-            version    : 'v3.2'
-            });
-            
-            FB.AppEvents.logPageView();   
-
-            {% if redirect_confirmation %}
-                FB.AppEvents.logEvent("COMPLETED_REGISTRATION");
-            {% endif %} 
-        };
-
-        (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
+    {% if redirect_confirmation %}
+        <script>
+            fbq('track', 'CompleteRegistration');
+        </script>
+    {% endif %} 
 
     <div class="launchpad">
         <nav class="navbar fixed-top navbar-dark">
