@@ -195,6 +195,7 @@ LOGIN_REDIRECT_URL = 'home'
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/login/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = True
+SOCIAL_AUTH_USER_FIELDS = ['email', 'username']
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
