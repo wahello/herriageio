@@ -136,11 +136,8 @@ def settings(request, profile_host_name="www"):
     profile = get_object_or_404(
         Profile, user=request.user, host=profile_host_name)
 
-    if request.user.is_superuser:
-        profile_form = ProfileFormForAdmins(
-            request.POST or None, request.FILES or None, instance=profile)
-    else:
-        profile_form = None
+    profile_form = ProfileFormForAdmins(
+        request.POST or None, request.FILES or None, instance=profile)
 
     if request.method == "POST":
         if profile_form.is_valid():
