@@ -34,13 +34,19 @@ button {
 .btn-facebook {
   background: #3B5998;
   color: #FFFFFF; }
+  .btn-facebook .fa {
+    padding-right: 10px; }
 
 .btn-twitter {
   background: #55ACEE;
   color: #FFFFFF; }
+  .btn-twitter .fa {
+    padding-right: 10px; }
 
 .btn-google {
   background: #dd4b39;
   color: #FFFFFF; }
+  .btn-google .fa {
+    padding-right: 10px; }
 
 /*# sourceMappingURL=style.css.map */
