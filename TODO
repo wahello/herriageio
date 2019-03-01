@@ -5,21 +5,13 @@ To push the staging launch of Lunch o' Munch:
 
                 Notes:
                     With this we now know that we don't need a 'moproblems.io' app in PythonAnywhere because it is grabbed by 'www' and the wildcard redirect.
-                    
+
     ☐ Need to connect social authentication and get it functional on 'www'
+    ☐ Need to prompt 'add email address' once they've connected social if they don't have one yet.
     ☐ Need to connect social authentication to lunchmunch launchpad. 
         Notes:
             Really, all launchpads will need social authentication so it may be best to create a launchpad_base.html in the future.
     ☐ Need the welcome email on Mailchimp to be created before we want anyone signing up.
-
-
-
-
-
-
-
-
-
 
 Lunch o' Munch:
     ☐ Build out the development process.

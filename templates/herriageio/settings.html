@@ -12,23 +12,6 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-4">
-                        {% if github_login %}
-                            <!-- <p>Connected as <a href="https://github.com/{{ github_login.extra_data.login }}/" target="_blank">{{ github_login.extra_data.login }}</a></p> -->
-                            {% if can_disconnect %}
-                            <form method="post" action="{% url 'social:disconnect' 'github' %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger btn-block">Disconnect from GitHub</button>
-                            </form>
-                            {% else %}
-                            <button type="button" disabled class="btn btn-secondary btn-block">Disconnect from GitHub</button>
-                            <p style="color: red">You must <a href="{% url 'password' %}">define a password</a> for your account before disconnecting from Github.</p>
-                            {% endif %}
-                        {% else %}
-                            <a href="{% url 'social:begin' 'github' %}" class="btn btn-secondary btn-block">Connect to GitHub</a>
-                        {% endif %}
-                    </div>
-                    <div class="col-md-4">
-                        {% if google_login %}
                             <p>{{ google_login }}</p>
 
                             <!-- <p>Connected as <a href="https://google.com/{{ google_login.extra_data.login }}/" target="_blank">{{ google_login.extra_data.login }}</a></p> -->

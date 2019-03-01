@@ -21,6 +21,7 @@
 						<div class="col-md-4">
 							<a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-secondary btn-block"><i class="fab fa-google"></i> Log In With Google</a>
 						</div>
+						
 						<div class="col-md-12" style="margin-top: 20px;">
 							<form method="POST" action="{% url 'login_view' host 'www' %}{% if ref_app %}?ref_app={{ ref_app }}{% endif %}" enctype="multipart/form-data">
 								{% csrf_token %}

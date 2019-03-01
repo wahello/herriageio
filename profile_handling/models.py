@@ -117,8 +117,9 @@ class Profile(models.Model):
 
 
 @receiver(post_save, sender=User)
-def user_post_create_receiver(sender, instance, created, **kwargs):
-    if created:
+def user_post_save(sender, instance, **kwargs):
+    if not Profile.objects.filter(user=instance, host="www").exists():
+        print('creating the new profile for www')
         Profile.objects.create(
             user=instance,
             host='www',  # create a profile for 'www' by default
