@@ -1,5 +1,11 @@
 To push the staging launch of Lunch o' Munch:
-    ☐ Fix the host processing.
+    ✔ Fix the host processing. @done(19-03-01 13:24)
+        Conclusion:
+            Now, we should be able to access the non-www version of the domain and still be directed to 'www' if we are not given a host. This works for 'moproblems.io' as well! 
+
+                Notes:
+                    With this we now know that we don't need a 'moproblems.io' app in PythonAnywhere because it is grabbed by 'www' and the wildcard redirect.
+                    
     ☐ Need to connect social authentication and get it functional on 'www'
     ☐ Need to connect social authentication to lunchmunch launchpad. 
         Notes:

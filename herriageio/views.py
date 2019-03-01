@@ -111,7 +111,7 @@ def logout_view(request):
 
 
 @login_required
-def settings(request, profile_host_name):
+def settings(request, profile_host_name="www"):
     user = request.user
 
     ref_app_exists = False

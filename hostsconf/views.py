@@ -11,7 +11,11 @@ else:
 def wildcard_redirect(request, path=None):
     new_url = DEFAULT_REDIRECT_URL
     if path is not None:
-        # this is the wildcard redirect that is fired when we cannot find a host. So, it will redirect to http://www.localhost:8000/
-        # + /path (We don't want the path in this because if we are directing to the wildcard redirect then they've access an unavailable host and we want to send them to the homepage.)
+        """ 
+        This is the wildcard redirect that is fired when we cannot find a host. So, it will redirect to http://www.localhost:8000/
+
+        new_url had `+ path` at the end, but because we always want to send them to the homepage when they access an invalid host, we don't need it.
+        """
+
         new_url = "http://www." + DEFAULT_REDIRECT_URL + "/"
     return redirect(new_url)

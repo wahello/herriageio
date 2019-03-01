@@ -45,9 +45,7 @@
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->
 
-        {% if request.user.is_superuser %}
-            {% include "herriageio/admin_navbar.html" %}
-        {% endif %}
+        {% include "herriageio/admin_navbar.html" %}
 
         {% if messages %}
             <ul class="messages">
