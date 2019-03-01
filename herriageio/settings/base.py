@@ -205,6 +205,9 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'id, name, email, age_range',
 }
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'name']
+
+
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
     'social_core.pipeline.social_auth.social_uid',

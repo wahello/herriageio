@@ -8,6 +8,13 @@ To push the staging launch of Lunch o' Munch:
 
     ☐ Need to connect social authentication and get it functional on 'www'
     ☐ Need to prompt 'add email address' once they've connected social if they don't have one yet.
+        Notes:
+            We have officially added email the the Facebook connection :)
+
+            ☐ Twitter isn't pulling the email.
+            ☐ Google isn't pulling the email.
+            ☐ If Facebook isn't the first connection, the email isn't updated.
+
         ☐ Don't show settings form or any account information until 
     ☐ Need to connect social authentication to lunchmunch launchpad. 
         Notes:
