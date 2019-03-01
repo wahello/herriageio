@@ -182,6 +182,8 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+
 
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -200,6 +202,9 @@ SOCIAL_AUTH_TWITTER_KEY = get_env_var('SOCIAL_AUTH_TWITTER_KEY')
 SOCIAL_AUTH_TWITTER_SECRET = get_env_var('SOCIAL_AUTH_TWITTER_SECRET')
 SOCIAL_AUTH_FACEBOOK_KEY = get_env_var('SOCIAL_AUTH_FACEBOOK_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = get_env_var('SOCIAL_AUTH_FACEBOOK_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = get_env_var('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = get_env_var(
+    'SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 CHANCE_TEST_ADMIN_USERNAME = get_env_var('CHANCE_TEST_ADMIN_USERNAME')
 CHANCE_TEST_ADMIN_PASSWORD = get_env_var('CHANCE_TEST_ADMIN_PASSWORD')
