@@ -192,12 +192,17 @@ AUTHENTICATION_BACKENDS = (
 LOGIN_URL = 'login_view'
 LOGOUT_URL = 'logout_view'
 LOGIN_REDIRECT_URL = 'home'
-
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/login/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = True
+
 SOCIAL_AUTH_USER_FIELDS = ['email', 'username']
-SOCIAL_AUTH_PROTECTED_USER_FIELDS = ['email', ]
+OCIAL_AUTH_PROTECTED_USER_FIELDS = ['email', ]
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id, name, email, age_range',
+}
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',

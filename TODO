@@ -8,6 +8,7 @@ To push the staging launch of Lunch o' Munch:
 
     ☐ Need to connect social authentication and get it functional on 'www'
     ☐ Need to prompt 'add email address' once they've connected social if they don't have one yet.
+        ☐ Don't show settings form or any account information until 
     ☐ Need to connect social authentication to lunchmunch launchpad. 
         Notes:
             Really, all launchpads will need social authentication so it may be best to create a launchpad_base.html in the future.
