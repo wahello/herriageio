@@ -31,4 +31,16 @@ button {
   #home-hero .content {
     margin: auto; }
 
+.btn-facebook {
+  background: #3B5998;
+  color: #FFFFFF; }
+
+.btn-twitter {
+  background: #55ACEE;
+  color: #FFFFFF; }
+
+.btn-google {
+  background: #dd4b39;
+  color: #FFFFFF; }
+
 /*# sourceMappingURL=style.css.map */
