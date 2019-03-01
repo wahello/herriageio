@@ -13,8 +13,6 @@
                 <div class="row">
                     <div class="col-md-4">
                         {% if google_login %}
-                            <p>{{ google_login }}</p>
-
                             <!-- <p>Connected as <a href="https://google.com/{{ google_login.extra_data.login }}/" target="_blank">{{ google_login.extra_data.login }}</a></p> -->
                             {% if can_disconnect %}
                             <form method="post" action="{% url 'social:disconnect' 'google-oauth2' %}">
@@ -75,12 +73,10 @@
                             </div>
 
                             <div class="col-md-12">
-                                {% if request.user.is_superuser %}
-                                    {% if profile_form %}
-                                        {% for field in profile_form  %}
-                                            {{ field|as_crispy_field }}
-                                        {% endfor %}
-                                    {% endif %}
+                                {% if profile_form %}
+                                    {% for field in profile_form  %}
+                                        {{ field|as_crispy_field }}
+                                    {% endfor %}
                                 {% endif %}
                                 <button type="submit" class="btn btn-primary btn-block">Save Profile</button>
                             </div>
