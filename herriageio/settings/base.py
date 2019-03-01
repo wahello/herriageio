@@ -1,7 +1,6 @@
 import os
 import json
 
-from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 
 os.environ['SITE_CONFIG'] = './site_config.json'
@@ -195,6 +194,8 @@ LOGIN_REDIRECT_URL = 'home'
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/login/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = True
+
+SOCIAL_AUTH_USER_MODEL = 'auth.User'
 
 SOCIAL_AUTH_USER_FIELDS = ['email', 'username']
 OCIAL_AUTH_PROTECTED_USER_FIELDS = ['email', ]
