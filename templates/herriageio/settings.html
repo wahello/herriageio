@@ -28,6 +28,24 @@
                         {% endif %}
                     </div>
                     <div class="col-md-4">
+                        {% if google_login %}
+                            <p>{{ google_login }}</p>
+
+                            <p>Connected as <a href="https://google.com/{{ google_login.extra_data.login }}/" target="_blank">{{ google_login.extra_data.login }}</a></p>
+                            {% if can_disconnect %}
+                            <form method="post" action="{% url 'social:disconnect' 'google-oauth2' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-block">Disconnect from Google</button>
+                            </form>
+                            {% else %}
+                            <button type="button" disabled class="btn btn-secondary btn-block">Disconnect from Google</button>
+                            <p style="color: red">You must <a href="{% url 'password' %}">define a password</a> for your account before disconnecting from Google.</p>
+                            {% endif %}
+                        {% else %}
+                            <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-secondary btn-block">Connect to Google</a>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4">
                         {% if twitter_login %}
                             <p>Connected as <a href="https://twitter.com/{{ twitter_login.extra_data.access_token.screen_name }}/" target="_blank">@{{ twitter_login.extra_data.access_token.screen_name }}</a></p>
                             {% if can_disconnect %}
