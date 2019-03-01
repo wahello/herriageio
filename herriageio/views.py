@@ -53,8 +53,8 @@ def login_view(request):
         "section_header": "Account Access",
         "form": form,
         'ref_app': ref_app,
-        'heading': "Log In.",
-        'heading_sub_p': '👋 Welcome back! Hop into your account and manage your account and all it\'s goodies.',
+        'heading': "Hop Into Your Account.",
+        'heading_sub_p': 'If you\'ve never created an account you can do so by using your favorite social platform or your email. If you do have an account, continue with what you used the first time',
     }
 
     return render(request, template_name, context)

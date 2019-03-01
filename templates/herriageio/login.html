@@ -9,17 +9,21 @@
 			<div class="col-md-12 about-centered">
 				<div class="centered-content">
 					<h1>{{ heading }}</h1>
-					<p>{{ heading_sub_p }}</p>
+					<div class="row">
+						<div class="col-md-8">
+							<p>{{ heading_sub_p }}</p>
+						</div>
+					</div>
 
 					<div class="row mt-5">
 						<div class="col-md-4">
-							<a href="{% url 'social:begin' 'facebook' %}" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f"></i> Log In With Facebook</a>
+							<a href="{% url 'social:begin' 'facebook' %}" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f"></i> Continue With Facebook</a>
 						</div>
 						<div class="col-md-4">
-							<a href="{% url 'social:begin' 'twitter' %}" class="btn btn-twitter btn-block"><i class="fab fa-twitter"></i> Log In With Twitter</a>
+							<a href="{% url 'social:begin' 'twitter' %}" class="btn btn-twitter btn-block"><i class="fab fa-twitter"></i> Continue With Twitter</a>
 						</div>
 						<div class="col-md-4">
-							<a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-google btn-block"><i class="fab fa-google"></i> Log In With Google</a>
+							<a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-google btn-block"><i class="fab fa-google"></i> Continue With Google</a>
 						</div>
 						
 						<div class="col-md-12" style="margin-top: 20px;">
@@ -34,7 +38,7 @@
 						        	<small style="color: red">{{ error }}</small>
 						        {% endfor %}	
 								<br>
-								<button class="btn btn-primary btn-block" type="submit">Log In</button>
+								<button class="btn btn-primary btn-block" type="submit">Continue With Email</button>
 							</form>
 							<p style="margin-top: 10px; font-size: 14px;">Don't have an account? <a href="{% url 'signup_view' host 'www' %}{% if ref_app %}?ref_app={{ ref_app }}{% endif %}">Sign up</a> now.</p>
 						</div>
