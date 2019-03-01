@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         {% if github_login %}
-                            <p>Connected as <a href="https://github.com/{{ github_login.extra_data.login }}/" target="_blank">{{ github_login.extra_data.login }}</a></p>
+                            <!-- <p>Connected as <a href="https://github.com/{{ github_login.extra_data.login }}/" target="_blank">{{ github_login.extra_data.login }}</a></p> -->
                             {% if can_disconnect %}
                             <form method="post" action="{% url 'social:disconnect' 'github' %}">
                                 {% csrf_token %}
@@ -31,7 +31,7 @@
                         {% if google_login %}
                             <p>{{ google_login }}</p>
 
-                            <p>Connected as <a href="https://google.com/{{ google_login.extra_data.login }}/" target="_blank">{{ google_login.extra_data.login }}</a></p>
+                            <!-- <p>Connected as <a href="https://google.com/{{ google_login.extra_data.login }}/" target="_blank">{{ google_login.extra_data.login }}</a></p> -->
                             {% if can_disconnect %}
                             <form method="post" action="{% url 'social:disconnect' 'google-oauth2' %}">
                                 {% csrf_token %}
@@ -47,7 +47,7 @@
                     </div>
                     <div class="col-md-4">
                         {% if twitter_login %}
-                            <p>Connected as <a href="https://twitter.com/{{ twitter_login.extra_data.access_token.screen_name }}/" target="_blank">@{{ twitter_login.extra_data.access_token.screen_name }}</a></p>
+                            <!-- <p>Connected as <a href="https://twitter.com/{{ twitter_login.extra_data.access_token.screen_name }}/" target="_blank">@{{ twitter_login.extra_data.access_token.screen_name }}</a></p> -->
                             {% if can_disconnect %}
                             <form method="post" action="{% url 'social:disconnect' 'twitter' %}">
                                 {% csrf_token %}
@@ -63,7 +63,7 @@
                     </div>
                     <div class="col-md-4">
                         {% if facebook_login %}
-                            <p>Connected as <a href="https://facebook.com/{{ facebook_login.extra_data.id }}/" target="_blank">{{ facebook_login.extra_data.id }}</a></p>
+                            <!-- <p>Connected as <a href="https://facebook.com/{{ facebook_login.extra_data.id }}/" target="_blank">{{ facebook_login.extra_data.id }}</a></p> -->
                             {% if can_disconnect %}
                             <form method="post" action="{% url 'social:disconnect' 'facebook' %}">
                                 {% csrf_token %}
