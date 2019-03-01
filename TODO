@@ -1,23 +1,10 @@
-Architecture:
-    This just got so much more complicated. Previously, I was under the believe that the domain -> pythonanywhere -> django relation would look as follows...
-
-        django -> local server or production server
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+To push the staging launch of Lunch o' Munch:
+    ☐ Fix the host processing.
+    ☐ Need to connect social authentication and get it functional on 'www'
+    ☐ Need to connect social authentication to lunchmunch launchpad. 
+        Notes:
+            Really, all launchpads will need social authentication so it may be best to create a launchpad_base.html in the future.
+    ☐ Need the welcome email on Mailchimp to be created before we want anyone signing up.
 
 
 
