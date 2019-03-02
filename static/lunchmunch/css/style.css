@@ -8,12 +8,16 @@ body {
   .launchpad .hero {
     background-color: #F68F48;
     background-image: url("../images/launchpad_background.png");
-    background-size: 100% auto;
+    background-size: cover;
     background-repeat: no-repeat;
     min-height: 100vh;
     width: 100vw;
     color: white !important;
-    display: grid; }
+    display: grid;
+    padding-top: 150px;
+    margin-top: -60px;
+    padding-left: 0px;
+    padding-right: 0px; }
     .launchpad .hero .row {
       margin: auto; }
       .launchpad .hero .row h1 {
@@ -24,7 +28,7 @@ body {
       .launchpad .hero .row p.lead {
         margin-bottom: 80px;
         color: #FFF;
-        max-width: 75%; }
+        font-size: 18px; }
       .launchpad .hero .row input,
       .launchpad .hero .row button {
         border: none;
@@ -34,8 +38,11 @@ body {
         box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15); }
       .launchpad .hero .row .btn-secondary {
         background: #CB834F; }
-      .launchpad .hero .row form .col-xs-12 {
-        padding-left: 0px;
-        padding-right: 0px; }
+      .launchpad .hero .row form {
+        padding-top: 50px; }
+
+@media screen and (min-width: 1300px) {
+  p.lead {
+    max-width: 75%; } }
 
 /*# sourceMappingURL=style.css.map */

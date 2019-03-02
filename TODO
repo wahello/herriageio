@@ -6,20 +6,45 @@ To push the staging launch of Lunch o' Munch:
                 Notes:
                     With this we now know that we don't need a 'moproblems.io' app in PythonAnywhere because it is grabbed by 'www' and the wildcard redirect.
 
-    ☐ Need to connect social authentication and get it functional on 'www'
-    ☐ Need to prompt 'add email address' once they've connected social if they don't have one yet.
+    ✔ Need to connect social authentication and get it functional on 'www' @done(19-03-01 16:48)
+    ✘ Need to prompt 'add email address' once they've connected social if they don't have one yet. @cancelled(19-03-01 16:48)
         Notes:
             We have officially added email the the Facebook connection :)
 
-            ☐ Twitter isn't pulling the email.
-            ☐ Google isn't pulling the email.
-            ☐ If Facebook isn't the first connection, the email isn't updated.
+            ✔ Twitter isn't pulling the email. @done(19-03-01 16:48)
+            ✔ Google isn't pulling the email. @done(19-03-01 16:48)
+            ✔ If Facebook isn't the first connection, the email isn't updated. @done(19-03-01 16:48)
 
-        ☐ Don't show settings form or any account information until 
+        Conclusion:
+            All social channels are pulling the email now. There should be no situation where a User doesn't have an email.
+            
+            We should be able have complete social authentication and still maintain access to Mailchimp. This is the first functional authentication system that is up to the standards of other platforms.
+
+        ✔ Don't show settings form or any account information until @done(19-03-01 16:51)
+            Conclusion:
+                Now the form is only displayed for superusers, as they should absolutely be the only ones with access to that information. Those are pure user management values.
+
+                The profile is definitely being created though so that worry can be put to rest.
+
     ☐ Need to connect social authentication to lunchmunch launchpad. 
         Notes:
             Really, all launchpads will need social authentication so it may be best to create a launchpad_base.html in the future.
+
+        ☐ Need to add urls to all three social authentication settings.
+            ☐ https://lunchmunch.moproblems.io/oauth/login/<platform>
+            ☐ https://lunchmunch.moproblems.io/oauth/complete/<platform>
+            ☐ https://lunchmunch.moproblems.io
+        ☐ Add `?next={{ request.path }}` to the social begin links.
+
     ☐ Need the welcome email on Mailchimp to be created before we want anyone signing up.
+
+    ☐ If the user is authenticated while on launchpad and has already shown interest. Show the thank you page.
+    
+
+    ☐ Mo' Problems landing hero up and styled.
+
+    ☐ Fix the email authentication. The users are being "logged in" in the view, but then when we are directed back to the homepage, nothing is there. We also aren't getting any messages.
+
 
 Lunch o' Munch:
     ☐ Build out the development process.
