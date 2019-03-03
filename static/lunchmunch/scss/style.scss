@@ -1,25 +1,50 @@
+html {
+    overflow-x: hidden;
+}
+
 body {
-    background-color: #F68F48;
+    background-color: #000000;
+    overflow-x: hidden;
+
+    a {
+        font-weight: 500;
+    }
+
+    .btn {
+        font-weight: 900 !important;
+    }
 }
 
 .launchpad {
-    font-family: 'Averia Serif Libre', cursive;
+    font-family: proxima-nova, sans-serif;
+    font-weight: 500;
+    font-style: normal;
     text-shadow: 0px 3px 3px rgba(#000000, .15);
     margin-top: -3px;
+    min-height: 100vh;
+    overflow-x: hidden;
 
     .hero {
-        background-color: #F68F48;
+        background-color: #000000;
         background-image: url('../images/launchpad_background.png');
         background-size: cover;
         background-repeat: no-repeat;
-        min-height: 100vh;
+        min-height: 100%;
         width: 100vw;
         color: white !important;
         display: grid;
-        padding-top: 150px;
+        padding-top: 220px;
         margin-top: -60px;
         padding-left: 0px;
+        margin-bottom: 0px;
         padding-right: 0px;
+
+        @media screen and (min-width: 580px) {
+            .container {
+                padding-left: 0px;
+                padding-right: 0px;
+            }
+        }
 
         .row {
             margin: auto;
@@ -27,6 +52,7 @@ body {
             h1 {
                 max-width: 100%;
                 margin-bottom: 20px;
+                font-weight: 900;
             }
 
             p {
@@ -34,7 +60,6 @@ body {
             }
 
             p.lead {
-                margin-bottom: 80px;
                 color: #FFF;
                 font-size: 18px;
             }
@@ -54,14 +79,8 @@ body {
             }
 
             form {
-                padding-top: 50px;
+                padding-top: 80px;
             }
         }
-    }
-}
-
-@media screen and (min-width: 1300px) {
-    p.lead {
-        max-width: 75%;
     }
 }

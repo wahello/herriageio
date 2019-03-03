@@ -12,6 +12,7 @@
 	<link rel="icon" data-emoji="🍔" type="image/png">
 
     <link href="https://fonts.googleapis.com/css?family=Averia+Serif+Libre:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.typekit.net/pvu5szd.css">
     <link rel="stylesheet" href="{% static 'herriageio/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'lunchmunch/css/style.css' %}">
 
@@ -44,44 +45,56 @@
 
     <div class="launchpad">
         <nav class="navbar navbar-dark">
-            <a href="{% url 'launchpad' host 'lunchmunch' %}" class="navbar-brand">🍔 Lunch O' Munch</a>    
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="{% url 'launchpad' host 'lunchmunch' %}" class="navbar-brand">🍔 Lunch o' Munch</a>    
+                    </div>
+                </div>
+            </div>
         </nav>
 
         <div class="jumbotron hero" {% if redirect_confirmation %}style="background-image: url('{% static 'lunchmunch/images/launchpad_thankyou.png' %}');"{% endif %}>
-            <div class="row">
-                <div class="col-xl-5 offset-xl-2 col-lg-7 col-md- col-sm-10 col-xs-12">
-                    {% if redirect_confirmation %}
-                        <h1>Thank you for joining the<br> 🍔 Lunch o' Munch community!</h1>
-                        <p class="lead">By joining the community now you have guaranteed yourself FREE lifetime access to Lunch o' Munch. Keep an eye on your inbox as we approach our public launch in the next couple of weeks.</p>
-                    {% else %}
-                        <h1>Make sure that everyone enjoys the choice for lunch.</h1>
-                        <p class="lead">End the arguments of where to eat. Everyone in the group answers a couple of questions and we will suggest the perfect place. Claim free lifetime access while you can.</p>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-7 col-md- col-sm-10 col-xs-12">
+                        {% if redirect_confirmation %}
+                            <h1 style="padding-top: 80px;">Woohoo {% if request.user.is_authenticated %}{{ request.user.first_name}}{% endif %}! You successfully claimed FREE lifetime access.</h1>
+                            <p class="lead">We are still building, but we will be ready for you in just a couple of weeks. For now, keep an eye on your email inbox so that you will be the first to know when we launch!</p>
+                        {% else %}
+                            <h1>Make sure that everyone enjoys where you go to eat.</h1>
+                            <p class="lead">End the arguments of where to eat. Everyone in the group answers a couple of questions and we will suggest the perfect place. Claim free lifetime access while you can.</p>
+                        {% endif %}
+                    </div>
+
+                    {% if not redirect_confirmation %}
+                        <form action="." method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-5 col-sm-12">
+                                    <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f"></i> Continue On Facebook</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-5 col-sm-12">
+                                    <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-twitter btn-block"><i class="fab fa-twitter"></i> Continue On Twitter</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-5 col-sm-12">
+                                    <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-google btn-block"><i class="fab fa-google"></i> Continue On Google</a>
+                                </div>
+
+                                <!--<div class="mb-2 col-lg-4 offset-lg-3 col-md-5 offset-md-2 col-sm-10 offset-sm-1 col-xs-12 offset-xs-0">
+                                    <input name="email_address" type="text" class="input-block form-control" placeholder="Email Address...">
+                                </div>
+                                <div class="col-lg-2 col-md-3 offset-md-0 col-sm-10 offset-sm-1 col-xs-12 offset-xs-0">
+                                    <button class="btn btn-secondary btn-block">Get Started</button>
+                                </div>-->
+                            </div>
+                        </form>
                     {% endif %}
                 </div>
-
-                {% if not redirect_confirmation %}
-                    <form action="." method="POST">
-                        {% csrf_token %}
-                        <div class="row">
-                            <div class="col-xl-3 offset-xl-2 col-lg-4 col-sm-12">
-                                <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f"></i> Get Started</a>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-12">
-                                <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-twitter btn-block"><i class="fab fa-twitter"></i> Get Started</a>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-12">
-                                <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-google btn-block"><i class="fab fa-google"></i> Get Started</a>
-                            </div>
-
-                            <!--<div class="mb-2 col-lg-4 offset-lg-3 col-md-5 offset-md-2 col-sm-10 offset-sm-1 col-xs-12 offset-xs-0">
-                                <input name="email_address" type="text" class="input-block form-control" placeholder="Email Address...">
-                            </div>
-                            <div class="col-lg-2 col-md-3 offset-md-0 col-sm-10 offset-sm-1 col-xs-12 offset-xs-0">
-                                <button class="btn btn-secondary btn-block">Get Started</button>
-                            </div>-->
-                        </div>
-                    </form>
-                {% endif %}
             </div>
         </div>
     </div>
