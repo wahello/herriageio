@@ -61,7 +61,7 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-7 col-md- col-sm-10 col-xs-12">
                         {% if redirect_confirmation %}
-                            <h1 style="padding-top: 80px;">Woohoo {% if request.user.is_authenticated and request.user.first_name %}{{ request.user.first_name}}{% endif %}! You successfully claimed FREE lifetime access.</h1>
+                            <h1 style="padding-top: 80px;">Thanks {% if request.user.is_authenticated and request.user.first_name %}{{ request.user.first_name}}{% endif %}! You successfully claimed FREE lifetime access.</h1>
                             <p class="lead">We are still building, but we will be ready for you in just a couple of weeks. For now, keep an eye on your email inbox so that you will be the first to know when we launch!</p>
                         {% else %}
                             <h1>Make sure that everyone enjoys where you go to eat.</h1>

@@ -31,6 +31,9 @@ body {
     padding-left: 0px;
     margin-bottom: 0px;
     padding-right: 0px; }
+    @media screen and (max-width: 768px) {
+      .launchpad .hero {
+        padding-top: 150px; } }
     @media screen and (min-width: 580px) {
       .launchpad .hero .container {
         padding-left: 0px;

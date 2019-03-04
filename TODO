@@ -41,18 +41,23 @@ To push the staging launch of Lunch o' Munch:
 
                 "In your custom pipeline, retrieve it using:"
                 "strategy.session_get('key')"
+
                 @https://python-social-auth-docs.readthedocs.io/en/latest/use_cases.html#pass-custom-get-post-parameters-and-retrieve-them-on-authentication
 
                 We may or may not need to create a custom pipeline. This will have to be seen during the testing of the authentication.
 
             ☐ Process request parameters in settings and when they exist, use the parameters for the redirect.
-                ☐ This has been setup. We just need to test it.
-                    ☐ Test it.
+                ✔ This has been setup. We just need to test it. @done(19-03-04 00:39)
+                    ✔ Test it. @done(19-03-04 00:39)
+
+                ☐ We need to create a custom pipeline to look for all three url parameters and then redirect from that pipeline because the values aren't included in the actual path redirect.
+
+                ☐ We also need to create the profile from a modular function
 
             ✔ If the user is authenticated while on launchpad and has already shown interest. Show the thank you page. @done(19-03-04 00:12)
 
-    ☐ Scale down background images to 1920x1080 and optimize them.
-    ☐ Set up .gitignore
+    ✔ Scale down background images to 1920x1080 and optimize them. @done(19-03-04 00:25)
+    ✔ Set up .gitignore @done(19-03-04 00:25)
 
     ☐ Need the welcome email on Mailchimp to be created before we want anyone signing up.
 
