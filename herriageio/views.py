@@ -114,6 +114,16 @@ def logout_view(request):
 def settings(request, profile_host_name="www"):
     user = request.user
 
+    mp_host_redirect = request.POST.get(
+        'mp_host_redirect', request.GET.get('mp_host_redirect', ''))
+    mp_redirect_confirmation = request.POST.get(
+        'mp_redirect_confirmation', request.GET.get('mp_redirect_confirmation', ''))
+    mp_path = request.POST.get(
+        'mp_path', request.GET.get('mp_path', ''))
+
+    if mp_host_redirect and mp_redirect_confirmation and mp_path:
+        return redirect(reverse('launchpad', host=mp_host_redirect, kwargs={'redirect_confirmation': mp_redirect_confirmation}))
+
     ref_app_exists = False
     for value, app in django_settings.CHILD_APPS:
         if not ref_app_exists:

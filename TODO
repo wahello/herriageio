@@ -30,21 +30,36 @@ To push the staging launch of Lunch o' Munch:
         Notes:
             Really, all launchpads will need social authentication so it may be best to create a launchpad_base.html in the future.
 
-        ☐ Need to add urls to all three social authentication settings.
-            ☐ https://lunchmunch.moproblems.io/oauth/login/<platform>
-            ☐ https://lunchmunch.moproblems.io/oauth/complete/<platform>
-            ☐ https://lunchmunch.moproblems.io
-        ☐ Add `?next={{ request.path }}` to the social begin links.
+        ✔ Need to add urls to all three social authentication settings. @done(19-03-04 00:00)
+            ✔ https://lunchmunch.moproblems.io/oauth/login/<platform> @done(19-03-04 00:00)
+            ✔ https://lunchmunch.moproblems.io/oauth/complete/<platform> @done(19-03-04 00:00)
+            ✔ https://lunchmunch.moproblems.io @done(19-03-04 00:00)
+
+        ☐ Add the needed url parameters to the social login links.
+            Notes:
+                This should actually be changed to `?host_redirect=lunchmunch&path=/thank-you/`
+
+                "In your custom pipeline, retrieve it using:"
+                "strategy.session_get('key')"
+                @https://python-social-auth-docs.readthedocs.io/en/latest/use_cases.html#pass-custom-get-post-parameters-and-retrieve-them-on-authentication
+
+                We may or may not need to create a custom pipeline. This will have to be seen during the testing of the authentication.
+
+            ☐ Process request parameters in settings and when they exist, use the parameters for the redirect.
+                ☐ This has been setup. We just need to test it.
+                    ☐ Test it.
+
+            ✔ If the user is authenticated while on launchpad and has already shown interest. Show the thank you page. @done(19-03-04 00:12)
 
     ☐ Need the welcome email on Mailchimp to be created before we want anyone signing up.
 
-    ☐ If the user is authenticated while on launchpad and has already shown interest. Show the thank you page.
-    
-
     ☐ Mo' Problems landing hero up and styled.
 
-    ☐ Fix the email authentication. The users are being "logged in" in the view, but then when we are directed back to the homepage, nothing is there. We also aren't getting any messages.
+    ✘ Fix the email authentication. The users are being "logged in" in the view, but then when we are directed back to the homepage, nothing is there. We also aren't getting any messages. @cancelled(19-03-04 00:01)
+        Conclusion: 
+            Instead of offering email authentication, we are going to require social authentication of some sort. There is really no reason to offer an email signup and I think it's safe to assume that only about 0.01% of people would use the email signup.
 
+            If someone complains about it, we can add it back. But, for now it's not that big of a deal and it would break the styling of the page. So, in the end, this doesn't matter at this time.
 
 Lunch o' Munch:
     ☐ Build out the development process.

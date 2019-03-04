@@ -194,6 +194,10 @@ LOGIN_REDIRECT_URL = 'home'
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/login/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = True
+# makes sure that our custom parameters are appeneded.
+SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = [
+    'mp_path', 'mp_host_redirect', 'mp_redirect_confirmation']
+
 
 AUTH_USER_MODEL = 'auth.User'
 SOCIAL_AUTH_USER_MODEL = 'auth.User'

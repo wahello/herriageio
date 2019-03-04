@@ -27,6 +27,9 @@ def home(request):
 def launchpad(request, redirect_confirmation=None):
     template_name = "lunchmunch/launchpad.html"
 
+    if request.user.is_authenticated and Profile.objects.filter(user=request.user, host="lunchmunch").exists():
+        redirect_confirmation = "thank-you"
+
     if request.method == "POST" and redirect_confirmation is None:
         email = request.POST.get('email_address')
         user, created = User.objects.get_or_create(email=email, username=email)
