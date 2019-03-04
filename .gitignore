@@ -5,3 +5,5 @@ db
 .DS_Store
 venv/
 site_config.json
+dump.rdb
+archive.todo

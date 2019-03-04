@@ -51,6 +51,9 @@ To push the staging launch of Lunch o' Munch:
 
             ✔ If the user is authenticated while on launchpad and has already shown interest. Show the thank you page. @done(19-03-04 00:12)
 
+    ☐ Scale down background images to 1920x1080 and optimize them.
+    ☐ Set up .gitignore
+
     ☐ Need the welcome email on Mailchimp to be created before we want anyone signing up.
 
     ☐ Mo' Problems landing hero up and styled.
