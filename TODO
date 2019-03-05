@@ -51,17 +51,33 @@ To push the staging launch of Lunch o' Munch:
                     ✔ Test it. @done(19-03-04 00:39)
 
                 ☐ We need to create a custom pipeline to look for all three url parameters and then redirect from that pipeline because the values aren't included in the actual path redirect.
-
-                ☐ We also need to create the profile from a modular function
+                    ☐ We also need to create the profile from a modular function that just accepts the host name
 
             ✔ If the user is authenticated while on launchpad and has already shown interest. Show the thank you page. @done(19-03-04 00:12)
 
     ✔ Scale down background images to 1920x1080 and optimize them. @done(19-03-04 00:25)
     ✔ Set up .gitignore @done(19-03-04 00:25)
 
+    ☐ Need to get the Mailchimp domain records functioning properly
+        ✔ Need to get both of us the emails. @done(19-03-05 13:41)
+        ☐ Add mason to ADMINS of the website
+    ☐ Need Twitter account.
+    ☐ Need Instagram account.
+    ☐ Need to grab all social accounts honestly.
+    ☐ Add merge tags to Mailchimp from Profile creation if possible
+    ☐ Get emails setup for moproblems
+    
+    ☐ Add a link for contact to the thank you page.
+
+    Facebook:
+        ☐ Need to update the Facebook cover image.
+        ☐ Need to update the Facebook user image with the correct black.
+
     ☐ Need the welcome email on Mailchimp to be created before we want anyone signing up.
 
     ☐ Mo' Problems landing hero up and styled.
+        Conclusion:
+            This isn't needed for a lunchmunch
 
     ✘ Fix the email authentication. The users are being "logged in" in the view, but then when we are directed back to the homepage, nothing is there. We also aren't getting any messages. @cancelled(19-03-04 00:01)
         Conclusion: 
